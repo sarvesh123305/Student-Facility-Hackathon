@@ -1,6 +1,6 @@
 import React from "react";
 
-const AdminHome = () => {
+const FacultyHome = () => {
   return (
     <div className="bg-white ml-2 mr-2">
       <h1 className="mt-2 ml-4">
@@ -10,4 +10,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default FacultyHome;

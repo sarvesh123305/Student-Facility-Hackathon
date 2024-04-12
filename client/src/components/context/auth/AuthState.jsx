@@ -13,9 +13,8 @@ import {
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
+  LOGIN_SUCCESS_STUDENTSECTION,
 } from "../types";
-axios.defaults.baseURL = "http://localhost:5000";
-
 const AuthState = (props) => {
   const initialState = {
     token: localStorage.getItem("token"),
@@ -29,20 +28,25 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   //Load User
-  const loadUser = async () => {
+  const loadUser = async (userType) => {
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
 
     try {
-      const res = await axios.get("/api/auth/student");
-      // console.log("Data got", res);
+      console.log("User in auth", userType);
+      const res = await axios.get(`/api/auth/${userType}`);
+      const data = {
+        ...res.data,
+        userType,
+      };
       dispatch({
         type: USER_LOADED,
-        payload: res.data,
+        payload: data,
       });
+      console.log("Completed in auth", userType);
     } catch (err) {
-      console.log("got here bangged");
+      console.log("Some error in API", err);
       dispatch({
         type: AUTH_ERROR,
       });
@@ -121,16 +125,34 @@ const AuthState = (props) => {
       });
     }
   };
+
+  //Students Section login
+
+  const StudentSectionlogin = async (formData) => {
+    try {
+      console.log("Student section login ", formData);
+      const res = await axios.post("/api/auth/studentsection", formData);
+      // console.log("data to be seen", res.data.token);
+      dispatch({
+        type: LOGIN_SUCCESS_STUDENTSECTION,
+        payload: res.data,
+      });
+      // loadUser();
+      console.log("Ssadja");
+    } catch (err) {
+      console.log("error student section", err);
+      // dispatch({
+      //   type: LOGIN_FAIL,
+      //   payload: err.response.data.msg,
+      // });
+    }
+  };
   //Clear Errors
   const clearErrors = () => {
     // console.log("clearErrors");
     dispatch({
       type: CLEAR_ERRORS,
     });
-  };
-
-  const requestBonaide = (formData) => {
-    console.log(formData);
   };
 
   return (
@@ -148,7 +170,7 @@ const AuthState = (props) => {
         logout,
         Facultylogin,
         clearErrors,
-        requestBonaide,
+        StudentSectionlogin,
       }}
     >
       {props.children}

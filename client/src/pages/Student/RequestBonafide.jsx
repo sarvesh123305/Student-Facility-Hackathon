@@ -5,7 +5,15 @@ import AlertContext from "../../components/context/alert/alertContext";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import axios from "axios";
-const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
+import {
+  bonafideDownload,
+  initialLoadUser,
+} from "../../redux/actions/logActions";
+const RequestBonafide = ({
+  student: { studentDetails, academicProfile },
+  bonafideDownload,
+  initialLoadUser,
+}) => {
   const [bonafideDetails, setBonafideDetails] = useState({
     reason: "",
     purpose: "",
@@ -14,7 +22,6 @@ const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
 
   //auth Context
   const authContext = useContext(AuthContext);
-  const { user, isAuthenticated } = authContext;
 
   //user Context
   const userContext = useContext(UserContext);
@@ -35,39 +42,22 @@ const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
     if (reason === "" || purpose === "") {
       setAlert("All the fields are mandatory", "danger");
     } else {
-      requestBonafide(bonafideDetails);
-      //name mis dept year academic-year
+      requestBonafide(bonafideDetails, setPdfData);
     }
   };
 
   const handleBonafideDownload = async () => {
     // e.preventDefault();
-
-    try {
-      console.log("MIS", studentDetails.mis);
-      const formData = {
-        mis: studentDetails.mis,
-        name: studentDetails.name,
-        year: academicProfile.year,
-        dept: academicProfile.branch,
-        academicYear: studentDetails.academicyear,
-        programme: "Btech",
-        purpose: "Scholarship",
-      };
-      console.log(formData);
-      const response = await axios.post(
-        "http://localhost:5000/api/student/requestBonafide",
-        formData,
-        {
-          responseType: "arraybuffer",
-        }
-      );
-
-      // Store the PDF content in the component state
-      setPdfData(new Blob([response.data], { type: "application/pdf" }));
-    } catch (error) {
-      console.error("Error downloading PDF:", error.message);
-    }
+    const formData = {
+      mis: studentDetails.mis,
+      name: studentDetails.name,
+      year: academicProfile.year,
+      dept: academicProfile.branch,
+      academicYear: studentDetails.academicyear,
+      programme: "Btech",
+      purpose: "Scholarship",
+    };
+    bonafideDownload(formData, setPdfData);
   };
 
   useEffect(() => {
@@ -81,6 +71,7 @@ const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
 
       URL.revokeObjectURL(pdfUrl);
     }
+    initialLoadUser();
   }, [pdfData]);
   return (
     <div className="">
@@ -272,4 +263,6 @@ const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps)(RequestBonafide);
+export default connect(mapStateToProps, { bonafideDownload, initialLoadUser })(
+  RequestBonafide
+);

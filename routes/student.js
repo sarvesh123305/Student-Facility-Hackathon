@@ -20,7 +20,9 @@ const fs = require("fs");
 const PDFDocument = require("pdfkit");
 const axios = require("axios");
 const { format } = require("date-fns");
+const SemesterCreditRegistration = require("../models/SemesterCreditRegistration");
 
+const mongodbURLURIOPTIMIZE = config.get("mongoURI");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
 const client = new MongoClient(uri);
@@ -93,7 +95,60 @@ router.post(
   }
 );
 
-function generateBonafide() {}
+//@routes GET api/student/updateStudent
+//@desc Update Student Details
+//@access public
+
+router.put(
+  "/updateStudent/:MIS",
+  [
+    // auth("student"),
+    [
+      // check("MIS", "mis is required").notEmpty(),
+      // check("ProfilePhoto", "ProfilePhoto is required").notEmpty(),
+      // check("PersonalInformation", "ProfilePhoto is required").notEmpty(),
+      // check("FamilyInformation", "ProfilePhoto is required").notEmpty(),
+      // check("ContactInformation", "ContactInformation is required").notEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //bad request
+    }
+    const {
+      MIS,
+      ProfilePhoto,
+      PersonalInformation,
+      FamilyInformation,
+      ContactInformation,
+    } = req.body;
+    try {
+      // const studentFields = {};
+      const findStudent = await Student.findOne({ mis: MIS });
+      const studentInformation = await StudentInformation.findById(
+        findStudent.studentInformation
+      );
+      if (ProfilePhoto) {
+        studentInformation.ProfilePhoto = ProfilePhoto;
+      }
+      if (PersonalInformation) {
+        studentInformation.PersonalInformation = PersonalInformation;
+      }
+      if (FamilyInformation) {
+        studentInformation.FamilyInformation = FamilyInformation;
+      }
+      if (ContactInformation) {
+        studentInformation.ContactInformation = ContactInformation;
+      }
+      await studentInformation.save();
+      console.log("Sucesss");
+      res.json(studentInformation);
+    } catch (err) {
+      console.log("Errors", err);
+    }
+  }
+);
 
 //@routes POST api/student/requestBonafide
 //@desc Register to a bonafide request
@@ -275,6 +330,9 @@ router.post(
 router.get("/queries", auth("student"), async (req, res) => {
   try {
     const studentQueries = await Message.find({ from: req.student.id });
+    if (!studentQueries) {
+      res.json({ msg: "No queries found" });
+    }
     res.json(studentQueries);
   } catch (err) {
     console.error(err.message);
@@ -311,15 +369,15 @@ async function connectToAtlas() {
   }
 }
 
-async function createCollectionInAtlas(dbName, collectionName) {
-  try {
-    const db = client.db(dbName);
-    await db.createCollection(collectionName);
-    console.log("Collection created in MongoDB Atlas:", collectionName);
-  } catch (error) {
-    console.error("Error creating collection in MongoDB Atlas:", error);
-  }
-}
+// async function createCollectionInAtlas(dbName, collectionName) {
+//   try {
+//     const db = client.db(dbName);
+//     await db.createCollection(collectionName);
+//     console.log("Collection created in MongoDB Atlas:", collectionName);
+//   } catch (error) {
+//     console.error("Error creating collection in MongoDB Atlas:", error);
+//   }
+// }
 
 async function addDocumentToCollection(document, dbName, collectionName) {
   try {
@@ -378,7 +436,6 @@ router.post(
       if (!user) return res.status(400).json({ msg: "No such student found" });
 
       let { academicProfile } = user;
-      console.log(academicProfile);
       let getAcademicProfile = await AcademicProfile.findOne({
         _id: academicProfile,
       });
@@ -391,7 +448,6 @@ router.post(
         (sem) => sem.semesterName === semesterName
       );
       let { subjects } = specificSemester;
-      console.log("Subjects", subjects);
 
       let getSubjects = await Subject.findOne({ _id: subjects });
       if (!getSubjects)
@@ -428,12 +484,9 @@ router.get(
     try {
       // const { mis } = req.query;
       const mis = req.student.id;
-      console.log("Request is ", mis);
       const studentDetails = await Student.findOne({ _id: mis });
       if (!studentDetails)
         return res.status(404).json({ message: "Student not found" });
-      console.log(studentDetails);
-      console.log(studentDetails.studentInformation);
       const studentInformation = await StudentInformation.findOne({
         _id: studentDetails.studentInformation,
       });
@@ -889,6 +942,57 @@ function drawTable(doc, table, options) {
     rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
+
+router.post("/subjectFetchtesting", async (req, res) => {
+  const { sName } = req.body;
+  try {
+    await client.connect();
+    const db = client.db("test");
+    const collection = db.collection("SemsesterSubjects");
+    const query = { semesterName: sName };
+    const document = await collection.findOne(query);
+
+    res.json(document);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error finding document");
+  }
+});
+
+router.post(
+  "/semesterCreditRegistration",
+  [
+    check("electives", "electives is required"),
+    check("subjects", "subjects are required"),
+    check("mis", "mis are required"),
+    check("semesterName", "semesterName are required"),
+  ],
+  async (req, res) => {
+    const { electives, subjects, mis, semesterName } = req.body;
+    try {
+      console.log("Hello", mis, semesterName);
+      const existReg = await SemesterCreditRegistration.findOne({
+        mis: mis,
+        semesterName: semesterName,
+      });
+      console.log("Reg", existReg);
+      if (existReg)
+        return res.json({ msg: "Student with the same MIS already exists" });
+
+      const newReg = new SemesterCreditRegistration({
+        electives,
+        semesterName,
+        subjects,
+        mis,
+      });
+      await newReg.save();
+      res.json({ msg: "Semester Credit Registration Success" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
 
 module.exports = router;
 /*

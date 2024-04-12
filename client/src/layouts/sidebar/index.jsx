@@ -10,18 +10,18 @@ import { AiOutlineAppstore } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { HiOutlineDatabase } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
-import { RiBuilding3Line } from "react-icons/ri";
 import { useMediaQuery } from "react-responsive";
-import { MdMenu } from "react-icons/md";
+import { MdEdit, MdMenu, MdNotifications } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import AuthContext from "../../components/context/auth/authContext";
+import { Edit3Icon, EditIcon } from "lucide-react";
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
   const [open, setOpen] = useState(isTabletMid ? false : true);
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const authContext = useContext(AuthContext);
-  const { user, userType } = authContext;
+  const { user, userType, loadUser } = authContext;
   useEffect(() => {
     if (isTabletMid) {
       setOpen(false);
@@ -29,9 +29,16 @@ const Sidebar = () => {
       setOpen(true);
     }
   }, [isTabletMid]);
+  const firstName = user ? user.name.split(" ") : null;
+  const mis = user ? user.mis : null;
 
   useEffect(() => {
     isTabletMid && setOpen(false);
+    // loadUser
+    const userType = pathname.includes("Faculty") ? "faculty" : "student";
+    // console.log(userType);
+    userType && loadUser(userType);
+    // }, [pathname, userType]);
   }, [pathname]);
 
   const Nav_animation = isTabletMid
@@ -71,11 +78,7 @@ const Sidebar = () => {
     {
       name: "Academics",
       icon: BsPerson,
-      menus: [
-        "Academic Profile",
-        "Semester Credit Registration",
-        "Elective Registration",
-      ],
+      menus: ["Academic Profile", "Semester Credit Registration"],
     },
     {
       name: "Scholarship",
@@ -95,6 +98,7 @@ const Sidebar = () => {
       menus: [
         "Academic Profile",
         "Semester Credit Registration",
+        "Elective Allocation",
         "Elective Registration",
       ],
     },
@@ -107,7 +111,7 @@ const Sidebar = () => {
       md:h-[68%] h-[70%]"
       >
         <li>
-          <NavLink to={"/"} className="link">
+          <NavLink to={"/Faculty"} className="link">
             <AiOutlineAppstore size={23} className="min-w-max" />
             Profile
           </NavLink>
@@ -117,13 +121,13 @@ const Sidebar = () => {
           <div className="border-slate-300 ">
             {subMenusListFaculty?.map((menu) => (
               <div key={menu.name} className="flex flex-col gap-1">
-                <SubMenu data={menu} />
+                <SubMenu data={menu} userType="Faculty" />
               </div>
             ))}
           </div>
         )}
         <li>
-          <NavLink to={"/stroage"} className="link">
+          <NavLink to={"/Faculty/manageResult"} className="link">
             <HiOutlineDatabase size={23} className="min-w-max" />
             Manage Result
           </NavLink>
@@ -136,17 +140,46 @@ const Sidebar = () => {
       <ul
         className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1
       font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   
-      md:h-[68%] h-[70%]"
+      md:h-[68%] h-[70%] "
       >
+            <li>
+          
+            <form class="flex items-center max-w-md mx-auto">
+              <label for="simple-search" class="sr-only">Search</label>
+              <div class="relative w-full  m-1">
+
+                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5   " placeholder="Search Anything" required />
+              </div>
+              <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                <svg class="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+                <span class="sr-only">Search</span>
+              </button>
+            </form>
+        </li>
         <li>
-          <NavLink to={"/"} className="link">
+          <NavLink
+            to={"/"}
+            className="link hover:bg-white-600 hover:text-black"
+          >
             <AiOutlineAppstore size={23} className="min-w-max" />
             Profile
           </NavLink>
         </li>
 
+        <li>
+          <NavLink
+            to={"/updateProfile"}
+            className="link flex items-stretch hover:bg-white-600 hover:text-black"
+          >
+            <MdEdit size={23} className="min-w-max" />
+            Update Profile
+          </NavLink>
+        </li>
+
         {(open || isTabletMid) && (
-          <div className="border-slate-300 ">
+          <div className="border-slate-300">
             {subMenusListStudent?.map((menu) => (
               <div key={menu.name} className="flex flex-col gap-1">
                 <SubMenu data={menu} />
@@ -155,11 +188,26 @@ const Sidebar = () => {
           </div>
         )}
         <li>
-          <NavLink to={"/result"} className="link">
+          <NavLink
+            to={"/result"}
+            className="link hover:bg-white-600 hover:text-black"
+          >
             <HiOutlineDatabase size={23} className="min-w-max" />
             Result
           </NavLink>
         </li>
+
+        <li>
+          <NavLink
+            to={"/notifications"}
+            className="link flex items-stretch hover:bg-white-600 hover:text-black"
+          >
+            <MdNotifications size={23} className="min-w-max" />
+            Notifications
+          </NavLink>
+        </li>
+
+    
       </ul>
     );
   };
@@ -203,7 +251,6 @@ const Sidebar = () => {
         </div>
 
         <div className="flex flex-col  h-full">
-          {/*Here ul to be inserted */}
           {getMenubar(userType)}
           {}
           {open && (
@@ -216,8 +263,10 @@ const Sidebar = () => {
                   className="rounded-full"
                 />
                 <div className="ml-5 text-base">
-                  <p>Hello {user && user.name}</p>
-                  <small>142203002</small>
+                  <p>
+                    Hello {user && user.name.split(" ").slice(1, -1).join(" ")}
+                  </p>
+                  <small>{user && user.mis}</small>
                 </div>
                 {/* <p className="text-teal-500 py-1.5 px-3 text-xs bg-teal-50 rounded-xl">
                   Upgrade

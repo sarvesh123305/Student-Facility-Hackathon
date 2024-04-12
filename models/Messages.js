@@ -6,6 +6,7 @@ const MessagesSchema = mongoose.Schema({
   query: { type: String, required: true },
   type: { type: String, required: true },
   messageId: { type: String, required: true },
+  reply: { type: String },
   date: {
     type: Date,
     default: Date.now,

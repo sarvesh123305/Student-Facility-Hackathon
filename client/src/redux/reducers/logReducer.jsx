@@ -1,4 +1,8 @@
-import { GET_STUDENT_DETAILS } from "../actions/types";
+import {
+  GET_STUDENT_DETAILS,
+  GET_QUERIES,
+  UPDATE_STUDENT,
+} from "../actions/types";
 
 const initialState = {
   studentInformation: null,
@@ -17,7 +21,16 @@ export default (state = initialState, action) => {
         academicProfile: action.payload.academicProfile,
         studentDetails: action.payload.studentDetails,
       };
-
+    case GET_QUERIES:
+      return {
+        ...state,
+        queries: action.payload,
+      };
+    case UPDATE_STUDENT:
+      return {
+        ...state,
+        studentInformation: action.payload,
+      };
     default:
       return state;
   }

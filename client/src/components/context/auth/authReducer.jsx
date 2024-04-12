@@ -7,6 +7,7 @@ import {
   LOGIN_SUCCESS_FACULTY,
   LOGIN_FAIL,
   LOGOUT,
+  LOGIN_SUCCESS_STUDENTSECTION,
   CLEAR_ERRORS,
 } from "../types";
 
@@ -18,6 +19,7 @@ export default (state, action) => {
         isAuthenticated: true,
         loading: false,
         user: action.payload,
+        userType: action.payload.userType,
       };
     case LOGIN_SUCCESS_STUDENT:
     case REGISTER_SUCCESS:
@@ -38,10 +40,20 @@ export default (state, action) => {
         loading: false,
         userType: "faculty",
       };
+    case LOGIN_SUCCESS_STUDENTSECTION:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        loading: false,
+        userType: "studentsection",
+      };
+
     case LOGOUT:
-    case LOGIN_FAIL:
-    case AUTH_ERROR:
-    case REGISTER_FAIL:
+      // case LOGIN_FAIL:
+      // case AUTH_ERROR:
+      // case REGISTER_FAIL:
       localStorage.removeItem("token");
       return {
         ...state,

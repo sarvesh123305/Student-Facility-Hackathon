@@ -1,4 +1,4 @@
-import { GET_STUDENT_DETAILS } from "./types";
+import { GET_STUDENT_DETAILS, GET_QUERIES, UPDATE_STUDENT } from "./types";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from "axios";
 export const initialLoadUser = () => async (dispatch) => {
@@ -16,82 +16,101 @@ export const initialLoadUser = () => async (dispatch) => {
     console.log("got here bangged", err);
   }
 };
+export const bonafideDownload = (formData, setPdfData) => async (dispatch) => {
+  try {
+    console.log(formData);
+    const response = await axios.post(
+      "/api/student/requestBonafide",
+      formData,
+      {
+        responseType: "arraybuffer",
+      }
+    );
 
-/*
-//Bonafide request
-  const initialLoadUser = async () => {
+    // Store the PDF content in the component state
+    setPdfData(new Blob([response.data], { type: "application/pdf" }));
+  } catch (error) {
+    console.error("Error downloading PDF:", error.message);
+  }
+};
+export const resultDownload = (formData, setPdfData) => async (dispatch) => {
+  try {
+    console.log(formData);
+    const response = await axios.post("/api/student/result", formData, {
+      responseType: "arraybuffer",
+    });
+    setPdfData(new Blob([response.data], { type: "application/pdf" }));
+  } catch (error) {
+    console.error("Error downloading PDF:", error.message);
+  }
+};
+export const sendQuery = (message) => async (dispatch) => {
+  try {
+    await axios.post("/api/student/queries", message);
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getQueries = () => async (dispatch) => {
+  try {
+    // console.log("Queries");
     if (localStorage.token) {
       setAuthToken(localStorage.token);
     }
-    try {
-      axios.defaults.headers.common["x-auth-token"] = localStorage.token;
-      // console.log(localStorage.getItem("token"));
-      const res = await axios.get(`/api/student/getStudentDetails`);
-      console.log(res.data);
-      dispatch({
-        type: GET_STUDENT_DETAILS,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log("got here bangged", err);
-      // dispatch({
-      //   type: AUTH_ERROR,
-      // });
-    }
-    // initialLoadUser
-  };
-  const requestBonafide = () => {
-    console.log("Request Bonafide successfull");
-  };
+    const res = await axios.get("/api/student/queries");
+    console.log("Queries ", res.data);
+    dispatch({
+      type: GET_QUERIES,
+      payload: res.data,
+    });
 
-  const getQueries = async () => {
-    // console.log("Got the queries");
+    // console.log("Completed");
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const fetchSemesterCreditRegistration =
+  (formData, setData) => async (dispatch) => {
+    console.log("I am in fetch Semester Credit");
     try {
-      const token = localStorage.getItem("token"); // no need of this should be removed ,done for testing
-      if (!token) {
-        throw new Error("Missing user token");
-      }
-      const config = {
-        headers: {
-          "x-auth-token": token,
-        },
-      };
-      const res = await axios.get("/api/student/queries", config);
-      // console.log(res.data);
-      dispatch({
-        type: GET_QUERIES,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
+      const response = await axios.post(
+        "http://localhost:5000/api/student/subjectFetchtesting",
+        formData
+      );
+      console.log("Response is ", response.data);
+      setData(response.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
   };
+export const semesterCreditRegistration = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      "http://localhost:5000/api/student/semesterCreditRegistration",
+      formData
+    );
+    // console.log(res);
+    if (res.data.msg === "Student with the same MIS already exists")
+      alert(res.data.msg);
+    else alert("Semester Credit Registration Success");
+  } catch (error) {
+    console.log("Error fetching data:", error);
+  }
+};
 
-  const sendQuery = async (message) => {
-    try {
-      // const message = {
-      //   query: "Ogmg this is so good",
-      //   type: "No type",
-      //   to: "students section",
-      //   from: "65e95437e7cadf2e0f732b77",
-      // };
-      const token = localStorage.getItem("token"); //
-      if (!token) {
-        throw new Error("Missing user token");
-      }
-      const config = {
-        headers: {
-          "x-auth-token": token,
-          "Content-Type": "application/json",
-        },
-      };
-      const res = await axios.post("/api/student/queries", message, config);
-      dispatch({
-        type: SEND_QUERY,
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-*/
+export const updateStudent = (mis, formData) => async (dispatch) => {
+  try {
+    console.log("Hii Got in update student");
+    const res = await axios.put(`/api/student/updateStudent/${mis}`, formData);
+    console.log(res);
+    dispatch({
+      type: UPDATE_STUDENT,
+      payload: res.data,
+    });
+    console.log("Bye Completed");
+  } catch (error) {
+    console.log("Error fetching data:", error);
+  }
+};
+/*
+ */

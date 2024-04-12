@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import { NavLink, useLocation } from "react-router-dom";
 
-const SubMenu = ({ data }) => {
+const SubMenu = ({ data, userType }) => {
   const { pathname } = useLocation();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   function removeSpaces(inputString) {
@@ -12,7 +12,7 @@ const SubMenu = ({ data }) => {
   return (
     <>
       <li
-        className={`link ${pathname.includes(data.name) && "text-blue-600"}`}
+        className={`link ${pathname.includes(data.name) && "text-blue-600 "}`}
         onClick={() => setSubMenuOpen(!subMenuOpen)}
       >
         <data.icon size={23} className="min-w-max" />
@@ -36,8 +36,15 @@ const SubMenu = ({ data }) => {
         {data.menus?.map((menu) => (
           <li key={menu}>
             {/* className="hover:text-blue-600 hover:font-medium" */}
+
             <NavLink
-              to={`/${data.name}/${removeSpaces(menu)}`}
+              to={
+                userType
+                  ? `/${userType}/${removeSpaces(data.name)}/${removeSpaces(
+                      menu
+                    )}`
+                  : `/${removeSpaces(data.name)}/${removeSpaces(menu)}`
+              }
               className="link !bg-transparent capitalize"
             >
               {menu}

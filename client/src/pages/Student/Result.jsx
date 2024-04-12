@@ -2,8 +2,14 @@ import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { connect } from "react-redux";
+import {
+  resultDownload,
+  initialLoadUser,
+} from "../../redux/actions/logActions";
 const Result = ({
   student: { studentInformation, studentDetails, academicProfile },
+  resultDownload,
+  initialLoadUser,
 }) => {
   const [currentSemester, setCurrentSemester] = useState("");
   const [pdfData, setPdfData] = useState(null);
@@ -13,28 +19,12 @@ const Result = ({
   };
   const handleDownloadPdf = async (e) => {
     e.preventDefault();
-
-    try {
-      console.log("MIS", studentDetails);
-      const formData = {
-        mis: studentDetails.mis,
-        semesterName: currentSemester,
-        year: academicProfile.year,
-      };
-      console.log(formData);
-      const response = await axios.post(
-        "http://localhost:5000/api/student/result",
-        formData,
-        {
-          responseType: "arraybuffer",
-        }
-      );
-
-      // Store the PDF content in the component state
-      setPdfData(new Blob([response.data], { type: "application/pdf" }));
-    } catch (error) {
-      console.error("Error downloading PDF:", error.message);
-    }
+    const formData = {
+      mis: studentDetails.mis,
+      semesterName: currentSemester,
+      year: academicProfile.year,
+    };
+    resultDownload(formData, setPdfData);
   };
 
   useEffect(() => {
@@ -58,6 +48,7 @@ const Result = ({
       // Clean up by revoking the URL
       URL.revokeObjectURL(pdfUrl);
     }
+    initialLoadUser();
   }, [pdfData]);
 
   const semesterOptions = [
@@ -140,10 +131,14 @@ const Result = ({
           </button>
         </div>
       </form>
+
+      
     </div>
   );
 };
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps)(Result);
+export default connect(mapStateToProps, { resultDownload, initialLoadUser })(
+  Result
+);
