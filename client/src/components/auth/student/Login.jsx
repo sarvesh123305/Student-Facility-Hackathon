@@ -48,20 +48,20 @@ const Login = (props) => {
       setAlert("Please fill in all fields", "danger");
     } else {
       if (role === "Student") {
-        loginResult = Studentlogin({
+     Studentlogin({
           mis,
           password,
         });
       } else if (role === "Faculty") {
-        loginResult = Facultylogin({ empno: mis, password: password });
+         Facultylogin({ empno: mis, password: password });
       } else if (role === "StudentsSection") {
         console.log("students sections");
-        loginResult = StudentSectionlogin({
+      StudentSectionlogin({
           empno: mis,
           password,
         });
       }
-      if (loginResult && loginResult === true) setShowSidebarAndNavbar(true);
+     setShowSidebarAndNavbar(true);
 
       setUser({
         mis: "",
