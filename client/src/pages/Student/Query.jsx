@@ -63,7 +63,14 @@ export default function Query() {
           Drop Your Query
         </h2>
       </div>
-      <form method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+
+      <hr className="mt-5" />
+      <form method="POST" className="mx-auto mt-16 max-w-xl sm:mt-10">
+        <div className="mx-auto max-w-2xl text-center">
+          <i className="text-red-500">
+            Please read FAQ before sending the query
+          </i>
+        </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
@@ -148,7 +155,7 @@ export default function Query() {
               htmlFor="message"
               className="block text-sm font-semibold leading-6 text-gray-900"
             >
-              Message
+              Query
             </label>
             <div className="mt-2.5">
               <textarea

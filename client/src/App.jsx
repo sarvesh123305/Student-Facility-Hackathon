@@ -16,64 +16,88 @@ import ScholarshipQueries from "./pages/Student/ScholarshipQueries";
 import Home from "./pages/Student/Home";
 import Query from "./pages/Student/Query";
 import Allocationform from "./pages/Faculty/Allocationform";
+import Result from "./pages/Student/Result";
+import ScholarshipsAvailable from "./pages/Student/ScholarshipsAvailable";
+import LetterFormats from "./pages/Student/LetterFormats";
+import SemesterCreditRegistration from "./pages/Student/SemesterCreditRegistration";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 const App = () => {
   return (
-    <AuthState>
-      <AlertState>
-        <UserState>
-          <Router>
-            <Fragment>
-              <div style={{ display: "flex", flexDirection: "row" }}>
-                <Sidebar />
-                <div className="flex-col w-full">
-                  <Navbar />
-                  <Alerts />
-                  <Routes>
-                    {/* STUDENT ROUTES*/}
-                    <Route
-                      path="/Academics/AcademicProfile"
-                      element={<Academic />}
-                    />
-                    <Route path="/elective" element={<Home />} />
-                    <Route
-                      path="/Academics/ElectiveRegistration"
-                      element={<Subjectallocation />}
-                    />
+    <Provider store={store}>
+      {" "}
+      <AuthState>
+        <AlertState>
+          <UserState>
+            <Router>
+              <Fragment>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <Sidebar />
+                  <div className="flex-col w-full bg-white">
+                    <Navbar />
+                    <Alerts />
+                    <Routes>
+                      {/* STUDENT ROUTES*/}
+                      <Route
+                        path="/Academics/AcademicProfile"
+                        element={<Academic />}
+                      />
+                      <Route path="/elective" element={<Home />} />
+                      <Route
+                        path="/Academics/ElectiveRegistration"
+                        element={<Subjectallocation />}
+                      />
 
-                    <Route
-                      path="/Scholarship/RequestBonafide"
-                      element={<RequestBonafide />}
-                    />
-                    <Route path="/Scholarship/Queries" element={<Query />} />
+                      <Route
+                        path="/Scholarship/RequestBonafide"
+                        element={<RequestBonafide />}
+                      />
+                      <Route path="/Scholarship/Queries" element={<Query />} />
+                      <Route
+                        path="/Scholarship/LetterFormats"
+                        element={<LetterFormats />}
+                      />
+                      <Route path="/result" element={<Result />} />
+                      <Route
+                        path="/Academics/SemesterCreditRegistration"
+                        element={<SemesterCreditRegistration />}
+                      />
 
-                    {/* FACULTY ROUTES*/}
-                    <Route path="/Faculty/" element={<AdminHome />} />
+                      <Route
+                        path="/Scholarship/ScholarshipsAvailable"
+                        element={<ScholarshipsAvailable />}
+                      />
 
-                    {/* OTHER ROUTES*/}
+                      {/* FACULTY ROUTES*/}
+                      <Route path="/Faculty/" element={<AdminHome />} />
 
-                    <Route path="/login" element={<Login role="Student" />} />
-                    <Route
-                      path="/Faculty/login"
-                      element={<Login role="Faculty" />}
-                    />
-                    <Route
-                      path="/Other/other"
-                      element={<Login role="other" />}
-                    />
+                      {/* OTHER ROUTES*/}
 
-                    <Route path="/" element={<Profile />} />
-                    <Route
-                      path="/allocationform"
-                      element={<Allocationform />}
-                    />
-                  </Routes>
+                      <Route path="/login" element={<Login role="Student" />} />
+                      <Route
+                        path="/Faculty/login"
+                        element={<Login role="Faculty" />}
+                      />
+                      <Route
+                        path="/Other/other"
+                        element={<Login role="other" />}
+                      />
+
+                      <Route path="/" element={<Profile />} />
+                      <Route
+                        path="/allocationform"
+                        element={<Allocationform />}
+                      />
+                    </Routes>
+                  </div>
                 </div>
-              </div>
-            </Fragment>
-          </Router>
-        </UserState>
-      </AlertState>
-    </AuthState>
+              </Fragment>
+            </Router>
+          </UserState>
+        </AlertState>
+      </AuthState>
+    </Provider>
   );
 };
 

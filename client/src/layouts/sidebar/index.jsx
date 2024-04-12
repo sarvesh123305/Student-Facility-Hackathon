@@ -155,7 +155,7 @@ const Sidebar = () => {
           </div>
         )}
         <li>
-          <NavLink to={"/stroage"} className="link">
+          <NavLink to={"/result"} className="link">
             <HiOutlineDatabase size={23} className="min-w-max" />
             Result
           </NavLink>
@@ -187,14 +187,16 @@ const Sidebar = () => {
         variants={Nav_animation}
         initial={{ x: isTabletMid ? -250 : 0 }}
         animate={open ? "open" : "closed"}
-        className=" bg-white text-gray shadow-xl z-[999] max-w-[24rem]  w-[24rem] 
+        className="	 text-slate-300	 shadow-xl z-[999] max-w-[24rem]  w-[24rem] 
             overflow-hidden md:relative fixed
          h-screen "
+        style={{ backgroundColor: "#0F172A" }}
       >
         <div className="flex items-center gap-2.5 font-medium border-b py-3 border-slate-300  mx-3">
           <img
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-iQlmH71DcnDxzUNJfqs4-b0bXlkXvMU4LbUvzkf6Aw&s"
             width={45}
+            className=" rounded-full"
             alt=""
           />
           <span className="text-xl whitespace-pre">COEP Tech</span>
@@ -206,7 +208,7 @@ const Sidebar = () => {
           {}
           {open && (
             <div className="flex-1 text-sm z-50  max-h-48 my-auto  whitespace-pre   w-full  font-medium  ">
-              <div className="flex border-y border-slate-300 p-4 items-center justify-start hover:bg-gray-300">
+              <div className="flex border-y border-slate-300 p-4 items-center justify-start hover:bg-zinc-600">
                 <img
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                   width={45}

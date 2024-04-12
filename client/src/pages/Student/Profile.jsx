@@ -1,13 +1,18 @@
 import profileImage from "../../../public/images/coeplogo.png";
-import Academic from "./Academic";
+// import Academic from "./Academic";
 import { useContext, useEffect } from "react";
 import AuthContext from "../../components/context/auth/authContext";
-import UserContext from "../../components/context/user/userContext";
-const Profile = () => {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
+import { initialLoadUser } from "../../redux/actions/logActions";
+const Profile = ({
+  student: { studentInformation, studentDetails },
+  initialLoadUser,
+}) => {
   const authContext = useContext(AuthContext);
-  const userContext = useContext(UserContext);
   const { loadUser } = authContext;
-  const { initialLoadUser, studentInformation, studentDetails } = userContext;
+
   useEffect(() => {
     loadUser();
     initialLoadUser();
@@ -15,7 +20,7 @@ const Profile = () => {
   return (
     studentInformation &&
     studentDetails && (
-      <div className="bg-white py-12 sm:py-8">
+      <div className="bg-white mx-auto max-w-7xl px-6 lg:px-8">
         <div className="infohead flex flex-col sm:flex-row justify-between mx-8">
           <div className="sidehead flex-col">
             <h1 className="text-center text-xl font-bold leading-8 text-gray-900">
@@ -146,4 +151,10 @@ const Profile = () => {
     )
   );
 };
-export default Profile;
+Profile.propTypes = {
+  initialLoadUser: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  student: state.student,
+});
+export default connect(mapStateToProps, { initialLoadUser })(Profile);

@@ -99,7 +99,7 @@ function generateBonafide() {}
 //@desc Register to a bonafide request
 //@access public
 
-router.get(
+router.post(
   "/requestBonafide",
   // [
   //   auth("student"),
@@ -119,6 +119,9 @@ router.get(
     const { name, mis, dept, year, academicYear, programme, purpose } =
       req.body;
     const currentYear = ["First", "Second", "Third", "Final"];
+    const cwd = process.cwd();
+    console.log("Year", typeof year, year);
+    console.log("The year", currentYear[year - 1]);
     try {
       // let user = await Bonafide.findOne({ mis });
       // if (user) {
@@ -145,7 +148,8 @@ router.get(
       doc.fontSize(18);
 
       doc.image(
-        "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/BonafideHeader.png",
+        // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/BonafideHeader.png",
+        cwd + "/routes/BonafideHeader.png",
         {
           width: 765, // Set the width of the image
           height: 150, // Fit the image into a 100x100 box
@@ -163,7 +167,9 @@ router.get(
         .text(`Date:  ${currentDate}`, 570, 170, { align: "right" });
 
       doc.image(
-        "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/Header.png",
+        // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/Header.png",
+        cwd + "/routes/Header.png",
+
         {
           width: 300, // Set the width of the image
           height: 50, // Fit the image into a 100x100 box
@@ -171,8 +177,8 @@ router.get(
           y: 210,
         }
       );
-      doc.font("Times-Roman").text(`This is to certify that `, 100, 300);
-      doc.font("Times-Bold").text(`${name}`, 260, 300);
+      doc.font("Times-Roman").text(`This is to certify that `, 90, 300);
+      doc.font("Times-Bold").text(`${name}`, 270, 300);
       doc.font("Times-Roman").text(`is a bonafide Student of`, 545, 300);
 
       doc
@@ -186,16 +192,18 @@ router.get(
       doc.font("Times-Roman").text(`during the Year`, 590, 330);
 
       doc.font("Times-Bold").text(`${academicYear}. `, 60, 360);
-      doc.font("Times-Bold").text(`His/ Her`, 130, 360);
-      doc.font("Times-Roman").text(`MIS No.`, 200, 360);
-      doc.font("Times-Bold").text(`${mis}.`, 265, 360);
+      doc.font("Times-Bold").text(`His/ Her`, 150, 360);
+      doc.font("Times-Roman").text(`MIS No.`, 220, 360);
+      doc.font("Times-Bold").text(`${mis}.`, 285, 360);
       doc
         .font("Times-Roman")
         .text(`This certificate is issued for the purpose of `, 100, 390);
       doc.font("Times-Bold").text(`${purpose}.`, 410, 390);
 
       doc.image(
-        "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/coepStamp.png",
+        // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/coepStamp.png",
+        cwd + "/routes/coepStamp.png",
+
         {
           width: 150, // Set the width of the image
           height: 150, // Fit the image into a 100x100 box
@@ -697,9 +705,11 @@ async function fetchData(studentData, res) {
   }
 }
 
-router.get("/result", async (req, res) => {
+router.post("/result", async (req, res) => {
   try {
     const studentData = req.body;
+    console.log(req.body);
+    const cwd = process.cwd();
     tableData = [
       ["Course Code", "Course Name", "Course Credit", "Grade Earned"],
     ];
@@ -723,7 +733,8 @@ router.get("/result", async (req, res) => {
     };
 
     doc.image(
-      "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/watermark.png",
+      // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/watermark.png",
+      cwd + "/routes/watermark.png",
       {
         width: 320,
         height: 500,
@@ -734,7 +745,9 @@ router.get("/result", async (req, res) => {
     );
 
     doc.image(
-      "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/image1.png",
+      // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/image1.png",
+      cwd + "/routes/image1.png",
+
       {
         width: 600, // Set the width of the image
         height: 130, // Fit the image into a 100x100 box

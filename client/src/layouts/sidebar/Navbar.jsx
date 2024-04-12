@@ -1,12 +1,20 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import AuthContext from "../../components/context/auth/authContext";
 import Avatar from "../../components/Avatar";
-const Navbar = () => {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { initialLoadUser } from "../../redux/actions/logActions";
+const Navbar = ({ initialLoadUser }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
+  useEffect(() => {
+    initialLoadUser();
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="flex flex-row  p-2 bg-white justify-between ">
-      <div className="">
+      <div></div>
+      {/*  <div className="">
         <input
           type="search"
           className="relative m-0 block  min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-[0.25rem] text-base font-normal leading-[1.6] text-neutral-700 outline-none transition duration-200 ease-in-out focus:z-[3] focus:border-primary focus:text-neutral-700 focus:shadow-[inset_0_0_0_1px_rgb(59,113,202)] focus:outline-none dark:border-neutral-600 dark:text-black-800 dark:placeholder:text-black-200 dark:focus:border-primary"
@@ -14,6 +22,7 @@ const Navbar = () => {
           placeholder="Type a Search"
         />
       </div>
+      */}
       <div className="flex">
         <div className="">
           <img
@@ -37,5 +46,7 @@ const Navbar = () => {
     </div>
   );
 };
-
-export default Navbar;
+Navbar.propTypes = {
+  initialLoadUser: PropTypes.func.isRequired,
+};
+export default connect(null, { initialLoadUser })(Navbar);

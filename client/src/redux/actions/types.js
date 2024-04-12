@@ -1,0 +1,4 @@
+export const GET_STUDENT_DETAILS = "GET_STUDENT_DETAILS";
+export const GET_QUERIES = "GET_QUERIES";
+export const SEND_QUERY = "SEND_QUERY";
+export const SET_LOADING = "SET_LOADING";

@@ -1,9 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AuthContext from "../../components/context/auth/authContext";
 import UserContext from "../../components/context/user/userContext";
 import AlertContext from "../../components/context/alert/alertContext";
-
-const RequestBonafide = () => {
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import axios from "axios";
+const RequestBonafide = ({ student: { studentDetails, academicProfile } }) => {
   const [bonafideDetails, setBonafideDetails] = useState({
     reason: "",
     purpose: "",
@@ -21,6 +23,7 @@ const RequestBonafide = () => {
   //alert context
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+  const [pdfData, setPdfData] = useState(null);
 
   const onChange = (e) =>
     setBonafideDetails({ ...bonafideDetails, [e.target.name]: e.target.value });
@@ -36,9 +39,52 @@ const RequestBonafide = () => {
       //name mis dept year academic-year
     }
   };
+
+  const handleBonafideDownload = async () => {
+    // e.preventDefault();
+
+    try {
+      console.log("MIS", studentDetails.mis);
+      const formData = {
+        mis: studentDetails.mis,
+        name: studentDetails.name,
+        year: academicProfile.year,
+        dept: academicProfile.branch,
+        academicYear: studentDetails.academicyear,
+        programme: "Btech",
+        purpose: "Scholarship",
+      };
+      console.log(formData);
+      const response = await axios.post(
+        "http://localhost:5000/api/student/requestBonafide",
+        formData,
+        {
+          responseType: "arraybuffer",
+        }
+      );
+
+      // Store the PDF content in the component state
+      setPdfData(new Blob([response.data], { type: "application/pdf" }));
+    } catch (error) {
+      console.error("Error downloading PDF:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    if (pdfData) {
+      const pdfUrl = URL.createObjectURL(pdfData);
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.setAttribute("download", `${studentDetails.mis}_Bonafide.pdf`);
+      document.body.appendChild(link);
+      link.click();
+
+      URL.revokeObjectURL(pdfUrl);
+    }
+  }, [pdfData]);
   return (
     <div className="">
-      <div className="bg-white m-2 flex flex-1 flex-col h-screen">
+      <div className="bg-white  flex flex-1 flex-col h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Request for bonafide
@@ -63,6 +109,7 @@ const RequestBonafide = () => {
                     onChange={handleChange}
                     name="push-notifications"
                     value="Buspass"
+                    required
                   />
                   <label
                     htmlFor="push-everything"
@@ -197,7 +244,19 @@ const RequestBonafide = () => {
               </button>
             </div>
           </form>
-
+          {
+            //Testing Bonafide
+          }
+          <div>
+            <button
+              type="submit"
+              onClick={handleBonafideDownload}
+              className="flex w-full mt-10 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              {" "}
+              Download Bonafide
+            </button>
+          </div>
           {/* <p className="mt-10 text-center text-sm text-gray-500">
               Not a member?{' '}
               <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
@@ -210,4 +269,7 @@ const RequestBonafide = () => {
   );
 };
 
-export default RequestBonafide;
+const mapStateToProps = (state) => ({
+  student: state.student,
+});
+export default connect(mapStateToProps)(RequestBonafide);
