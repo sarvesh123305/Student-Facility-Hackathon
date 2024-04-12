@@ -8,7 +8,7 @@ function Subjectallocation() {
   const options = ["WST", "ADS", "SP"];
 
   return (
-    <div className="electives">
+    <div className="electives bg-white">
       <h1>
         <b>Electives Allocation</b>
       </h1>

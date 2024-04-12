@@ -16,9 +16,10 @@ import Sidebar from "./layouts/sidebar";
 import AdminHome from "./pages/Faculty/AdminHome";
 import RequestBonafide from "./pages/Student/RequestBonafide";
 import UserState from "./components/context/user/UserState";
-import Profile from "./pages/Student/Profile";
-import Subjectallocation from "./pages/Student/Studentallocation";
+import Subjectallocation from "./pages/Student/Subjectallocation";
 import Academic from "./pages/Student/Academic";
+import Profiletry from "./pages/Student/profiletry";
+import ScholarshipQueries from "./pages/Student/ScholarshipQueries";
 const App = () => {
   return (
     <AuthState>
@@ -33,7 +34,6 @@ const App = () => {
                   <Alerts />
                   <Routes>
                     {/* STUDENT ROUTES*/}
-                    <Route path="/profile" element={<Profile />}></Route>
                     <Route path="/academic" element={<Academic />} />
                     <Route
                       path="/subjectallocation"
@@ -43,6 +43,11 @@ const App = () => {
                     <Route
                       path="/Scholarship/RequestBonafide"
                       element={<RequestBonafide />}
+                    />
+
+                    <Route
+                      path="/Scholarship/Queries"
+                      element={<ScholarshipQueries />}
                     />
                     {/* FACULTY ROUTES*/}
                     <Route path="/Faculty/" element={<AdminHome />} />
@@ -68,6 +73,7 @@ const App = () => {
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/build/:bID" element={<Build />} />
                     <Route path="/analytics/:aID" element={<Analytics />} />
+                    <Route path="/profiletry" element={<Profiletry />} />
                   </Routes>
                 </div>
               </div>

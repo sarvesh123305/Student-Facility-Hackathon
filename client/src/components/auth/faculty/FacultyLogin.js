@@ -3,7 +3,7 @@ import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-const StudentLogin = (props) => {
+const StudentLogin = () => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
@@ -19,7 +19,8 @@ const StudentLogin = (props) => {
       clearErrors();
     }
     // eslint-disable-next-line
-  }, [error, isAuthenticated, props.history]);
+  }, [error, isAuthenticated]);
+
   const [user, setUser] = useState({
     mis: "",
     password: "",

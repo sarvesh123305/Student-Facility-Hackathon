@@ -79,7 +79,6 @@ const AuthState = (props) => {
     };
     try {
       // console.log(formData);
-      console.log("lalala");
 
       const res = await axios.post("/api/auth/student", formData, config);
       console.log("data to be seen", res.data.token);
@@ -114,7 +113,7 @@ const AuthState = (props) => {
     try {
       console.log(formData);
       const res = await axios.post(
-        "http://localhost:5000/api/auth/faculty",
+        "/api/auth/faculty",
         formData,
         config
       );

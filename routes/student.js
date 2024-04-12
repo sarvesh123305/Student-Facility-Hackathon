@@ -7,6 +7,8 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/auth");
 const Bonafide = require("../models/Bonafide");
+const Message = require("../models/Messages");
+const { v4: uuidv4 } = require("uuid");
 
 //@routes POST api/student/
 //@desc Register to a user
@@ -122,4 +124,85 @@ router.post(
     }
   }
 );
+
+//@routes POST api/student/queries
+//@desc Create a query with some ticket no
+//@access public
+
+router.post(
+  "/queries",
+  [
+    auth("student"),
+    [
+      check("query", "Please enter a valid email").notEmpty(),
+      check("type", "Please enter a valid name").notEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //bad request
+    }
+    const { query, type, to, from } = req.body;
+    const uuid = uuidv4();
+    try {
+      user = new Message({
+        query,
+        type,
+        to,
+        from,
+        messageId: uuid,
+      });
+
+      const newMessage = await user.save();
+      // res.send("User saved int o database magically");
+      res.json(newMessage);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error occured");
+    }
+  }
+);
+
+//@routes GET api/student/queries
+//@desc Get all my queries a queries asked so far
+//@access public
+
+router.get("/queries", auth("student"), async (req, res) => {
+  try {
+    const studentQueries = await Message.find({ from: req.student.id });
+    res.json(studentQueries);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error occured");
+  }
+});
+
+
+// router.get("/elective", auth("student"), async (req, res) =>  {
+
+//     try {
+//       // get alloted elective from the respective database
+//       const result = 
+
+//       res.json(result);
+//     } catch (error) {
+//       res.status(500).send("Internal Server Error");
+//     }
+// });
+
+// router.post("/elective", auth("student"), async (req, res) =>  {
+
+//   try {
+    
+//     const id = req.student.id;
+//     const {preferences} = req.body;
+//     // Save all preferences to a elective collection
+//     const result = 
+//     res.json(result);
+//   } catch (error) {
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
+
 module.exports = router;
