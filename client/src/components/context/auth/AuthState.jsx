@@ -86,7 +86,6 @@ const AuthState = (props) => {
 
       const res = await axios.post("/api/auth/student", formData, config);
       console.log("data to be seen", res.data.token);
-
       dispatch({
         type: LOGIN_SUCCESS_STUDENT,
         payload: res.data,
@@ -119,6 +118,7 @@ const AuthState = (props) => {
       });
       // loadUser();
     } catch (err) {
+
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
@@ -140,6 +140,7 @@ const AuthState = (props) => {
       // loadUser();
       console.log("Ssadja");
     } catch (err) {
+
       console.log("error student section", err);
       // dispatch({
       //   type: LOGIN_FAIL,

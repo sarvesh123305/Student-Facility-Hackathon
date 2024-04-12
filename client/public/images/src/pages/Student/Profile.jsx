@@ -4,6 +4,7 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../../components/context/auth/authContext";
 import UserContext from "../../components/context/user/userContext";
 const Profile = () => {
+  setShowSidebarAndNavbar(true);
   const authContext = useContext(AuthContext);
   const userContext = useContext(UserContext);
   const { loadUser } = authContext;
