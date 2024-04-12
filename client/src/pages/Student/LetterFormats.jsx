@@ -7,7 +7,10 @@ const LetterFormats = () => {
     <div className="p-10">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
-          <a href="#">
+          <a
+            href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
+            target="_blank"
+          >
             <img class="rounded-t-lg" src={imageUrl} alt="" />
           </a>
           <div class="p-5">
@@ -20,7 +23,7 @@ const LetterFormats = () => {
               You can use this format to write declaration form{" "}
             </p>
             <a
-              href="#"
+              href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
               class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
             >
               Download
@@ -43,11 +46,18 @@ const LetterFormats = () => {
           </div>
         </div>
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
-          <a href="#">
+          <a
+            href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
+            target="_blank"
+          >
+            {" "}
             <img class="rounded-t-lg" src={imageUrl} alt="" />
           </a>
           <div class="p-5">
-            <a href="#">
+            <a
+              href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
+              target="_blank"
+            >
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
                 Vehicle Pass Format
               </h5>
@@ -83,7 +93,10 @@ const LetterFormats = () => {
             <img class="rounded-t-lg" src={imageUrl} alt="" />
           </a>
           <div class="p-5">
-            <a href="#">
+            <a
+              href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
+              target="_blank"
+            >
               <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 ">
                 Leaving Certificate Format
               </h5>
@@ -116,7 +129,10 @@ const LetterFormats = () => {
         </div>
 
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
-          <a href="#">
+          <a
+            href="https://www.atharvacoe.ac.in/wp-content/uploads/Pratidnya-Patra.pdf"
+            target="_blank"
+          >
             <img class="rounded-t-lg" src={imageUrl} alt="" />
           </a>
           <div class="p-5">

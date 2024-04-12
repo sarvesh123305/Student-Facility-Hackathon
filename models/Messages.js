@@ -7,6 +7,8 @@ const MessagesSchema = mongoose.Schema({
   type: { type: String, required: true },
   messageId: { type: String, required: true },
   reply: { type: String },
+  // image: { type: Buffer },
+  status: { type: String },
   date: {
     type: Date,
     default: Date.now,

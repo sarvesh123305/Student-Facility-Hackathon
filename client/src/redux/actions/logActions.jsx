@@ -46,6 +46,7 @@ export const resultDownload = (formData, setPdfData) => async (dispatch) => {
 };
 export const sendQuery = (message) => async (dispatch) => {
   try {
+    console.log(message);
     await axios.post("/api/student/queries", message);
   } catch (err) {
     console.log(err);
@@ -58,7 +59,7 @@ export const getQueries = () => async (dispatch) => {
       setAuthToken(localStorage.token);
     }
     const res = await axios.get("/api/student/queries");
-    console.log("Queries ", res.data);
+    // console.log("Queries ", res.data);
     dispatch({
       type: GET_QUERIES,
       payload: res.data,

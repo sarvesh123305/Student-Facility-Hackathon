@@ -14,7 +14,13 @@ const Queries = ({
     initialLoadUser();
     getAllQueries();
     //   console.log(queries);
-  }, []);
+  }, [queries]);
+  // const [newQueries, setNewQueries] = useState();
+  const handleDelete = (record) => {
+    // console.log(record);
+    const newQueries = queries.filter((rec) => rec._id == record._id);
+    // queries = newQueries;
+  };
   return (
     <div>
       <h1 className="p-2">Queries from student</h1>
@@ -44,7 +50,7 @@ const Queries = ({
             </tr>
           </thead>
           <tbody>
-            {queries.map((query, index) => (
+            {queries?.map((query, index) => (
               <tr className="bg-white border-b " key={index}>
                 <th
                   scope="row"
@@ -64,12 +70,12 @@ const Queries = ({
                   >
                     Reply
                   </a>
-                  <a
-                    href="#"
+                  <button
+                    onClick={() => handleDelete(query)}
                     className="ml-2 font-medium text-blue-600 dark:text-red-500 hover:underline"
                   >
                     Delete
-                  </a>
+                  </button>
                 </td>
               </tr>
             ))}

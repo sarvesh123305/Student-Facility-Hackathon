@@ -7,15 +7,15 @@ const ElectiveAllocation = ({
   getElectivesList,
 }) => {
   const [categories, setCategories] = useState([]);
-  const [preferencesCount, setPreferencesCount] = useState(0);
+  const [preferencesCount, setPreferencesCount] = useState(1);
   const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
     getElectivesList();
-    console.log("Electives list ", electivesCategoryList);
+
     const student = electivesCategoryList[0];
     const findcategories = Object.keys(student.electives);
-    console.log(categories);
+    // console.log(categories);
     setCategories(findcategories);
   }, []);
   const handleSelectChange = (event) => {
@@ -59,7 +59,7 @@ const ElectiveAllocation = ({
               Choose an Elective Category
             </option>
             {categories?.map((category, index) => (
-              <option>{category}</option>
+              <option key={index}>{category}</option>
             ))}
           </select>
         </form>
@@ -75,7 +75,7 @@ const ElectiveAllocation = ({
                   MIS
                 </th>
 
-                {preferencesCount > 0 &&
+                {preferencesCount > 1 &&
                   [...Array(preferencesCount)].map((_, index) => (
                     <th key={index} scope="col" className="px-6 py-3">
                       Preference {index + 1}
@@ -90,33 +90,34 @@ const ElectiveAllocation = ({
               </tr>
             </thead>
             <tbody>
-              {selectedOption &&
-                electivesCategoryList?.map((student, index) => (
-                  <tr className="bg-white border-b " key={index}>
-                    <th
-                      scope="row"
-                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-black"
-                    >
-                      {student.mis}
-                    </th>
-                    {Object.values(student.electives[selectedOption]).map(
-                      (preference, preferenceIndex) => (
-                        <td key={preferenceIndex} className="px-6 py-4">
-                          {preference}
-                        </td>
-                      )
-                    )}
-                    <td className="px-6 py-4">7.76</td>
-                    <td className="px-6 py-4">7.76</td>
-                  </tr>
-                ))}
+              {selectedOption
+                ? electivesCategoryList?.map((student, index) => (
+                    <tr className="bg-white border-b " key={index}>
+                      <th
+                        scope="row"
+                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-black"
+                      >
+                        {student.mis}
+                      </th>
+                      {Object.values(student.electives[selectedOption]).map(
+                        (preference, preferenceIndex) => (
+                          <td key={preferenceIndex} className="px-6 py-4">
+                            {preference}
+                          </td>
+                        )
+                      )}
+                      <td className="px-6 py-4">7.76</td>
+                      <td className="px-6 py-4">7.76</td>
+                    </tr>
+                  ))
+                : "No Data Found"}
             </tbody>
           </table>
         </div>
         {/*selectedOption ? (
           ""
         ) : (
-          <h1 className="max-w-sm mx-auto">No Data Found</h1>
+          No Data Found
         )*/}
       </div>
     </div>

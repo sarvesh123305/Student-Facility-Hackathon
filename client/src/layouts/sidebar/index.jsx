@@ -88,7 +88,7 @@ const Sidebar = () => {
       name: "Scholarship",
       icon: TbReportAnalytics,
       menus: [
-        "Scholarships Available",
+        // "Scholarships Available",
         "Request Bonafide",
         "Letter Formats",
         "Queries",
@@ -101,9 +101,9 @@ const Sidebar = () => {
       name: "Scholarship",
       icon: TbReportAnalytics,
       menus: [
-        "Scholarships Available",
-        "Requested Bonafides",
-        "Letter Formats",
+        // "Scholarships Available",
+        // "Requested Bonafides",
+        // "Letter Formats",
         "Queries",
       ],
     },
@@ -113,8 +113,8 @@ const Sidebar = () => {
       name: "Manage Academics",
       icon: BsPerson,
       menus: [
-        "Academic Profile",
-        "Semester Credit Registration",
+        // "Academic Profile",
+        // "Semester Credit Registration",
         "Elective Allocation",
         "Elective Registration",
       ],
