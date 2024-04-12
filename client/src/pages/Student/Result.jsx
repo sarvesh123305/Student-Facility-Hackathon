@@ -6,17 +6,26 @@ import {
   resultDownload,
   initialLoadUser,
 } from "../../redux/actions/logActions";
+
+import { previousCredits, currentCredits } from "./semesterCredits";
+
 const Result = ({
   student: { studentInformation, studentDetails, academicProfile },
   resultDownload,
   initialLoadUser,
 }) => {
   const [currentSemester, setCurrentSemester] = useState("");
+  const [targetCGPA, setTargetCGPA] = useState(""); // State for target CGPA
   const [pdfData, setPdfData] = useState(null);
 
   const updateCurrentSemester = (event) => {
     setCurrentSemester(event.target.value);
   };
+
+  const updateTargetCGPA = (event) => {
+    if (!isNaN(event.target.value)) setTargetCGPA(event.target.value); // Update target CGPA state
+  };
+
   const handleDownloadPdf = async (e) => {
     e.preventDefault();
     const formData = {
@@ -25,6 +34,49 @@ const Result = ({
       year: academicProfile.year,
     };
     resultDownload(formData, setPdfData);
+  };
+
+  const generateSG = async (e) => {
+    if (targetCGPA < 0 || targetCGPA > 10)
+      return alert("Target CGPA should be between 0 and 10");
+
+    console.log(targetCGPA);
+    console.log(previousCredits);
+
+    var totalGradePointsTillNow = 0;
+    var totalCreditsTillPreviousSemester = 0;
+    var totalCreditsInCurrentSemester = 0;
+    var totalGradePointsRequired = 0;
+    var requiredSGPA = 0;
+
+    for (var i = 0; i < previousCredits.subjects.length; i++) {
+      totalGradePointsTillNow +=
+        previousCredits["subjects"][i]["credits"] *
+        previousCredits["subjects"][i]["awardedGradePoint"];
+      totalCreditsTillPreviousSemester +=
+        previousCredits["subjects"][i]["credits"];
+    }
+
+    for (var i = 0; i < currentCredits.subjects.length; i++)
+      totalCreditsInCurrentSemester += currentCredits["subjects"][i]["credits"];
+
+    totalGradePointsRequired =
+      targetCGPA *
+      (totalCreditsTillPreviousSemester + totalCreditsInCurrentSemester);
+    var currentCGPA =
+      totalGradePointsTillNow / totalCreditsTillPreviousSemester;
+    requiredSGPA =
+      (totalGradePointsRequired - totalGradePointsTillNow) /
+      totalCreditsInCurrentSemester;
+    console.log(currentCGPA);
+    console.log(requiredSGPA);
+    // console.log("Total Grade Points Till Now : " + totalGradePointsTillNow)
+    // console.log(currentCredits)
+    // console.log(totalCreditsTillPreviousSemester)
+    // console.log(totalCreditsInCurrentSemester)
+    // console.log(totalGradePointsRequired)
+
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -61,6 +113,7 @@ const Result = ({
     { label: "Semester 7" },
     { label: "Semester 8" },
   ];
+
   return (
     <div className="bg-white p-8">
       <h1 className="p-4">Student Details</h1>
@@ -106,8 +159,8 @@ const Result = ({
                   </option>
                 ))}
                 {/*<option value="Semester 2">Semester 2</option>
-  <option value="Semester 3">Semester 3</option>
-*/}
+                  <option value="Semester 3">Semester 3</option>
+                */}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 ">
                 <svg
@@ -120,7 +173,26 @@ const Result = ({
               </div>
             </div>
           </div>
+
+          {/* Additional form field for target CGPA */}
+          <div className="w-full md:w-1/3 mb-6 md:mb-0">
+            <label
+              className="block uppercase tracking-wide text-xs font-bold mb-2"
+              htmlFor="target-cgpa"
+            >
+              Target CGPA
+            </label>
+            <input
+              className="appearance-none block w-full border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              id="target-cgpa"
+              type="text" // Change type to text for pattern validation
+              pattern="[0-9]*" // Regular expression to allow only numbers
+              onChange={updateTargetCGPA}
+              placeholder="Enter target CGPA"
+            />
+          </div>
         </div>
+
         <div className="md:w-2/3 mx-5">
           <button
             className="shadow bg-blue-500 hover:bg-blue-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded"
@@ -129,10 +201,18 @@ const Result = ({
           >
             Show Result
           </button>
+
+          {/* Button to generate CGPA predictions */}
+          <button
+            className="shadow bg-green-500 hover:bg-green-600 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded ml-4"
+            type="button"
+            onClick={generateSG}
+            // Add onClick event handler for generating CGPA predictions
+          >
+            Generate CGPA Predictions
+          </button>
         </div>
       </form>
-
-      
     </div>
   );
 };

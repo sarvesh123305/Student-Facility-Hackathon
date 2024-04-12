@@ -31,6 +31,8 @@ import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
 import UploadMarks from "./pages/Faculty/UploadMarks";
+import FeeReceiptForm from "./pages/Student/FeeReceiptForm";
+import LeavingCertificateForm from "./pages/Student/LeavingCertificateForm";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -122,6 +124,14 @@ const App = () => {
                       <Route
                         path="/Faculty/UploadMarks"
                         element={<UploadMarks />}
+                      />
+                      <Route
+                        path="/Applications/FeeReceipt/"
+                        element={<FeeReceiptForm />}
+                      />
+                      <Route
+                        path="/Applications/LeavingCertificate/"
+                        element={<LeavingCertificateForm />}
                       />
                       {/* FACULTY ROUTES*/}
                       <Route
