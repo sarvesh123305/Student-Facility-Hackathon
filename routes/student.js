@@ -14,7 +14,7 @@ const Subject = require("../models/Subject");
 const AcademicProfile = require("../models/AcademicProfile");
 const Notifications = require("../models/Notifications");
 const StudentInformation = require("../models/StudentInformation");
-
+const FeeReceipt = require("../models/FeeReceipt");
 const fs = require("fs");
 
 const PDFDocument = require("pdfkit");
@@ -1397,6 +1397,94 @@ function drawTable2(doc, table, options) {
     rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
+
+router.post("/fillFeeReceit", async (req, res) => {
+  try {
+    // Parse request body to extract data
+    const {
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    } = req.body;
+
+    // Create a new document using the AcademicProfile schema
+    const feereceitt = new FeeReceipt({
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    });
+
+    // Save the new document to the database
+    const data = await feereceitt.save();
+    // res.status(201).json({ message: "Fee Receit Data Saved successfully" });
+    res.send(data);
+  } catch (error) {
+    console.error("Error saving academic profile:", error);
+    res.status(500).json({ error: "Server error occurred" });
+  }
+});
 module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
