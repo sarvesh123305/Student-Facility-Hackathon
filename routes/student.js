@@ -6,21 +6,7 @@ const { genSalt, hash, compare } = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../middleware/auth");
-
-// //@routes GET api/auth
-// //@desc Get Loggedin user
-// //@access Private
-
-// router.get("/", auth, async (req, res) => {
-//   try {
-//     console.log(req.student);
-//     // const user = await Contact.findById(req.user.id).select("-password");
-//     // res.json(user);
-//     res.send("Get logged in user");
-//   } catch (err) {
-//     res.status(500).send("server error occured");
-//   }
-// });
+const Bonafide = require("../models/Bonafide");
 
 //@routes POST api/student/
 //@desc Register to a user
@@ -37,8 +23,16 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() }); //bad request
     }
-    const { name, mis, password, totalCreditsEarned, totalCurrentCredits } =
-      req.body;
+    const {
+      name,
+      mis,
+      password,
+      totalCreditsEarned,
+      totalCurrentCredits,
+      department,
+      currentyear,
+      academicyear,
+    } = req.body;
     try {
       let user = await Student.findOne({ mis });
       if (user) {
@@ -48,6 +42,9 @@ router.post(
       user = new Student({
         name,
         mis,
+        department,
+        currentyear,
+        academicyear,
         totalCreditsEarned,
         totalCurrentCredits,
         password,
@@ -79,4 +76,50 @@ router.post(
   }
 );
 
+//@routes POST api/student/requestBonafide
+//@desc Register to a bonafide request
+//@access public
+
+router.post(
+  "/requestBonafide",
+  [
+    auth("student"),
+    [
+      check("mis", "Please enter a valid email").notEmpty(),
+      check("name", "Please enter a valid name").notEmpty(),
+      check("dept", "Please enter a valid department").notEmpty(),
+
+      check("academicYear", "Please enter a valid academicYear").notEmpty(),
+    ],
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //bad request
+    }
+    const { name, mis, dept, year, academicYear } = req.body;
+    try {
+      let user = await Bonafide.findOne({ mis });
+      if (user) {
+        return res.status(400).json({ msg: "Request already exists" });
+      }
+      console.log(req.student);
+      user = new Bonafide({
+        name,
+        mis,
+        dept,
+        year,
+        academicYear,
+        user: req.student.id,
+      });
+
+      const newBonafide = await user.save();
+      res.json(newBonafide);
+      res.send("User saved int o database magically");
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error occured");
+    }
+  }
+);
 module.exports = router;

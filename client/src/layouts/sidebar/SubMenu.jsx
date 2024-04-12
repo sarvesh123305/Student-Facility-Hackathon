@@ -6,6 +6,9 @@ import { NavLink, useLocation } from "react-router-dom";
 const SubMenu = ({ data }) => {
   const { pathname } = useLocation();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
+  function removeSpaces(inputString) {
+    return inputString.replace(/\s/g, "");
+  }
   return (
     <>
       <li
@@ -33,8 +36,9 @@ const SubMenu = ({ data }) => {
         {data.menus?.map((menu) => (
           <li key={menu}>
             {/* className="hover:text-blue-600 hover:font-medium" */}
+            {console.log(menu)}
             <NavLink
-              to={`/${data.name}/${menu}`}
+              to={`/${data.name}/${removeSpaces(menu)}`}
               className="link !bg-transparent capitalize"
             >
               {menu}

@@ -16,7 +16,6 @@ module.exports = function (role) {
     }
     try {
       const decoded = jwt.verify(token, config.get("jwtsecret"));
-      console.log("long run ", decoded);
       // req.student = decoded.user;
       switch (role) {
         case "student":

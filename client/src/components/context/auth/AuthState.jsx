@@ -139,6 +139,9 @@ const AuthState = (props) => {
     });
   };
 
+  const requestBonaide = (formData) => {
+    console.log(formData);
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -154,6 +157,7 @@ const AuthState = (props) => {
         logout,
         Facultylogin,
         clearErrors,
+        requestBonaide,
       }}
     >
       {props.children}

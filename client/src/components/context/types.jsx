@@ -20,3 +20,5 @@ export const LOGIN_SUCCESS_FACULTY = "LOGIN_SUCCESS_FACULTY";
 export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const CLEAR_ERRORS = "CLEAR_ERRORS";
+
+export const REQUEST_BONAFIDE = "REQUEST_BONAFIDE";

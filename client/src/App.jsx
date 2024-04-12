@@ -15,47 +15,65 @@ import Navbar from "./layouts/sidebar/Navbar";
 import Sidebar from "./layouts/sidebar";
 import AdminHome from "./pages/Faculty/AdminHome";
 import RequestBonafide from "./pages/Student/RequestBonafide";
+import UserState from "./components/context/user/UserState";
+import Profile from "./pages/Student/Profile";
+import Subjectallocation from "./pages/Student/Studentallocation";
+import Academic from "./pages/Student/Academic";
 const App = () => {
   return (
     <AuthState>
       <AlertState>
-        <Alerts />
-        <Router>
-          <Fragment>
-            <div style={{ display: "flex", flexDirection: "row" }}>
-              <Sidebar />
-              <div className="flex-col w-full">
-                <Navbar />
-                <Routes>
-                  {/* STUDENT ROUTES*/}
-                  <Route
-                    path="/RequestBonafide/"
-                    element={<RequestBonafide />}
-                  />
+        <UserState>
+          <Router>
+            <Fragment>
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <Sidebar />
+                <div className="flex-col w-full">
+                  <Navbar />
+                  <Alerts />
+                  <Routes>
+                    {/* STUDENT ROUTES*/}
+                    <Route path="/profile" element={<Profile />}></Route>
+                    <Route path="/academic" element={<Academic />} />
+                    <Route
+                      path="/subjectallocation"
+                      element={<Subjectallocation />}
+                    />
 
-                  {/* FACULTY ROUTES*/}
-                  <Route path="/Faculty/" element={<AdminHome />} />
+                    <Route
+                      path="/Scholarship/RequestBonafide"
+                      element={<RequestBonafide />}
+                    />
+                    {/* FACULTY ROUTES*/}
+                    <Route path="/Faculty/" element={<AdminHome />} />
 
-                  {/* OTHER ROUTES*/}
+                    {/* OTHER ROUTES*/}
 
-                  <Route path="/" element={<AllApps />} />
-                  <Route path="/authentication" element={<Authentication />} />
-                  <Route path="/login" element={<Login role="Student" />} />
-                  <Route
-                    path="/Faculty/login"
-                    element={<Login role="Faculty" />}
-                  />
-                  <Route path="/Other/other" element={<Login role="other" />} />
+                    <Route path="/" element={<AllApps />} />
+                    <Route
+                      path="/authentication"
+                      element={<Authentication />}
+                    />
+                    <Route path="/login" element={<Login role="Student" />} />
+                    <Route
+                      path="/Faculty/login"
+                      element={<Login role="Faculty" />}
+                    />
+                    <Route
+                      path="/Other/other"
+                      element={<Login role="other" />}
+                    />
 
-                  <Route path="/stroage" element={<Stroage />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/build/:bID" element={<Build />} />
-                  <Route path="/analytics/:aID" element={<Analytics />} />
-                </Routes>
+                    <Route path="/stroage" element={<Stroage />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/build/:bID" element={<Build />} />
+                    <Route path="/analytics/:aID" element={<Analytics />} />
+                  </Routes>
+                </div>
               </div>
-            </div>
-          </Fragment>
-        </Router>
+            </Fragment>
+          </Router>
+        </UserState>
       </AlertState>
     </AuthState>
   );
