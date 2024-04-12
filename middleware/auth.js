@@ -9,7 +9,6 @@ module.exports = function (role) {
     const token = req.header("x-auth-token");
 
     // Check if token doesnt exists
-
     if (!token) {
       return res
         .status(401)
@@ -17,11 +16,11 @@ module.exports = function (role) {
     }
     try {
       const decoded = jwt.verify(token, config.get("jwtsecret"));
-      //payload is put in decoded if success
+      console.log("long run ", decoded);
       // req.student = decoded.user;
       switch (role) {
         case "student":
-          req.student = decoded.user;
+          req.student = decoded.Student;
           break;
 
         case "faculty":
@@ -37,6 +36,7 @@ module.exports = function (role) {
       next(); //Next function is used to pass control to the next middleware function in the request-response
       // cycle.
     } catch (err) {
+      console.log("invaid");
       res.status(401).json({ msg: "Token is not valid" });
     }
   };

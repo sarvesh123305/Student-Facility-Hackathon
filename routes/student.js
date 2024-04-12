@@ -22,7 +22,7 @@ const auth = require("../middleware/auth");
 //   }
 // });
 
-//@routes POST api/student
+//@routes POST api/student/
 //@desc Register to a user
 //@access public
 
