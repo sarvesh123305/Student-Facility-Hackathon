@@ -1046,6 +1046,43 @@ router.get("/semesterCreditRegistration", async (req, res) => {
 //@access public
 
 router.post("/FeeReceipt", async (req, res) => {
+  // const {formData} = req.body;
+  const formData = {
+    FullName: "Sanika Kulkarni",
+    Year: 2024,
+    MobileNumber: "1234567890",
+    Mis: 142203011,
+    Branch: "Computer Science",
+    Category: "General",
+    DateOfPayment: "2024-04-12",
+    TutionFee: 5000,
+    DevelopmentFee: 2000,
+    GymkhanaFee: 1000,
+    TnpFee: 1500,
+    Library: 500,
+    Laboratory: 1000,
+    InternetAndEmail: 200,
+    Gathering: 300,
+    Cmd: 400,
+    BoatClubFee: 100,
+    BoatClubMemFee: 50,
+    StudentAidFund: 200,
+    ExamFee: 800,
+    IdentityCard: 100,
+    UniversityFee: 3000,
+    AluminiFee: 200,
+    HostelFee: 5000,
+    HostelDepost: 2000,
+    AraiLibFee: 300,
+    AraiCompFee: 400,
+    AraiLabFee: 500,
+    AraiAluminiFee: 100,
+    LeavingCert: 200,
+    StudentAid: 300,
+    Fine: 50,
+    Other: 100,
+    uploadSbiFee: 200,
+  };
   try {
     const studentData = req.body;
     const currentDateTime = new Date();
@@ -1053,43 +1090,50 @@ router.post("/FeeReceipt", async (req, res) => {
     const currentDate = format(new Date(), "dd/MM/yyyy");
     console.log(req.body);
     const cwd = process.cwd();
+    let totalFees = 0;
+    for (const field in formData) {
+      if (field.endsWith("Fee")) {
+        totalFees += formData[field];
+      }
+    }
 
+    console.log("Total fees:", totalFees);
     tableData1 = [
-      ["Name", "Chinmay Milind Sheth"],
-      ["Mobile Number", "9273606333"],
-      ["Class", "Third Year BTech"],
-      ["MIS", "142203003"],
-      ["Branch", "Computer Engineering"],
-      ["Category", "EWS"],
+      ["Name", `${formData.FullName}`],
+      ["Mobile Number", `${formData.MobileNumber}`],
+      ["Class", `${formData.Year}`], //third year
+      ["MIS", `${formData.Mis}`],
+      ["Branch", `${formData.Branch}`],
+      ["Category", `${formData.Category}`],
       ["Date of Payment", `${currentDate}`],
     ];
 
     tableData2 = [
       ["Particulars", "Amount"],
-      ["Tuition Fee", "7500"],
-      ["Development Fee", "39850"],
-      ["Gymkhana Fee", "1800"],
-      ["Training and Placement", "1000"],
-      ["Library", "4500"],
-      ["Laboratoty", "15000"],
-      ["Internet and Email", "2200"],
-      ["Gathering", "1500"],
-      ["C. M. D. (Refundable)", "5000"],
-      ["Boat Club Fee", "600"],
-      ["Boat Club Membership", "150"],
-      ["Student Aid Fund", "250"],
-      ["Examination Fee", "750"],
-      ["Identity Card", "100"],
-      ["University Fee", "200"],
-      ["Alumni Membership Fee", "1000"],
-      ["Hostel Fee", "0"],
-      ["Hostel Deposit", "0"],
-      ["ARAI Fee", "0"],
-      ["Leaving Certificate / Transfer Certificate", "50"],
-      ["Student Accident Insurance Premium", "150"],
-      ["Fine", "0"],
-      ["Others", "0"],
-      ["Total", "82600"],
+      ["Tuition Fee", `${formData.TutionFee}`],
+      ["Development Fee", `${formData.DevelopmentFee}`],
+      ["Gymkhana Fee", `${formData.GymkhanaFee}`],
+      ["Training and Placement", `${formData.TnpFee}`],
+      ["Library", `${formData.Library}`],
+      ["Laboratoty", `${formData.Laboratory}`],
+      ["Internet and Email", `${formData.InternetAndEmail}`],
+      ["Gathering", `${formData.Gathering}`],
+      ["C. M. D. (Refundable)", `${formData.Cmd}`],
+      ["Boat Club Fee", `${formData.BoatClubFee}`],
+      ["Boat Club Membership", `${formData.BoatClubMemFee}`],
+      ["Student Aid Fund", `${formData.StudentAidFund}`],
+      ["Examination Fee", `${formData.ExamFee}`],
+      ["Identity Card", `${formData.IdentityCard}`],
+      ["University Fee", `${formData.UniversityFee}`],
+      ["Alumni Membership Fee", `${formData.AluminiFee}`],
+      ["Hostel Fee", `${formData.HostelFee}`],
+      ["Hostel Deposit", `${formData.HostelDepost}`],
+      ["ARAI Fee", `${formData.AraiLibFee}`],
+      ["Leaving Certificate / Transfer Certificate", `${formData.LeavingCert}`],
+      ["Student Accident Insurance Premium", `${formData.StudentAid}`],
+      ["Fine", `${formData.Fine}`],
+      ["Others", `${formData.Other}`],
+      ["Total", `${totalFees}`],
     ];
 
     tableData3 = [

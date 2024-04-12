@@ -6,7 +6,7 @@ const FeeReceipt = mongoose.Schema({
     required: true,
   },
   Year: {
-    type: Number,
+    type: String,
     required: true,
   },
   MobileNumber: {
