@@ -135,7 +135,10 @@ export const updateStudent = (mis, formData) => async (dispatch) => {
 
 export const sendBonafideRequest = (formData) => async (dispatch) => {
   try {
-    console.log("SEND ",formData)
+
+    // Check if formData.mis in bonafides
+
+    console.log("SEND ",formData.mis)
     const res = await axios.post("/api/student/sendBonafideRequest", formData);
   } catch (err) {
     console.log(err);
