@@ -233,7 +233,7 @@ const RequestBonafide = ({
                   id="reason"
                   type="text"
                   name="reason"
-                  value={reason}
+                  v alue={reason}
                   onChange={onChange}
                   required
                   class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Write a reason..."/>
@@ -241,13 +241,13 @@ const RequestBonafide = ({
             </div>
             */}
             <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={handleSendRequest}
-              >
-                Send Request
-              </button>
+            <button
+              onClick={handleSendRequest}
+              className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              {" "}
+              Send Request
+            </button>
             </div>
           </form>
           {

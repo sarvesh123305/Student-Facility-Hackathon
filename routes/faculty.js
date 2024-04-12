@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const Faculty = require("../models/Faculty");
 const auth = require("../middleware/auth")
+const Notifications = require("../models/Notifications");
 
 const { MongoClient } = require('mongodb');
 
@@ -284,10 +285,10 @@ async function initAllotment(dbName){
 
 router.post("/addNotification", async (req, res) => {
   try {
-    const { message, messageType, mis } = req.body;
+    const { message, messageType, relatedTo, mis } = req.body;
     const newNotification = new Notifications({
       message,
-      messageType,
+      relatedTo,
       mis,
     });
     await newNotification.save();

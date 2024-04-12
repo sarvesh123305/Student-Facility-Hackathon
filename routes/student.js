@@ -12,15 +12,11 @@ const { v4: uuidv4 } = require("uuid");
 const { MongoClient } = require("mongodb");
 const Subject = require("../models/Subject");
 const AcademicProfile = require("../models/AcademicProfile");
-const multer = require("multer");
-
-const storage = multer.memoryStorage(); // Store files in memory as buffers
-// Create a Multer instance with storage configuration
-const upload = multer({ storage: storage });
-
+const Notifications = require("../models/Notifications");
 const StudentInformation = require("../models/StudentInformation");
 
 const fs = require("fs");
+
 const PDFDocument = require("pdfkit");
 const axios = require("axios");
 const { format } = require("date-fns");
@@ -177,7 +173,6 @@ router.post(
     }
     const { name, mis, dept, year, academicYear, programme, purpose } =
       req.body;
-
     const currentYear = ["First", "Second", "Third", "Final"];
     const cwd = process.cwd();
     console.log("Year", typeof year, year);
@@ -292,42 +287,38 @@ router.post(
 //@routes POST api/student/queries
 //@desc Create a query with some ticket no
 //@access public
+
 router.post(
   "/queries",
-  upload.single("image"), // Use Multer middleware to handle single file uploads
   [
     auth("student"),
     [
       check("query", "Please enter a valid email").notEmpty(),
       check("type", "Please enter a valid name").notEmpty(),
-      // No need to check for image presence as Multer handles it
     ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); // Bad request
+      return res.status(400).json({ errors: errors.array() }); //bad request
     }
-
     const { query, type, to, from } = req.body;
     const uuid = uuidv4();
-
     try {
-      const newMessage = new Message({
+      user = new Message({
         query,
         type,
         to,
         from,
         messageId: uuid,
-        // image: req.file.buffer.toString('base64'), // Store the image buffer from Multer
       });
 
-      await newMessage.save();
-
+      const newMessage = await user.save();
+      // res.send("User saved int o database magically");
       res.json(newMessage);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server error occurred");
+      res.status(500).send("Server error occured");
     }
   }
 );
@@ -1004,12 +995,12 @@ router.post(
 );
 router.get("/notifications/:mis", async (req, res) => {
   try {
-    const mis = Number(req.params.mis);
-    const notification = await Notifications.find({ messageType: "Unicast" });
-    const studentOnly = await Notifications.find({ mis: mis });
+    const mis = req.params.mis;
+    const private = await Notifications.find({ mis: Number(mis) });
+    const public = await Notifications.find({ mis: "All" });
     const combinedResults = {
-      notifications: notification,
-      studentOnlyNotifications: studentOnly,
+      public: public,
+      private: private,
     };
 
     res.status(200).send(combinedResults);

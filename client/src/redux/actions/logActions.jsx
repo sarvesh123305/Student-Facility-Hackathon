@@ -70,6 +70,25 @@ export const getQueries = () => async (dispatch) => {
     console.log(err);
   }
 };
+
+export const getNotifications = () => async (dispatch) => {
+  try {
+    // console.log("Queries");
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
+    const res = await axios.get("/api/student/queries");
+    // console.log("Queries ", res.data);
+    dispatch({
+      type: GET_QUERIES,
+      payload: res.data,
+    });
+
+    // console.log("Completed");
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const fetchSemesterCreditRegistration =
   (formData, setData) => async (dispatch) => {
     console.log("I am in fetch Semester Credit");

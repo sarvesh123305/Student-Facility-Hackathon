@@ -56,7 +56,7 @@ const Query = ({
       type: selected.name,
       to: "Students Section",
       from: studentDetails._id,
-      // image: image,
+      image: image,
     });
   };
   const handleMessage = (e) => {
@@ -72,16 +72,15 @@ const Query = ({
 
   const [image, setImage] = useState("");
   const handleSupportingdocs = (e) => {
-    setImage(e.target.files[0]);
-    // var reader = new FileReader();
-    // reader.readAsDataURL(e.target.files[0]);
-    // reader.onload = () => {
-    //   // console.log(reader.result);
-    //   setImage(reader.result);
-    // };
-    // reader.onerror = (error) => {
-    //   console.log(error);
-    // };
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      // console.log(reader.result);
+      setImage(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log(error);
+    };
   };
 
   return (
@@ -93,11 +92,7 @@ const Query = ({
       </div>
 
       <hr className="mt-5" />
-      <form
-        className="mx-auto mt-16 max-w-xl sm:mt-10"
-        onSubmit={handleSubmit}
-        enctype="multipart/form-data"
-      >
+      <form className="mx-auto mt-16 max-w-xl sm:mt-10" onSubmit={handleSubmit}>
         <div className="mx-auto max-w-2xl text-center">
           <i className="text-red-500">
             Please read FAQ before sending the query
