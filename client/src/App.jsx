@@ -30,6 +30,7 @@ import Scholarships from "./pages/StudentSection/Scholarships";
 import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
+import UploadMarks from "./pages/Faculty/UploadMarks";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -118,7 +119,10 @@ const App = () => {
                         path="/notifications/"
                         element={<Notifications />}
                       />
-
+                      <Route
+                        path="/Faculty/UploadMarks"
+                        element={<UploadMarks />}
+                      />
                       {/* FACULTY ROUTES*/}
                       <Route
                         path="/Faculty/login"
