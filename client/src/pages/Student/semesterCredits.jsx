@@ -1,0 +1,166 @@
+const previousCredits = {
+  semesterName: "Semester 4",
+  department: "Computer Engineering",
+  subjects: [
+    {
+      subjectName: "Biology For Engineers",
+      subjectCode: "AS-21001",
+      credits: 3,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Data Communication",
+      subjectCode: "CT-20015",
+      credits: 3,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Data Structures and Algorithms II - Laboratory",
+      subjectCode: "CT-20017",
+      credits: 1,
+      noOfAttempts: "1",
+      awardedGrade: "AA",
+      awardedGradePoint: "10",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Data Structures and Algorithms II ",
+      subjectCode: "CT-20014",
+      credits: 1,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Microprocessor Techniques",
+      subjectCode: "CT-20013 ",
+      credits: 3,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Microprocessor Techniques Laboratory",
+      subjectCode: "CT-20016",
+      credits: 1,
+      noOfAttempts: "1",
+      awardedGrade: "AB",
+      awardedGradePoint: "9",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName:
+        "Rapid Prototyping Practice Using Object Oriented Programming",
+      subjectCode: "CT-20018 ",
+      credits: 1,
+      noOfAttempts: "1",
+      awardedGrade: "AA",
+      awardedGradePoint: "10",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Sensors and Automation ",
+      subjectCode: "ICE(IF)-20002 ",
+      credits: 2,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "10",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Theory of Computation",
+      subjectCode: "CT-20012",
+      credits: 4,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+    {
+      subjectName: "Multivariate Calculus And Differential Equations",
+      subjectCode: "MA-20005",
+      credits: 5,
+      noOfAttempts: "1",
+      awardedGrade: "BB",
+      awardedGradePoint: "8",
+      subjectStatus: "Completed",
+    },
+  ],
+};
+
+const currentCredits = {
+  semesterName: "Semester 4",
+  department: "Computer Engineering",
+  subjects: [
+    {
+      subjectName:
+        'Mini project ["D-S-P-T: Design-Simulate- Prototype - Test ”] : Software Engineering: Mini project - Stage II',
+      subjectCode: "CT-21015",
+      credits: 3,
+    },
+    {
+      subjectName: "Advanced Data Structures Laboratory",
+      subjectCode: "CT(DE)-21002",
+      credits: 1,
+    },
+    {
+      subjectName: "Operating Systems Laboratory",
+      subjectCode: "CT-21011",
+      credits: 1,
+    },
+    {
+      subjectName: "Data Science Laboratory",
+      subjectCode: "CT-21013",
+      credits: 1,
+    },
+    {
+      subjectName: "Data Science",
+      subjectCode: "CT-21012",
+      credits: 3,
+    },
+    {
+      subjectName: "Finance for Engineers",
+      subjectCode: "AS(HS)-21008",
+      credits: 2,
+    },
+    {
+      subjectName: "Big Data Analytics",
+      subjectCode: "CT(HO)-21003",
+      credits: 3,
+    },
+    {
+      subjectName: "Advanced Data Structures",
+      subjectCode: "CT(DE)-21001",
+      credits: 3,
+    },
+    {
+      subjectName: "Renewable Energy",
+      subjectCode: "IOC-21005",
+      credits: 2,
+    },
+    {
+      subjectName: "Environmental Studies",
+      subjectCode: "ML-21002",
+      credits: 0,
+    },
+    {
+      subjectName: "Operating Systems",
+      subjectCode: "CT-21010",
+      credits: 3,
+    },
+    {
+      subjectName: "Design and Analysis of Algorithms",
+      subjectCode: "CT-21014",
+      credits: 4,
+    },
+  ],
+};
+export { previousCredits, currentCredits };

@@ -41,28 +41,28 @@ const Login = (props) => {
   const { mis, password } = user;
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
-
   const onSubmit = (e) => {
+    var loginResult = false;
     e.preventDefault();
     console.log(mis, password);
     if (mis === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     } else {
       if (role === "Student") {
-        Studentlogin({
+        loginResult = Studentlogin({
           mis,
           password,
         });
       } else if (role === "Faculty") {
-        Facultylogin({ empno: mis, password: password });
+        loginResult = Facultylogin({ empno: mis, password: password });
       } else if (role === "StudentsSection") {
         console.log("students sections");
-        StudentSectionlogin({
+        loginResult = StudentSectionlogin({
           empno: mis,
           password,
         });
       }
-      setShowSidebarAndNavbar(true);
+      if (loginResult && loginResult === true) setShowSidebarAndNavbar(true);
 
       setUser({
         mis: "",
@@ -80,7 +80,7 @@ const Login = (props) => {
           alt="Your Company"
         />
         <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-          COEP Technological University{" "} <br></br>
+          COEP Technological University <br></br>
         </h1>
       </div>
 
