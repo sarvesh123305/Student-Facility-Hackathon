@@ -112,7 +112,7 @@ const SemesterCreditRegistration = ({
             />
             <label
               htmlFor={`subject-checkbox-${index}`}
-              className="ms-4 text-sm font-medium text-gray-900 dark:text-gray-900 m-2"
+              className="ms-4 text-md font-medium text-gray-900 dark:text-gray-900 m-2"
             >
               {item.subjectName}
             </label>
@@ -131,13 +131,13 @@ const SemesterCreditRegistration = ({
                     <div key={`preference-${preferenceIndex}`} className="mb-4">
                       <label
                         htmlFor={`preference-${electiveIndex}-${preferenceIndex}`}
-                        className="block text-sm font-medium text-gray-900 mb-2"
+                        className="block text-md font-medium text-gray-900 mb-2"
                       >
                         Preference {preferenceIndex + 1}
                       </label>
                       <select
                         id={`preference-${electiveIndex}-${preferenceIndex}`}
-                        className="block w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
+                        className="block w-full bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5"
                         onChange={(e) =>
                           handlePreferenceChange(
                             electiveIndex,

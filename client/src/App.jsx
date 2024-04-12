@@ -24,9 +24,14 @@ import ManageResult from "./pages/Faculty/ManageResult";
 import ElectiveAllocation from "./pages/Faculty/ElectiveAllocation";
 import StudentSectionHome from "./pages/StudentSection/StudentSectionHome";
 import Notifications from "./pages/Student/Notifications";
+import UpdateProfile from "./pages/Student/UpdateProfile";
+import StudentSectionNotifications from "./pages/StudentSection/StudentSectionNotifications";
+import Scholarships from "./pages/StudentSection/Scholarships";
+import Bonafides from "./pages/StudentSection/Bonafides";
+import LetterFormat from "./pages/StudentSection/LetterFormat";
+import Queries from "./pages/StudentSection/Queries";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import UpdateProfile from "./pages/Student/UpdateProfile";
 
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
@@ -153,6 +158,27 @@ const App = () => {
                       <Route
                         path="/StudentSection/"
                         element={<StudentSectionHome />}
+                      />
+
+                      <Route
+                        path="/StudentSection/notifications"
+                        element={<StudentSectionNotifications />}
+                      />
+                      <Route
+                        path="/StudentSection/Scholarship/ScholarshipsAvailable"
+                        element={<Scholarships />}
+                      />
+                      <Route
+                        path="/StudentSection/Scholarship/RequestedBonafides"
+                        element={<Bonafides />}
+                      />
+                      <Route
+                        path="/StudentSection/Scholarship/LetterFormats"
+                        element={<LetterFormat />}
+                      />
+                      <Route
+                        path="/StudentSection/Scholarship/Queries"
+                        element={<Queries />}
                       />
                     </Routes>
                   </div>

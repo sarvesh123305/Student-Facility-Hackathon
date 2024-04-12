@@ -35,7 +35,11 @@ const Sidebar = () => {
   useEffect(() => {
     isTabletMid && setOpen(false);
     // loadUser
-    const userType = pathname.includes("Faculty") ? "faculty" : "student";
+    const userType = pathname.includes("Faculty")
+      ? "faculty"
+      : pathname.includes("student")
+      ? "student"
+      : "studentsection";
     // console.log(userType);
     userType && loadUser(userType);
     // }, [pathname, userType]);
@@ -91,6 +95,19 @@ const Sidebar = () => {
       ],
     },
   ];
+
+  const subMenusListStudentSection = [
+    {
+      name: "Scholarship",
+      icon: TbReportAnalytics,
+      menus: [
+        "Scholarships Available",
+        "Requested Bonafides",
+        "Letter Formats",
+        "Queries",
+      ],
+    },
+  ];
   const subMenusListFaculty = [
     {
       name: "Manage Academics",
@@ -135,6 +152,13 @@ const Sidebar = () => {
       </ul>
     );
   };
+
+  const [search, setSearch] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(search);
+  };
+
   const StudentMenubar = () => {
     return (
       <ul
@@ -142,21 +166,27 @@ const Sidebar = () => {
       font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   
       md:h-[68%] h-[70%] "
       >
-            <li>
-          
-            <form class="flex items-center max-w-md mx-auto">
-              <label for="simple-search" class="sr-only">Search</label>
-              <div class="relative w-full  m-1">
+        <li>
+          {/*
+          <form class="flex items-center max-w-md mx-auto">
+          <label for="simple-search" class="sr-only">Search</label>
+          <div class="relative w-full m-1">
 
-                <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5   " placeholder="Search Anything" required />
+                <input type="text" id="simple-search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5   " placeholder="Search Anything" required />
               </div>
-              <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+              <button type="submit" 
+              onClick={(e) => handleSubmit(e)} 
+              class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
                 <svg class="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                 </svg>
                 <span class="sr-only">Search</span>
-              </button>
-            </form>
+                </button>
+                </form>
+              */}
         </li>
         <li>
           <NavLink
@@ -206,8 +236,67 @@ const Sidebar = () => {
             Notifications
           </NavLink>
         </li>
+      </ul>
+    );
+  };
+  const StudentSectionMenubar = () => {
+    return (
+      <ul
+        className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1
+      font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   
+      md:h-[68%] h-[70%] "
+      >
+        <li>
+          {/*
+          <form class="flex items-center max-w-md mx-auto">
+          <label for="simple-search" class="sr-only">Search</label>
+          <div class="relative w-full m-1">
 
-    
+                <input type="text" id="simple-search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-5 p-2.5   " placeholder="Search Anything" required />
+              </div>
+              <button type="submit" 
+              onClick={(e) => handleSubmit(e)} 
+              class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 ">
+                <svg class="w-5 h-5 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                </svg>
+                <span class="sr-only">Search</span>
+                </button>
+                </form>
+              */}
+        </li>
+        <li>
+          <NavLink
+            to={"/StudentSection/"}
+            className="link hover:bg-white-600 hover:text-black"
+          >
+            <AiOutlineAppstore size={23} className="min-w-max" />
+            Profile
+          </NavLink>
+        </li>
+
+        {(open || isTabletMid) && (
+          <div className="border-slate-300">
+            {subMenusListStudentSection?.map((menu) => (
+              <div key={menu.name} className="flex flex-col gap-1">
+                <SubMenu data={menu} userType="StudentSection" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        <li>
+          <NavLink
+            to={"/StudentSection/notifications"}
+            className="link flex items-stretch hover:bg-white-600 hover:text-black"
+          >
+            <MdNotifications size={23} className="min-w-max" />
+            Notifications
+          </NavLink>
+        </li>
       </ul>
     );
   };
@@ -217,6 +306,8 @@ const Sidebar = () => {
         return <StudentMenubar />;
       case "faculty":
         return <FacultyMenubar />;
+      case "studentsection":
+        return <StudentSectionMenubar />;
       default:
         return <StudentMenubar />;
       // return <h1>Please Login</h1>;

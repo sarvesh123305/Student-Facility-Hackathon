@@ -38,252 +38,233 @@ const Academic = ({ student: { academicProfile }, initialLoadUser }) => {
             { data: SGPA, label: "SGPA", id: "pvId" },
 
             { data: CGPA, label: "CGPA", id: "uvId" },
-
           ]}
           xAxis={[{ data: xLabels, scaleType: "band" }]}
         />
 
-
-
-
-
-        <div class="md:flex">
-          <ul class="flex-column space-y space-y-4 text-sm font-medium text-gray-500  md:me-4 mb-4 md:mb-0 p-4 ">
+        <div className="md:flex">
+          <ul className="flex-column space-y space-y-4 text-sm font-medium text-gray-500  md:me-4 mb-4 md:mb-0 p-4 ">
             <li>
-              <a href="#" class="inline-flex items-center px-4 py-3 text-white bg-blue-700 rounded-lg active w-full " aria-current="page">
-
-                SEMESTER V
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg  w-full "
+                aria-current="page"
+              >
+                SEMESTER I
               </a>
             </li>
             <li>
-              <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full ">
-                SEMESTER IV
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full "
+              >
+                SEMESTER II
               </a>
             </li>
             <li>
-              <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full">
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full"
+              >
                 SEMESTER III
               </a>
             </li>
             <li>
-              <a href="#" class="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full ">
-                SEMESTER II
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full "
+              >
+                SEMESTER IV
               </a>
             </li>
-
+            <li>
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg hover:text-gray-900 bg-gray-50 hover:bg-gray-100 w-full "
+              >
+                SEMESTER V
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="inline-flex items-center px-4 py-3 rounded-lg  w-full text-white bg-blue-700"
+              >
+                SEMESTER VI
+              </a>
+            </li>
           </ul>
-          <div class="p-6 bg-gray-50 text-medium text-gray-500 rounded-lg w-full">
-            <h3 class="text-lg font-bold text-gray-900 mb-2">SEM V</h3>
+          <div className="p-6 bg-gray-50 text-medium text-gray-500 rounded-lg w-full">
+            <h3 className="text-lg font-bold text-gray-900 mb-2">SEM V</h3>
 
-
-            <div class="relative overflow-x-auto overflow">
-              <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+            <div className="relative overflow-x-auto overflow">
+              <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
                   <tr>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Subject Name
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Subject Type
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Subject Code
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Semester Credit
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       No. of Attempt
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Awarded Grade
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Awarded Grade Point
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" className="px-6 py-3">
                       Subject Status
                     </th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Software Engineering Mini Project II
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10002</td>
+                    <td className="px-6 py-4">3</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Design and Analysis of Algorithms
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10003</td>
+                    <td className="px-6 py-4">4</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Operating System
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10003</td>
+                    <td className="px-6 py-4">3</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Web Technologies
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10004</td>
+                    <td className="px-6 py-4">3</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Data Science
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10005</td>
+                    <td className="px-6 py-4">3</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-                  <tr class="bg-white border-b ">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                      Apple MacBook Pro 17"
+                  <tr className="bg-white border-b ">
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap "
+                    >
+                      Programmable Logic Controller
                     </th>
-                    <td class="px-6 py-4">
-                      Silver
-                    </td>
-                    <td class="px-6 py-4">
-                      Laptop
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      $2999
-                    </td>
-                    <td class="px-6 py-4">
-                      <div class="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 " role="alert">
-                        <span class="font-medium">Appearing</span>
+                    <td className="px-6 py-4">Mandatory</td>
+                    <td className="px-6 py-4">CS-10006</td>
+                    <td className="px-6 py-4">2</td>
+                    <td className="px-6 py-4">1</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">---</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className="p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 "
+                        role="alert"
+                      >
+                        <span className="font-medium">Appearing</span>
                       </div>
                     </td>
                   </tr>
-
                 </tbody>
               </table>
             </div>
-
           </div>
         </div>
-
-
       </div>
     )
   );

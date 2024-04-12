@@ -36,6 +36,21 @@ router.get("/faculty", auth("faculty"), async (req, res) => {
     res.status(500).send("server error occured");
   }
 });
+
+//@routes GET api/auth/student
+//@desc Get Loggedin user
+//@access Private
+
+router.get("/studentsection", auth("studentsection"), async (req, res) => {
+  try {
+    const user = await Others.findById(req.studentsection.id).select(
+      "-password"
+    );
+    res.json(user);
+  } catch (err) {
+    res.status(500).send("server error occured");
+  }
+});
 //@routes POST api/auth/student
 //@desc Auth user and get token
 //@access public

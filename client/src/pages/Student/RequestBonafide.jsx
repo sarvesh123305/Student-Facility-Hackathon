@@ -60,6 +60,18 @@ const RequestBonafide = ({
     bonafideDownload(formData, setPdfData);
   };
 
+  const handleSendRequest = () => {
+    const formData = {
+      mis: studentDetails.mis,
+      name: studentDetails.name,
+      year: academicProfile.year,
+      dept: academicProfile.branch,
+      academicYear: studentDetails.academicyear,
+      programme: "Btech",
+      purpose: "Scholarship",
+    };
+    // sendBonafideRequest
+  };
   useEffect(() => {
     if (pdfData) {
       const pdfUrl = URL.createObjectURL(pdfData);
@@ -75,7 +87,7 @@ const RequestBonafide = ({
   }, [pdfData]);
   return (
     <div className="">
-      <div className="bg-white  flex flex-1 flex-col h-screen">
+      <div className="bg-white  p-10 flex flex-1 flex-col h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Request for bonafide
@@ -85,10 +97,10 @@ const RequestBonafide = ({
         <div className="px-2 mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
           <form className="space-y-6" id="loginform" onSubmit={onSubmit}>
             <fieldset>
-              <legend className="text-md font-bold leading-6 text-gray-900">
+              <legend className="text-lg font-bold leading-6 text-gray-900">
                 Bonafide certificate is issued for following
               </legend>
-              <p className="mt-1 text-sm leading-6 text-gray-600">
+              <p className="mt-1 text-lg leading-6 text-gray-600">
                 This certificate should be only for mentioned process.
               </p>
               <div className="mt-6 space-y-3">
@@ -104,7 +116,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-everything"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Buspass
                   </label>
@@ -120,7 +132,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-email"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Scholarship
                   </label>
@@ -136,7 +148,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-nothing"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Educational Loan
                   </label>
@@ -152,7 +164,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-nothing"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Verification{" "}
                   </label>
@@ -168,7 +180,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-nothing"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Job
                   </label>
@@ -184,7 +196,7 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-nothing"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Internship
                   </label>
@@ -200,36 +212,39 @@ const RequestBonafide = ({
                   />
                   <label
                     htmlFor="push-nothing"
-                    className="block text-sm font-medium leading-6 text-gray-900"
+                    className="block text-lg font-medium leading-6 text-gray-900"
                   >
                     Caste Validity Process
                   </label>
                 </div>
               </div>
             </fieldset>
+            {/* 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-lg font-bold leading-6 text-gray-900"
               >
                 Reason For Certificate
               </label>
-              <div className="mt-2">
-                <input
+              <div className="mt-2"> 
+
+                <textarea
                   id="reason"
                   type="text"
                   name="reason"
                   value={reason}
                   onChange={onChange}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                  class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Write a reason..."/>
               </div>
             </div>
+            */}
             <div>
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                onClick={handleSendRequest}
               >
                 Send Request
               </button>
@@ -240,15 +255,14 @@ const RequestBonafide = ({
           }
           <div>
             <button
-              type="submit"
               onClick={handleBonafideDownload}
-              className="flex w-full mt-10 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               {" "}
               Download Bonafide
             </button>
           </div>
-          {/* <p className="mt-10 text-center text-sm text-gray-500">
+          {/* <p className="mt-10 text-center text-lg text-gray-500">
               Not a member?{' '}
               <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
                 Start a 14 day free trial

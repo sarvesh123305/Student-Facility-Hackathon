@@ -282,4 +282,20 @@ async function initAllotment(dbName){
           });
 }
 
+router.post("/addNotification", async (req, res) => {
+  try {
+    const { message, messageType, mis } = req.body;
+    const newNotification = new Notifications({
+      message,
+      messageType,
+      mis,
+    });
+    await newNotification.save();
+    res.status(201).send("Notification added successfully"); // 201 for created resources
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Error adding notification");
+  }
+});
+
 module.exports = router;

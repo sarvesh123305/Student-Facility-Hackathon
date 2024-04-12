@@ -3,7 +3,9 @@ import React from "react";
 const StudentSectionHome = () => {
   return (
     <div>
-      <h1>Hello Student Section Department</h1>
+      <h1 className="p-2">
+        Welcome Sir! Head Towards Left Sidebar to navigate to our website
+      </h1>
     </div>
   );
 };

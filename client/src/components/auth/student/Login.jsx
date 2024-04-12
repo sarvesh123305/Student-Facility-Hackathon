@@ -79,16 +79,15 @@ const Login = (props) => {
           src={window.location.origin + "/images/coeplogo.png"}
           alt="Your Company"
         />
-        <h1 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          COEP Technological University{" "}
-          {role == "StudentsSection" ? "Student Section" : role} Sign In
+        <h1 className="mt-10 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
+          COEP Technological University{" "} <br></br>
         </h1>
       </div>
 
       <br></br>
       <br></br>
-      <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 sm:mx-auto sm:w-full sm:max-w-sm ">
-        <ul className="flex items-stretch mx-auto w-full sm:max-w-sm text-sm font-medium text-center text-gray-500  ">
+      <div className="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md ">
+        <ul className="flex items-stretch mx-auto w-full sm:max-w-sm text-lg font-medium text-center text-gray-500  ">
           <li className="me-2">
             <Link
               to="/login"
@@ -127,7 +126,7 @@ const Login = (props) => {
           <div>
             <label
               htmlFor="text"
-              className="block mb-2 text-sm font-medium text-gray-900 "
+              className="block mb-2 text-lg font-medium text-gray-900 "
             >
               PRN Number
             </label>
@@ -138,7 +137,7 @@ const Login = (props) => {
               autoComplete="on"
               value={mis}
               onChange={onChange}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               placeholder="Enter your PRN"
               required
             />
@@ -146,7 +145,7 @@ const Login = (props) => {
           <div>
             <label
               htmlFor="password"
-              className="block mb-2 text-sm font-medium text-gray-900 "
+              className="block mb-2 text-lg font-medium text-gray-900 "
             >
               Password
             </label>
@@ -158,7 +157,7 @@ const Login = (props) => {
               value={password}
               onChange={onChange}
               placeholder="••••••••"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
               required
             />
           </div>
@@ -167,18 +166,18 @@ const Login = (props) => {
                       <div className="flex items-center h-5">
                           <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 " required />
                       </div>
-                      <label for="remember" className="ms-2 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+                      <label for="remember" className="ms-2 ml-2 text-lg font-medium text-gray-900 dark:text-gray-300">Remember me</label>
                   </div> */}
             <a
               href="#"
-              className="ms-auto text-sm text-blue-700 hover:underline "
+              className="ms-auto text-lg text-blue-700 hover:underline "
             >
               Lost Password?
             </a>
           </div>
           <button
             type="submit"
-            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Login to your account
           </button>

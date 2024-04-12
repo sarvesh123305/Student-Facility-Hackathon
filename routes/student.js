@@ -993,6 +993,31 @@ router.post(
     }
   }
 );
+router.get("/notifications/:mis", async (req, res) => {
+  try {
+    const mis = Number(req.params.mis);
+    const notification = await Notifications.find({ messageType: 'Unicast' });
+    const studentOnly = await Notifications.find({ mis: mis });
+    const combinedResults = {
+      notifications: notification,
+      studentOnlyNotifications: studentOnly,
+    };
+
+    res.status(200).send(combinedResults);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error occured");
+  }
+});
+
+router.get("/semesterCreditRegistration", async (req, res) => {
+  try {
+    const allRegistrations = await SemesterCreditRegistration.find({});
+    res.json(allRegistrations);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
 /*

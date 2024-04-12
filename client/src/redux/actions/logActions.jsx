@@ -112,5 +112,13 @@ export const updateStudent = (mis, formData) => async (dispatch) => {
     console.log("Error fetching data:", error);
   }
 };
+
+export const sendBonafideRequest = (formData) => async (dispatch) => {
+  try {
+    const res = await axios.post("/api/student/sendBonafideRequest", formData);
+  } catch (err) {
+    console.log(err);
+  }
+};
 /*
  */

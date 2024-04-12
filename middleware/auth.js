@@ -26,8 +26,8 @@ module.exports = function (role) {
           req.faculty = decoded.Faculty;
           break;
 
-        case "others": //other refers student section
-          req.others = decoded.Others;
+        case "studentsection": //other refers student section
+          req.studentsection = decoded.Others;
           break;
         default:
           throw new Error("Invalid role specified");

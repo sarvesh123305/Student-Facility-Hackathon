@@ -254,7 +254,7 @@ const Query = ({
                       </span>
                       <br></br>
                       <div
-                        className="inline-flex items-center p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50 w-100 "
+                        className="inline-flex items-center p-4 mb-4 text-sm text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 w-100 "
                         role="alert"
                       >
                         <svg
@@ -269,7 +269,7 @@ const Query = ({
                         <span className="sr-only">Info</span>
                         <div>
                           <span className="font-medium ml-3">
-                            This query is rejected{" "}
+                            Status : Pending{" "}
                           </span>
                         </div>
                       </div>

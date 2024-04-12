@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import AuthContext from "../../components/context/auth/authContext";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+import {Link} from 'react-router-dom'
 import { initialLoadUser, updateStudent } from "../../redux/actions/logActions";
 const Profile = ({
   student: { studentInformation, studentDetails },
@@ -104,13 +104,21 @@ const Profile = ({
                   onClick={handleUpdateProfile}
                   className="inline-flex items-center mr-2 px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
                 >
+                  <Link
+            to={"/updateProfile"}
+          >
                   Update Profile
+          </Link>
                 </button>
                 <a
                   href="#"
                   className="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
                 >
+                   <Link
+            to={"/Academics/AcademicProfile"}
+          >
                   Academic Profile
+          </Link>
                 </a>
               </div>
             </div>
