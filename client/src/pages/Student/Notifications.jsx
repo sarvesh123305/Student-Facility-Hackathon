@@ -33,6 +33,17 @@ const Notifications = ({
 
   const [toggle, setToggle] = useState(false);
 
+  const options = [
+    { label: 'All', value: 'All' },
+    { label: 'Public', value: 'Public' },
+    { label: 'Private', value: 'Private' }
+  ];
+
+  const [selectedValue, setSelectedValue] = useState(options[0].value);
+
+  const handleDropdownChange = (value) => {
+    setSelectedValue(value);
+  };
 
   return (
     <div class="w-full p-4 bg-white border-gray-200 rounded-lg shadow sm:p-8">
@@ -44,8 +55,11 @@ const Notifications = ({
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
         </svg>
         </button>
-        {toggle? <FilterDropdown/> : ""}
-
+        {toggle ? <FilterDropdown
+          options={options}
+          selectedValue={selectedValue}
+          onValueChange={handleDropdownChange}
+        /> : ""}
 
         <div
           class="p-4 text-md text-blue-800 rounded-full bg-blue-50"
@@ -56,13 +70,21 @@ const Notifications = ({
       </div>
       <div class="flow-root">
         <ul role="list" class="divide-y divide-gray-200">
-          {data && data.public && data.public.map(item => (
+
+          {selectedValue === 'Public' ? data && data.public && data.public.map(item => (
             <NotificationItem mis={item.mis} message={item.message} relatedTo={item.relatedTo} />
+          )) : ""}
+
+          {selectedValue === 'Private' && data && data.private && data.private.map(item => (
+            <NotificationItem mis={item.mis} message={item.message} relatedTo={item.relatedTo} />))}
+
+          {selectedValue === 'All' && data && data.private && data.private.map(item => (
+            <NotificationItem key={item._id} mis={item.mis} message={item.message} relatedTo={item.relatedTo} />
+          ))}
+          {selectedValue === 'All' && data && data.public && data.public.map(item => (
+            <NotificationItem key={item._id} mis={item.mis} message={item.message} relatedTo={item.relatedTo} />
           ))}
 
-          {data && data.private && data.private.map(item => (
-            <NotificationItem mis={item.mis} message={item.message} relatedTo={item.relatedTo} />
-          ))}
           {/* <li class="py-3 sm:py-4 hover:bg-gray-100 p-3 hover:rounded-xl">
             <div class="flex items-center">
               <div class="flex-shrink-0 pr-5">
