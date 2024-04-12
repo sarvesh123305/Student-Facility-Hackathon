@@ -1442,6 +1442,309 @@ function drawTable2(doc, table, options) {
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
 
+router.post("/LeavingCertificate", async (req, res) => {
+  const formData = {
+    FullName: "Chinmay Milind Sheth",
+    Religion: "Hindu",
+    Caste: "Gujar",
+    Nationality: "Indian",
+    PlaceOfBirth: "Mahad",
+    DateOfBirth: "17/06/2003",
+    LastAttended: "Institute of Petrochemical Engineering, Lonere",
+    DateOfAdmission: "28/11/2022",
+    Progress: "Good",
+    Conduct: "Good",
+    DateofLeave: "15/06/2025",
+    Remarks: "No Dues",
+  };
+  try {
+    const studentData = req.body;
+    const currentDateTime = new Date();
+    const formattedDateTime = format(currentDateTime, "dd/MM/yyyy HH:mm:ss");
+    const currentDate = format(new Date(), "dd/MM/yyyy");
+    console.log(req.body);
+    const cwd = process.cwd();
+
+    tableData1 = [
+      ["1.", "Name of the Student", `${formData.FullName}`],
+      ["2.", "Religion", `${formData.Religion}`],
+      ["3.", "Caste", `${formData.Caste}`],
+      ["3.", "Nationality", `${formData.Nationality}`],
+      ["4.", "Place of Birth", `${formData.PlaceOfBirth}`],
+      ["5.", "Date of Birth", `${formData.DateOfBirth}`],
+      ["6.", "Institute/College Last Attended", `${formData.LastAttended}`],
+      ["7.", "Date of Admission", `${formData.DateOfAdmission}`],
+      ["8.", "Progress", `${formData.Progress}`],
+      ["9.", "Conduct", `${formData.Conduct}`],
+      ["10.","Date of Leaving the University", `${formData.DateofLeave}`],
+      ["11.", "Remarks", `${formData.Remarks}`]
+    ];
+
+    // studentDetails = {};
+    // await fetchData(studentData, res);
+
+    const doc = new PDFDocument({ size: "A4"});
+    
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="table_example.pdf"'
+    );
+    res.setHeader("Content-Type", "application/pdf");
+
+    doc.pipe(res);
+
+    doc.fontSize(11);
+    const table1 = {
+      headers: tableData1[0],
+      rows: tableData1.slice(1),
+    };
+
+    doc.image(
+      cwd + "/routes/COEP_Logo.png",
+      {
+        width: 40,
+        height: 40,
+        x: 80,
+        y: 45,
+      }
+    );
+
+    doc.image(
+      // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/watermark.png",
+      cwd + "/routes/watermark.png",
+      {
+        width: 400,
+        height: 500,
+        x: 100,
+        y: 200,
+        opacity: 0.01,
+      }
+    );
+
+    doc.image(
+      cwd + "/routes/Images/greenTick.png",
+      {
+        width: 50,
+        height: 50,
+        x: 450,
+        y: 720,
+        opacity: 0.1,
+      }
+    );
+    
+    doc
+      .fontSize(18)
+      .font("Helvetica-Bold")
+      .text("COEP TECHNOLOGICAL UNIVERSITY, PUNE", 110, 50, { align: "center" });
+
+    doc
+      .fontSize(14)
+      .font("Helvetica")
+      .text("5, Wellesly Road, Shivajinagar, Pune 411005", 110, 75, { align: "center" });
+
+    doc.rect(185, 100, 245, 40);
+    doc.stroke();
+
+    doc.rect(20, 20, 555, 750);
+    doc.stroke();
+
+    doc.rect(20, 190, 555, 0);
+    doc.stroke();
+
+    doc.rect(20, 195, 555, 0);
+    doc.stroke();
+
+    doc
+      .fontSize(25)
+      .font("Helvetica-Bold")
+      .text("Leaving Certificate", 90, 110, { align: "center" });
+
+    doc
+      .fontSize(13)
+      .font("Helvetica-Bold")
+      .text(`Sr. No. : 1019`, 50, 170, {align: "left" });
+
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Register No. : Comp/08/59`, 50, 170, {align: "right" });
+
+    doc
+      .fontSize(11)
+      .font("Helvetica")
+      .text("Note: No change in any entry in this Leaving Certificate is to be made except by the authority issuing this Leaving Certificate, Infringement of this rule will be punished with rustication.", 30, 205, { align: "left" });
+
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica")
+    //   .text("Note: Certified that the above information is in the accordance with the University Register.", 50, 680, { align: "center" });
+
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica-Bold")
+    //   .text("Student Details", 60, 120, { align: "center" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Place : Pune`, 50, 720, {align: "Left" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Date: ${currentDate}`, 50, 740, {align: "left" });
+
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Digitally Signed By`, 50, 710, {align: "right" });
+
+    doc
+      .font("Helvetica")
+      .text(`Registrar`, 10, 730, {align: "right" });
+
+    doc
+      .fontSize(12)
+      .font("Helvetica-Bold")
+      .text(`Date: ${formattedDateTime}`, 90, 750, { align: "right" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(
+    //     `Note: Please retain this copy till pass out from college.`,
+    //     50,
+    //     900,
+    //     { align: "center" }
+    //   );
+
+    // Draw the table
+    drawTable1(doc, table1, {
+      x: 20,
+      y: 240,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [50, 230, 275],
+    });
+    
+    doc.end();
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    res.status(500).send("Error generating PDF");
+  }
+});
+
+// Function to draw a table in the PDF document with custom column widths and alignments
+function drawTable1(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 35;
+
+  doc.font("Helvetica");
+  doc.fontSize(15);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      //align: "left",
+      align: i === 1 ? "left" : "left",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(15);
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "left" : "left"; // Align 'Course Name' column to the left
+      
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
+
+function drawTable2(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 18;
+
+  doc.font("Helvetica-Bold");
+  doc.fontSize(11);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      align: "center",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(11); 
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "center" : "left"; // Align 'Course Name' column to the left
+      
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
+
 router.post("/fillFeeReceit", async (req, res) => {
   try {
     // Parse request body to extract data
@@ -1529,6 +1832,51 @@ router.post("/fillFeeReceit", async (req, res) => {
     res.status(500).json({ error: "Server error occurred" });
   }
 });
+
+router.post("/FillLeaving", async (req, res) => {
+  try {
+    // Parse request body to extract data
+    const {
+      FullName,
+      Religion,
+      Caste,
+      Nationality,
+      DateOfBirth,
+      PlaceOfBirth,
+      LastSchoolAttended,
+      DateOfAdmission,
+      Progress,
+      Conduct,
+      DateofLeaving,
+      Remarks,
+    } = req.body;
+
+    // Create a new document using the AcademicProfile schema
+    const FillLeaving = new FillLeaving({
+      FullName,
+      Religion,
+      Caste,
+      Nationality,
+      DateOfBirth,
+      PlaceOfBirth,
+      LastSchoolAttended,
+      DateOfAdmission,
+      Progress,
+      Conduct,
+      DateofLeaving,
+      Remarks,
+    });
+
+    // Save the new document to the database
+    const data = await FillLeaving.save();
+    // res.status(201).json({ message: "Fee Receit Data Saved successfully" });
+    res.send(data);
+  } catch (error) {
+    console.error("Error saving academic profile:", error);
+    res.status(500).json({ error: "Server error occurred" });
+  }
+});
+
 module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
