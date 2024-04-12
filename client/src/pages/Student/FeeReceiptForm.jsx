@@ -1,42 +1,42 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 const FeeReceiptForm = () => {
   // Initialize state for form values
   const [formData, setFormData] = useState({
-    "FullName": "",
-    "Year": "",
-    "MobileNumber": "",
-    "Mis": "",
-    "Branch": "",
-    "Category": "",
-    "DateOfPayment": "",
-    "TutionFee": "",
-    "DevelopmentFee": "",
-    "GymkhanaFee": "",
-    "TnpFee": "",
-    "Library": "",
-    "Laboratory": "",
-    "InternetAndEmail": "",
-    "Gathering": "",
-    "Cmd": "",
-    "BoatClubFee": "",
-    "BoatClubMemFee": "",
-    "StudentAidFund": "",
-    "ExamFee": "",
-    "IdentityCard": "",
-    "UniversityFee": "",
-    "AluminiFee": "",
-    "HostelFee": "",
-    "HostelDepost": "",
-    "AraiLibFee": "",
-    "AraiCompFee": "",
-    "AraiLabFee": "",
-    "AraiAluminiFee": "",
-    "LeavingCert": "",
-    "StudentAid": "",
-    "Fine": "",
-    "Other": "",
-    "uploadSbiFee": ""
+    FullName: "",
+    Year: "",
+    MobileNumber: "",
+    Mis: "",
+    Branch: "",
+    Category: "",
+    DateOfPayment: "",
+    TutionFee: 0,
+    DevelopmentFee: "",
+    GymkhanaFee: 0,
+    TnpFee: 0,
+    Library: 0,
+    Laboratory: 0,
+    InternetAndEmail: 0,
+    Gathering: 0,
+    Cmd: 0,
+    BoatClubFee: 0,
+    BoatClubMemFee: 0,
+    StudentAidFund: 0,
+    ExamFee: 0,
+    IdentityCard: 0,
+    UniversityFee: 0,
+    AluminiFee: 0,
+    HostelFee: 0,
+    HostelDepost: 0,
+    AraiLibFee: 0,
+    AraiCompFee: 0,
+    AraiLabFee: 0,
+    AraiAluminiFee: 0,
+    LeavingCert: 0,
+    StudentAid: 0,
+    Fine: 0,
+    Other: 0,
+    uploadSbiReceit: "",
   });
 
   // Function to handle input change
@@ -54,6 +54,8 @@ const FeeReceiptForm = () => {
     console.log("Hellloooooooo");
     // Do something with formDataObject, like sending it to an API
     console.log(formData);
+    const res = axios.post("/api/student/FeeReceipt", { formData });
+    console.log(res.data);
   };
 
   return (
@@ -69,7 +71,8 @@ const FeeReceiptForm = () => {
           <input
             type="text"
             id="FullName"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             placeholder=""
             required
           />
@@ -83,7 +86,8 @@ const FeeReceiptForm = () => {
           </label>
           <select
             id="Year"
-            onChange={handleInputChange} value={formData.Year}
+            onChange={handleInputChange}
+            value={formData.Year}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="" disabled>
@@ -107,7 +111,8 @@ const FeeReceiptForm = () => {
           <input
             type="text"
             id="MobileNumber"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -121,7 +126,8 @@ const FeeReceiptForm = () => {
           <input
             type="text"
             id="Mis"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -134,24 +140,33 @@ const FeeReceiptForm = () => {
           </label>
           <select
             id="Branch"
-            onChange={handleInputChange} value={formData.Branch}
+            onChange={handleInputChange}
+            value={formData.Branch}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="" disabled>
               Select
             </option>
             <option value="Computer Engineering">Computer Engineering</option>
-            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Electrical Engineering">
+              Electrical Engineering
+            </option>
             <option value="Electronics and Telecommunication Engineering">
               Electronics and Telecommunication Engineering
             </option>
             <option value="Civil Engineering">Civil Engineering</option>
-            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Mechanical Engineering">
+              Mechanical Engineering
+            </option>
             <option value="Instrumentation and Control Engineering">
               Instrumentation and Control Engineering
             </option>
-            <option value="Production Engineering">Production Engineering</option>
-            <option value="Robotics and AI Engineering">Robotics and AI Engineering</option>
+            <option value="Production Engineering">
+              Production Engineering
+            </option>
+            <option value="Robotics and AI Engineering">
+              Robotics and AI Engineering
+            </option>
           </select>
         </div>
         <div>
@@ -163,7 +178,9 @@ const FeeReceiptForm = () => {
           </label>
           <select
             id="Category"
-            onChange={handleInputChange} value={formData.Category} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            value={formData.Category}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="" disabled>
               Select
@@ -191,7 +208,8 @@ const FeeReceiptForm = () => {
           <input
             type="date"
             id="DateOfPayment"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -203,9 +221,10 @@ const FeeReceiptForm = () => {
             Tution Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="TutionFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -217,9 +236,10 @@ const FeeReceiptForm = () => {
             Development Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="DevelopmentFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -231,9 +251,10 @@ const FeeReceiptForm = () => {
             Gymkhana Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="GymkhanaFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -245,9 +266,10 @@ const FeeReceiptForm = () => {
             Training and Placement
           </label>
           <input
-            type="text"
+            type="number"
             id="TnpFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -259,9 +281,10 @@ const FeeReceiptForm = () => {
             Library
           </label>
           <input
-            type="text"
+            type="number"
             id="Library"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -273,9 +296,10 @@ const FeeReceiptForm = () => {
             Laboratory
           </label>
           <input
-            type="text"
+            type="number"
             id="Laboratory"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -287,9 +311,10 @@ const FeeReceiptForm = () => {
             Internet & Email
           </label>
           <input
-            type="text"
+            type="number"
             id="InternetAndEmail"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -301,9 +326,10 @@ const FeeReceiptForm = () => {
             Gathering
           </label>
           <input
-            type="text"
+            type="number"
             id="Gathering"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -315,9 +341,10 @@ const FeeReceiptForm = () => {
             C. M. D. (Refundable)
           </label>
           <input
-            type="text"
+            type="number"
             id="Cmd"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -329,9 +356,10 @@ const FeeReceiptForm = () => {
             Boat Club Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="BoatClubFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -343,9 +371,10 @@ const FeeReceiptForm = () => {
             Boat Club Membership
           </label>
           <input
-            type="text"
+            type="number"
             id="BoatClubMemFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -357,9 +386,10 @@ const FeeReceiptForm = () => {
             Student Aid Fund
           </label>
           <input
-            type="text"
+            type="number"
             id="StudentAidFund"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -371,9 +401,10 @@ const FeeReceiptForm = () => {
             Exam Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="ExamFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -385,9 +416,10 @@ const FeeReceiptForm = () => {
             Identity Card
           </label>
           <input
-            type="text"
+            type="number"
             id="IdentityCard"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -399,9 +431,10 @@ const FeeReceiptForm = () => {
             Univerity Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="UniversityFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -413,9 +446,10 @@ const FeeReceiptForm = () => {
             Alumni Membership Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="AluminiFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -427,9 +461,10 @@ const FeeReceiptForm = () => {
             Hostel Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="HostelFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -441,9 +476,10 @@ const FeeReceiptForm = () => {
             Hostel Deposit
           </label>
           <input
-            type="text"
+            type="number"
             id="HostelDepost"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -455,9 +491,10 @@ const FeeReceiptForm = () => {
             ARAI Library Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="AraiLibFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -469,9 +506,10 @@ const FeeReceiptForm = () => {
             ARAI Computer Lab Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="AraiCompFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -483,9 +521,10 @@ const FeeReceiptForm = () => {
             ARAI Lab Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="AraiLabFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -497,9 +536,10 @@ const FeeReceiptForm = () => {
             ARAI Alumni Association Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="AraiAluminiFee"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -511,9 +551,10 @@ const FeeReceiptForm = () => {
             Leaving Certificate/Transfer Certificate
           </label>
           <input
-            type="text"
+            type="number"
             id="LeavingCert"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -525,9 +566,10 @@ const FeeReceiptForm = () => {
             Student Accident Insurance Premium
           </label>
           <input
-            type="text"
+            type="number"
             id="StudentAid"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -539,9 +581,10 @@ const FeeReceiptForm = () => {
             Fine
           </label>
           <input
-            type="text"
+            type="number"
             id="Fine"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
@@ -552,24 +595,27 @@ const FeeReceiptForm = () => {
           >
             Other (Please Specify Fee)
           </label>
-          <textarea
+          <input
             id="Other"
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            type="number"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="uploadSbiFee"
+            for="uploadSbiReceit"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Upload SBI Collect Fee Receipt
           </label>
           <input
-            onChange={handleInputChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+            onChange={handleInputChange}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
             aria-describedby="file_input_help"
-            id="uploadSbiFee"
+            id="uploadSbiReceit"
             type="file"
             accept=".pdf, .png, .jpeg, .jpg"
           />
@@ -582,7 +628,8 @@ const FeeReceiptForm = () => {
       <div className="text-center">
         <button
           type="submit"
-          onChange={handleInputChange} className="bg-blue-500 text-lg text-white px-5 py-2 rounded-lg hover:bg-blue-600"
+          onChange={handleInputChange}
+          className="bg-blue-500 text-lg text-white px-5 py-2 rounded-lg hover:bg-blue-600"
         >
           Save
         </button>

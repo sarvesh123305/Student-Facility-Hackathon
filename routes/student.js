@@ -21,7 +21,7 @@ const PDFDocument = require("pdfkit");
 const axios = require("axios");
 const { format } = require("date-fns");
 const SemesterCreditRegistration = require("../models/SemesterCreditRegistration");
-
+const { userData } = require("./userData");
 const mongodbURLURIOPTIMIZE = config.get("mongoURI");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
@@ -408,6 +408,7 @@ async function addDocumentToCollection(document, dbName, collectionName) {
 
     const result = await collection.insertOne(document);
     console.log("Document added to collection:", result.insertedId);
+    return result;
   } catch (error) {
     console.error("Error adding document to collection:", error);
   }
@@ -1042,47 +1043,49 @@ router.get("/semesterCreditRegistration", async (req, res) => {
 });
 
 //@routes GET api/student/FeeReceipt
-//@desc Get Fee Receit
+//@desc Get Fee Receit m,jgkljdjgkjldlkjdtlkjjdflkjy
 //@access public
 
 router.post("/FeeReceipt", async (req, res) => {
-  // const {formData} = req.body;
-  const formData = {
-    FullName: "Sanika Kulkarni",
-    Year: 2024,
-    MobileNumber: "1234567890",
-    Mis: 142203011,
-    Branch: "Computer Science",
-    Category: "General",
-    DateOfPayment: "2024-04-12",
-    TutionFee: 5000,
-    DevelopmentFee: 2000,
-    GymkhanaFee: 1000,
-    TnpFee: 1500,
-    Library: 500,
-    Laboratory: 1000,
-    InternetAndEmail: 200,
-    Gathering: 300,
-    Cmd: 400,
-    BoatClubFee: 100,
-    BoatClubMemFee: 50,
-    StudentAidFund: 200,
-    ExamFee: 800,
-    IdentityCard: 100,
-    UniversityFee: 3000,
-    AluminiFee: 200,
-    HostelFee: 5000,
-    HostelDepost: 2000,
-    AraiLibFee: 300,
-    AraiCompFee: 400,
-    AraiLabFee: 500,
-    AraiAluminiFee: 100,
-    LeavingCert: 200,
-    StudentAid: 300,
-    Fine: 50,
-    Other: 100,
-    uploadSbiFee: 200,
-  };
+  const { formData } = req.body;
+  console.log("IN axis", formData);
+  // console.log(formData.TutionFee + formData.TnpFee);
+  // const formData = {
+  //   FullName: "Sanika Kulkarni",
+  //   Year: 2024,
+  //   MobileNumber: "1234567890",
+  //   Mis: 142203011,
+  //   Branch: "Computer Science",
+  //   Category: "General",
+  //   DateOfPayment: "2024-04-12",
+  //   TutionFee: 5000,
+  //   DevelopmentFee: 2000,
+  //   GymkhanaFee: 1000,
+  //   TnpFee: 1500,
+  //   Library: 500,
+  //   Laboratory: 1000,
+  //   InternetAndEmail: 200,
+  //   Gathering: 300,
+  //   Cmd: 400,
+  //   BoatClubFee: 100,
+  //   BoatClubMemFee: 50,
+  //   StudentAidFund: 200,
+  //   ExamFee: 800,
+  //   IdentityCard: 100,
+  //   UniversityFee: 3000,
+  //   AluminiFee: 200,
+  //   HostelFee: 5000,
+  //   HostelDepost: 2000,
+  //   AraiLibFee: 300,
+  //   AraiCompFee: 400,
+  //   AraiLabFee: 500,
+  //   AraiAluminiFee: 100,
+  //   LeavingCert: 200,
+  //   StudentAid: 300,
+  //   Fine: 50,
+  //   Other: 100,
+  //   uploadSbiFee: 200,
+  // };
   try {
     const studentData = req.body;
     const currentDateTime = new Date();
@@ -1090,14 +1093,47 @@ router.post("/FeeReceipt", async (req, res) => {
     const currentDate = format(new Date(), "dd/MM/yyyy");
     console.log(req.body);
     const cwd = process.cwd();
-    let totalFees = 0;
-    for (const field in formData) {
-      if (field.endsWith("Fee")) {
-        totalFees += formData[field];
+    // Convert number fields to integers
+    const formDataWithInt = {
+      TutionFee: parseInt(formData.TutionFee),
+      DevelopmentFee: parseInt(formData.DevelopmentFee),
+      GymkhanaFee: parseInt(formData.GymkhanaFee),
+      TnpFee: parseInt(formData.TnpFee),
+      Library: parseInt(formData.Library),
+      Laboratory: parseInt(formData.Laboratory),
+      InternetAndEmail: parseInt(formData.InternetAndEmail),
+      Gathering: parseInt(formData.Gathering),
+      Cmd: parseInt(formData.Cmd),
+      BoatClubFee: parseInt(formData.BoatClubFee),
+      BoatClubMemFee: parseInt(formData.BoatClubMemFee),
+      StudentAidFund: parseInt(formData.StudentAidFund),
+      ExamFee: parseInt(formData.ExamFee),
+      IdentityCard: parseInt(formData.IdentityCard),
+      UniversityFee: parseInt(formData.UniversityFee),
+      AluminiFee: parseInt(formData.AluminiFee),
+      HostelFee: parseInt(formData.HostelFee),
+      HostelDepost: parseInt(formData.HostelDepost),
+      AraiLibFee: parseInt(formData.AraiLibFee),
+      AraiCompFee: parseInt(formData.AraiCompFee),
+      AraiLabFee: parseInt(formData.AraiLabFee),
+      AraiAluminiFee: parseInt(formData.AraiAluminiFee),
+      LeavingCert: parseInt(formData.LeavingCert),
+      StudentAid: parseInt(formData.StudentAid),
+      Fine: parseInt(formData.Fine),
+      Other: parseInt(formData.Other),
+    };
+
+    // Calculate total sum
+    let totalSum = 0;
+    for (const field in formDataWithInt) {
+      if (!isNaN(formDataWithInt[field])) {
+        totalSum += formDataWithInt[field];
       }
     }
 
-    console.log("Total fees:", totalFees);
+    console.log("Total sum:", totalSum);
+
+    // console.log("Total fees:", totalFees);
     tableData1 = [
       ["Name", `${formData.FullName}`],
       ["Mobile Number", `${formData.MobileNumber}`],
@@ -1133,7 +1169,7 @@ router.post("/FeeReceipt", async (req, res) => {
       ["Student Accident Insurance Premium", `${formData.StudentAid}`],
       ["Fine", `${formData.Fine}`],
       ["Others", `${formData.Other}`],
-      ["Total", `${totalFees}`],
+      ["Total", `${totalSum}`],
     ];
 
     tableData3 = [
@@ -1877,8 +1913,108 @@ router.post("/FillLeaving", async (req, res) => {
   }
 });
 
-module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
 document.getElementById("password").value = "password123"
 */
+
+async function publishSubjectsToDB(userData) {
+  const semesters = userData["academicprofiles"]["semesters"];
+  semesterSubjectKeys = [];
+  for (var i = 0; i < semesters.length; i++) {
+    var currentSubjectArray = semesters[i]["subjects"];
+    var subjectKeys = [];
+    for (var j = 0; j < currentSubjectArray.length; j++) {
+      var currentSubject = currentSubjectArray[j];
+      for (var k = 0; k < currentSubjectArray[j]["subjects"].length; k++) {
+        var key = await addDocumentToCollection(
+          currentSubjectArray[j]["subjects"][k],
+          "test",
+          "subjects"
+        );
+        subjectKeys.push(key.insertedId);
+      }
+    }
+    semesterSubjectKeys.push(subjectKeys);
+  }
+  console.log(semesterSubjectKeys);
+  return semesterSubjectKeys;
+}
+
+async function publishAcademicDetailsToDB(userData, semesterSubjectKeys) {
+  // Insert academicDetails
+  var academicProfileData = userData["academicprofiles"];
+  console.log(academicProfileData);
+
+  for (var i = 0; i < semesterSubjectKeys.length; i++) {
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] = [];
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] =
+      semesterSubjectKeys[i];
+  }
+  var academicProfileKey = await addDocumentToCollection(
+    academicProfileData,
+    "test",
+    "academicprofiles"
+  );
+  console.log(academicProfileData);
+  console.log(academicProfileKey.insertedId);
+  return academicProfileKey.insertedId;
+}
+
+async function publishStudentDetailsToDB(userData) {
+  // Insert Student Details
+
+  var studentDetailsData = userData["studentinformations"];
+  console.log(studentDetailsData);
+  var studentInformationKey = await addDocumentToCollection(
+    studentDetailsData,
+    "test",
+    "studentinformations"
+  );
+  console.log(studentInformationKey.insertedId);
+  return studentInformationKey.insertedId;
+}
+
+async function publishStudentDataToDB(
+  userData,
+  academicProfileKey,
+  studentInformationKey
+) {
+  // insert to the first instance Document :
+  var studentData = userData;
+  studentData["studentinformations"] = studentInformationKey;
+  studentData["academicprofiles"] = academicProfileKey;
+  var studentKey = await addDocumentToCollection(
+    studentData,
+    "test",
+    "students"
+  );
+  console.log(studentKey.insertedId);
+  return studentKey.insertedId;
+}
+router.post("/postToDB", async (req, res) => {
+  // const id = req.student.id;
+  try {
+    const { userData } = req.body;
+    // console.log(userData)
+    res.json({ message: "hi" });
+
+    var semesterSubjectKeys = await publishSubjectsToDB(userData);
+    var academicProfileKey = await publishAcademicDetailsToDB(
+      userData,
+      semesterSubjectKeys
+    );
+    var studentInformationKey = await publishStudentDetailsToDB(userData);
+
+    // the following key would not be needed tho as MIS would be the PK for accessing the values
+    var userDataUploadAccessKey = await publishStudentDataToDB(
+      userData,
+      academicProfileKey,
+      studentInformationKey
+    );
+    console.log(userDataUploadAccessKey);
+  } catch (err) {
+    console.log(err);
+  }
+});
+module.exports = router;
