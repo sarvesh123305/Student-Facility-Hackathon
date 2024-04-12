@@ -153,7 +153,6 @@ router.put(
 //@routes POST api/student/requestBonafide
 //@desc Register to a bonafide request
 //@access public
-
 router.post(
   "/requestBonafide",
   // [
@@ -239,11 +238,11 @@ router.post(
       doc
         .font("Times-Roman")
         .text(`this Institute studying in`, 60, 330, { align: "left" });
-      doc.font("Times-Bold").text(`${currentYear[year - 1]}`, 240, 330);
+      doc.font("Times-Bold").text(`${year}`, 240, 330);
       doc.font("Times-Roman").text(`Year`, 290, 330);
       doc.font("Times-Bold").text(`${programme}`, 330, 330);
       doc.font("Times-Roman").text(`in`, 390, 330);
-      doc.font("Times-Bold").text(`${dept}`, 410, 330);
+      doc.font("Times-Bold").text(`${dept}`, 409, 330);
       doc.font("Times-Roman").text(`during the Year`, 590, 330);
 
       doc.font("Times-Bold").text(`${academicYear}. `, 60, 360);
@@ -253,24 +252,48 @@ router.post(
       doc
         .font("Times-Roman")
         .text(`This certificate is issued for the purpose of `, 100, 390);
-      doc.font("Times-Bold").text(`${purpose}.`, 410, 390);
+      doc.font("Times-Bold").text(`Scholarship.`, 415, 390);
 
-      doc.image(
-        // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/coepStamp.png",
-        cwd + "/routes/coepStamp.png",
+      // doc.image(
+      //   // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/coepStamp.png",
+      //   cwd + "/routes/coepStamp.png",
 
-        {
-          width: 150, // Set the width of the image
-          height: 150, // Fit the image into a 100x100 box
-          x: 250,
-          y: 450,
-        }
-      );
+      //   {
+      //     width: 150, // Set the width of the image
+      //     height: 150, // Fit the image into a 100x100 box
+      //     x: 250,
+      //     y: 450,
+      //   }
+      // );
 
-      doc.font("Times-Roman").text(`Registrar`, 560, 490);
+      doc.font("Times-Bold").text(`Place : Pune`, 50, 450, { align: "Left" });
+
+      // doc
+      //   .font("Times-Bold")
+      //   .text(`Date: ${currentDate}`, 50, 480, { align: "left" });
+
       doc
-        .font("Times-Roman")
-        .text(`COEP Technological University, Pune`, 430, 510);
+        .font("Times-Bold")
+        .text(`Digitally Signed By`, 90, 450, { align: "right" });
+
+      doc.font("Times-Bold").text(`Registrar`, 90, 480, { align: "right" });
+
+      doc
+        .font("Times-Bold")
+        .text(`Date: 12/4/2024`, 90, 510, { align: "right" });
+
+      // doc.font("Times-Roman").text(`Registrar`, 560, 490);
+      // doc
+      //   .font("Times-Roman")
+      //   .text(`COEP Technological University, Pune`, 430, 510);
+
+      doc.image(cwd + "/routes/Images/greenTick.png", {
+        width: 50,
+        height: 50,
+        x: 650,
+        y: 460,
+        opacity: 0.01,
+      });
 
       doc.end();
 
@@ -283,7 +306,6 @@ router.post(
     }
   }
 );
-
 //@routes POST api/student/queries
 //@desc Create a query with some ticket no
 //@access public
@@ -1019,6 +1041,362 @@ router.get("/semesterCreditRegistration", async (req, res) => {
   }
 });
 
+//@routes GET api/student/FeeReceipt
+//@desc Get Fee Receit
+//@access public
+
+router.post("/FeeReceipt", async (req, res) => {
+  try {
+    const studentData = req.body;
+    const currentDateTime = new Date();
+    const formattedDateTime = format(currentDateTime, "dd/MM/yyyy HH:mm:ss");
+    const currentDate = format(new Date(), "dd/MM/yyyy");
+    console.log(req.body);
+    const cwd = process.cwd();
+
+    tableData1 = [
+      ["Name", "Chinmay Milind Sheth"],
+      ["Mobile Number", "9273606333"],
+      ["Class", "Third Year BTech"],
+      ["MIS", "142203003"],
+      ["Branch", "Computer Engineering"],
+      ["Category", "EWS"],
+      ["Date of Payment", `${currentDate}`],
+    ];
+
+    tableData2 = [
+      ["Particulars", "Amount"],
+      ["Tuition Fee", "7500"],
+      ["Development Fee", "39850"],
+      ["Gymkhana Fee", "1800"],
+      ["Training and Placement", "1000"],
+      ["Library", "4500"],
+      ["Laboratoty", "15000"],
+      ["Internet and Email", "2200"],
+      ["Gathering", "1500"],
+      ["C. M. D. (Refundable)", "5000"],
+      ["Boat Club Fee", "600"],
+      ["Boat Club Membership", "150"],
+      ["Student Aid Fund", "250"],
+      ["Examination Fee", "750"],
+      ["Identity Card", "100"],
+      ["University Fee", "200"],
+      ["Alumni Membership Fee", "1000"],
+      ["Hostel Fee", "0"],
+      ["Hostel Deposit", "0"],
+      ["ARAI Fee", "0"],
+      ["Leaving Certificate / Transfer Certificate", "50"],
+      ["Student Accident Insurance Premium", "150"],
+      ["Fine", "0"],
+      ["Others", "0"],
+      ["Total", "82600"],
+    ];
+
+    tableData3 = [
+      ["Payment", "Ref. No.", "Date", "Amount"],
+      ["DU", "", "", ""],
+      ["DU", "", "", ""],
+      ["DU", "", "", ""],
+      ["", "", "Total", ""],
+    ];
+
+    tableData4 = [
+      ["Bank Name", "D.D No.", "Date", "Amount"],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "", ""],
+      ["", "", "Total", ""],
+    ];
+    // studentDetails = {};
+    // await fetchData(studentData, res);
+
+    const doc = new PDFDocument({ size: "A3" });
+
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="table_example.pdf"'
+    );
+    res.setHeader("Content-Type", "application/pdf");
+
+    doc.pipe(res);
+
+    doc.fontSize(11);
+    const table1 = {
+      headers: tableData1[0],
+      rows: tableData1.slice(1),
+    };
+
+    const table2 = {
+      headers: tableData2[0],
+      rows: tableData2.slice(1),
+    };
+
+    const table3 = {
+      headers: tableData3[0],
+      rows: tableData3.slice(1),
+    };
+
+    const table4 = {
+      headers: tableData4[0],
+      rows: tableData4.slice(1),
+    };
+
+    doc.image(cwd + "/routes/COEP_Logo.png", {
+      width: 40,
+      height: 40,
+      x: 230,
+      y: 45,
+    });
+
+    doc.image(cwd + "/routes/Images/greenTick.png", {
+      width: 50,
+      height: 50,
+      x: 700,
+      y: 1050,
+      opacity: 0.01,
+    });
+
+    doc
+      .fontSize(14)
+      .font("Helvetica-Bold")
+      .text("COEP TECHNOLOGICAL UNIVERSITY, PUNE", 90, 50, { align: "center" });
+
+    doc
+      // .fontSize(14)
+      .font("Helvetica")
+      .text("5, Wellesly Road, Shivajinagar, Pune 411005", 90, 70, {
+        align: "center",
+      });
+
+    doc
+      // .fontSize(15)
+      .font("Helvetica-Bold")
+      .text("Fee Receipt", 60, 330, { align: "center" });
+
+    doc
+      // .fontSize(15)
+      .font("Helvetica-Bold")
+      .text("Online Payment Details", 170, 900, { align: "left" });
+
+    doc
+      // .fontSize(15)
+      .font("Helvetica-Bold")
+      .text("Demand Draft Payment", 450, 900, { align: "center" });
+
+    doc
+      // .fontSize(15)
+      .font("Helvetica-Bold")
+      .text("Student Details", 60, 120, { align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Name - Chinmay Milind Sheth`, 90, 200, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Mobile Number - 9273606333`, 90, 220, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Class - Second Year BTech`, 90, 240, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`MIS Number - 142203003`, 90, 260, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Branch - Computer Engineering`, 90, 280, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Category - EWS`, 90, 300, {align: "center" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(`Date of Payment - ${currentDate}`, 90, 320, {align: "center" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Place : Pune`, 50, 1050, { align: "Left" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Date: ${currentDate}`, 50, 1070, { align: "left" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Digitally Signed By`, 90, 1050, { align: "right" });
+
+    doc.font("Helvetica").text(`Pratyay Dhond`, 90, 1070, { align: "right" });
+
+    doc
+      // .fontSize(12)
+      .font("Helvetica-Bold")
+      .text(`Date: ${formattedDateTime}`, 90, 1090, { align: "right" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(
+    //     `Note: Please retain this copy till pass out from college.`,
+    //     50,
+    //     900,
+    //     { align: "center" }
+    //   );
+
+    // Draw the table
+    drawTable1(doc, table1, {
+      x: 50,
+      y: 140,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [365, 365],
+    });
+
+    drawTable2(doc, table2, {
+      x: 50,
+      y: 350,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [365, 365],
+    });
+
+    drawTable2(doc, table3, {
+      x: 50,
+      y: 920,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [87, 87, 87, 87],
+    });
+
+    drawTable2(doc, table4, {
+      x: 430,
+      y: 920,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [85, 85, 85, 85],
+    });
+
+    doc.end();
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    res.status(500).send("Error generating PDF");
+  }
+});
+
+// Function to draw a table in the PDF document with custom column widths and alignments
+function drawTable1(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 20;
+
+  doc.font("Helvetica");
+  doc.fontSize(11);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      //align: "left",
+      align: i === 1 ? "center" : "left",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(11);
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "center" : "left"; // Align 'Course Name' column to the left
+
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
+
+function drawTable2(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 18;
+
+  doc.font("Helvetica-Bold");
+  doc.fontSize(11);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      align: "center",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(11);
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "center" : "left"; // Align 'Course Name' column to the left
+
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
 module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
