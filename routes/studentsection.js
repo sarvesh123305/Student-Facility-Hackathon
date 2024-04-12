@@ -7,6 +7,8 @@ const config = require("config");
 const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
+const bonafides = require('../models/Bonafide');
+// const { default: Bonafides } = require("../client/src/pages/StudentSection/Bonafides");  
 // const Message = require("../models/Messages");
 //@routes POST api/others
 //@desc Register to a others;
@@ -113,4 +115,25 @@ router.post(
     }
   }
 );
+
+router.get('/bonafideApplications', async (req, res) => {
+  try {
+    // Fetch all bonafide applications from the collection
+    const bonafideApplications = await bonafides.find();
+
+    // Check if any bonafide applications were found
+    if (!bonafideApplications || bonafideApplications.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    // Return the bonafide applications as JSON response
+    res.json(bonafideApplications);
+  } catch (err) {
+    // Log and send an error response if an error occurs
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+});
+
+
 module.exports = router;
