@@ -16,7 +16,7 @@ const Login = (props) => {
   useEffect(() => {
     if (isAuthenticated) {
       if (role === "Student") navigate("/");
-      // if (role === "Faculty") navigate("/Faculty/");
+      if (role === "Faculty") navigate("/Faculty/");
     }
 
     if (error === "Invalid Credentials") {
@@ -65,7 +65,7 @@ const Login = (props) => {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
+          Sign in to your account {role}
         </h2>
       </div>
 

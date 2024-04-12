@@ -8,7 +8,8 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
-  LOGIN_SUCCESS,
+  LOGIN_SUCCESS_STUDENT,
+  LOGIN_SUCCESS_FACULTY,
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
@@ -22,6 +23,7 @@ const AuthState = (props) => {
     loading: true,
     user: null,
     error: null,
+    userType: null,
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -34,7 +36,7 @@ const AuthState = (props) => {
 
     try {
       const res = await axios.get("/api/auth/student");
-      // console.log("Data got", res);
+      console.log("Data got", res);
       dispatch({
         type: USER_LOADED,
         payload: res.data,
@@ -76,15 +78,20 @@ const AuthState = (props) => {
       },
     };
     try {
-      console.log(formData);
+      // console.log(formData);
+      console.log("lalala");
+
       const res = await axios.post("/api/auth/student", formData, config);
       console.log("data to be seen", res.data.token);
+
       dispatch({
-        type: LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS_STUDENT,
         payload: res.data,
       });
       // loadUser();
     } catch (err) {
+      console.log("Yerror occured");
+
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
@@ -113,7 +120,7 @@ const AuthState = (props) => {
       );
       console.log("data to be seen", res.data.token);
       dispatch({
-        type: LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS_FACULTY,
         payload: res.data,
       });
       // loadUser();
@@ -140,6 +147,7 @@ const AuthState = (props) => {
         loading: state.loading,
         user: state.user,
         error: state.error,
+        userType: state.userType,
         register,
         loadUser,
         Studentlogin,

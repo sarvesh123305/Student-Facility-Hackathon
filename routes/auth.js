@@ -39,7 +39,6 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //bad request
     }
     const { mis, password } = req.body;
-
     try {
       let user = await Student.findOne({ mis });
       if (!user) {

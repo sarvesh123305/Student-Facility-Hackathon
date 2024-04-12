@@ -3,7 +3,8 @@ import {
   REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
-  LOGIN_SUCCESS,
+  LOGIN_SUCCESS_STUDENT,
+  LOGIN_SUCCESS_FACULTY,
   LOGIN_FAIL,
   LOGOUT,
   CLEAR_ERRORS,
@@ -18,7 +19,7 @@ export default (state, action) => {
         loading: false,
         user: action.payload,
       };
-    case LOGIN_SUCCESS:
+    case LOGIN_SUCCESS_STUDENT:
     case REGISTER_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
@@ -26,6 +27,16 @@ export default (state, action) => {
         ...action.payload,
         isAuthenticated: true,
         loading: false,
+        userType: "student",
+      };
+    case LOGIN_SUCCESS_FACULTY:
+      localStorage.setItem("token", action.payload.token);
+      return {
+        ...state,
+        ...action.payload,
+        isAuthenticated: true,
+        loading: false,
+        userType: "faculty",
       };
     case LOGOUT:
     case LOGIN_FAIL:

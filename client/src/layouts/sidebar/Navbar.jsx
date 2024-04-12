@@ -1,8 +1,10 @@
-import React from "react";
-
+import React, { useContext } from "react";
+import AuthContext from "../../components/context/auth/authContext";
 const Navbar = () => {
+  const authContext = useContext(AuthContext);
+  const { user } = authContext;
   return (
-    <div className="flex flex-row h-16 p-2 bg-white justify-between ">
+    <div className="flex flex-row  p-2 bg-white justify-between ">
       <div className="">
         <input
           type="search"
@@ -11,12 +13,24 @@ const Navbar = () => {
           placeholder="Type a Search"
         />
       </div>
-      <div className="">
-        <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-          className="w-8 mr-6 mt-2 rounded-full"
-          alt="Avatar"
-        />
+      <div className="flex">
+        <div className="">
+          <img
+            src={window.location.origin + "/images/notification.png"}
+            className="w-7  rounded-full"
+            alt="Avatar"
+          />
+        </div>
+        <div className="flex ml-5">
+          <div>
+            <img
+              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              className="w-8 mr-2 rounded-full"
+              alt="Avatar"
+            />
+          </div>
+          <h3 className="mr-2 mt-1 font-medium">{user && user.name}</h3>
+        </div>
       </div>
     </div>
   );

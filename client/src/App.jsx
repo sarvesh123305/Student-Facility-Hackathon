@@ -13,6 +13,8 @@ import Alerts from "./layouts/Alerts";
 import { Fragment } from "react";
 import Navbar from "./layouts/sidebar/Navbar";
 import Sidebar from "./layouts/sidebar";
+import AdminHome from "./pages/Faculty/AdminHome";
+import RequestBonafide from "./pages/Student/RequestBonafide";
 const App = () => {
   return (
     <AuthState>
@@ -25,6 +27,17 @@ const App = () => {
               <div className="flex-col w-full">
                 <Navbar />
                 <Routes>
+                  {/* STUDENT ROUTES*/}
+                  <Route
+                    path="/RequestBonafide/"
+                    element={<RequestBonafide />}
+                  />
+
+                  {/* FACULTY ROUTES*/}
+                  <Route path="/Faculty/" element={<AdminHome />} />
+
+                  {/* OTHER ROUTES*/}
+
                   <Route path="/" element={<AllApps />} />
                   <Route path="/authentication" element={<Authentication />} />
                   <Route path="/login" element={<Login role="Student" />} />

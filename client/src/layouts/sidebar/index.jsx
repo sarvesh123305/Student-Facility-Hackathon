@@ -13,7 +13,7 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { RiBuilding3Line } from "react-icons/ri";
 import { useMediaQuery } from "react-responsive";
 import { MdMenu } from "react-icons/md";
-import { NavLink, useLocation, useRoutes } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import AuthContext from "../../components/context/auth/authContext";
 const Sidebar = () => {
   let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
@@ -21,7 +21,7 @@ const Sidebar = () => {
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const authContext = useContext(AuthContext);
-  const { user } = authContext;
+  const { user, userType } = authContext;
   useEffect(() => {
     if (isTabletMid) {
       setOpen(false);
@@ -67,19 +67,113 @@ const Sidebar = () => {
         },
       };
 
-  const subMenusList = [
+  const subMenusListStudent = [
     {
-      name: "build",
-      icon: RiBuilding3Line,
-      menus: ["auth", "app settings", "stroage", "hosting"],
+      name: "Academics",
+      icon: BsPerson,
+      menus: [
+        "Academic Profile",
+        "Semester Credit Registration",
+        "Elective Registration",
+      ],
     },
     {
-      name: "analytics",
+      name: "Scholarship",
       icon: TbReportAnalytics,
-      menus: ["dashboard", "realtime", "events"],
+      menus: [
+        "Scholarships Available",
+        "Request Bonafide",
+        "Letter Formats",
+        "Queries",
+      ],
     },
   ];
+  const subMenusListFaculty = [
+    {
+      name: "Manage Academics",
+      icon: BsPerson,
+      menus: [
+        "Academic Profile",
+        "Semester Credit Registration",
+        "Elective Registration",
+      ],
+    },
+  ];
+  const FacultyMenubar = () => {
+    return (
+      <ul
+        className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1
+      font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   
+      md:h-[68%] h-[70%]"
+      >
+        <li>
+          <NavLink to={"/"} className="link">
+            <AiOutlineAppstore size={23} className="min-w-max" />
+            Profile
+          </NavLink>
+        </li>
 
+        {(open || isTabletMid) && (
+          <div className="border-slate-300 ">
+            {subMenusListFaculty?.map((menu) => (
+              <div key={menu.name} className="flex flex-col gap-1">
+                <SubMenu data={menu} />
+              </div>
+            ))}
+          </div>
+        )}
+        <li>
+          <NavLink to={"/stroage"} className="link">
+            <HiOutlineDatabase size={23} className="min-w-max" />
+            Manage Result
+          </NavLink>
+        </li>
+      </ul>
+    );
+  };
+  const StudentMenubar = () => {
+    return (
+      <ul
+        className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1
+      font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   
+      md:h-[68%] h-[70%]"
+      >
+        <li>
+          <NavLink to={"/"} className="link">
+            <AiOutlineAppstore size={23} className="min-w-max" />
+            Profile
+          </NavLink>
+        </li>
+
+        {(open || isTabletMid) && (
+          <div className="border-slate-300 ">
+            {subMenusListStudent?.map((menu) => (
+              <div key={menu.name} className="flex flex-col gap-1">
+                <SubMenu data={menu} />
+              </div>
+            ))}
+          </div>
+        )}
+        <li>
+          <NavLink to={"/stroage"} className="link">
+            <HiOutlineDatabase size={23} className="min-w-max" />
+            Result
+          </NavLink>
+        </li>
+      </ul>
+    );
+  };
+  const getMenubar = (role) => {
+    switch (role) {
+      case "student":
+        return <StudentMenubar />;
+      case "faculty":
+        return <FacultyMenubar />;
+      default:
+        return <StudentMenubar />;
+      // return <h1>Please Login</h1>;
+    }
+  };
   return (
     <div>
       <div
@@ -107,45 +201,9 @@ const Sidebar = () => {
         </div>
 
         <div className="flex flex-col  h-full">
-          <ul className="whitespace-pre px-2.5 text-[0.9rem] py-5 flex flex-col gap-1  font-medium overflow-x-hidden scrollbar-thin scrollbar-track-white scrollbar-thumb-slate-100   md:h-[68%] h-[70%]">
-            <li>
-              <NavLink to={"/"} className="link">
-                <AiOutlineAppstore size={23} className="min-w-max" />
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/authentication"} className="link">
-                <BsPerson size={23} className="min-w-max" />
-                Academic Profile
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to={"/stroage"} className="link">
-                <HiOutlineDatabase size={23} className="min-w-max" />
-                Notifications
-              </NavLink>
-            </li>
-
-            {(open || isTabletMid) && (
-              <div className="border-y py-5 border-slate-300 ">
-                <small className="pl-3 text-slate-500 inline-block mb-2">
-                  Product categories
-                </small>
-                {subMenusList?.map((menu) => (
-                  <div key={menu.name} className="flex flex-col gap-1">
-                    <SubMenu data={menu} />
-                  </div>
-                ))}
-              </div>
-            )}
-            <li>
-              <NavLink to={"/settings"} className="link">
-                <SlSettings size={23} className="min-w-max" />
-                Settings
-              </NavLink>
-            </li>
-          </ul>
+          {/*Here ul to be inserted */}
+          {getMenubar(userType)}
+          {}
           {open && (
             <div className="flex-1 text-sm z-50  max-h-48 my-auto  whitespace-pre   w-full  font-medium  ">
               <div className="flex border-y border-slate-300 p-4 items-center justify-start hover:bg-gray-300">
