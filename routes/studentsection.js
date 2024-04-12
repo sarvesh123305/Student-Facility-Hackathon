@@ -66,9 +66,9 @@ router.post(
 // @desc Get all queries asked so far from different students
 // @access private
 
-router.get("/queries", auth("studentsection"), async (req, res) => {
+router.get("/queries", auth("others"), async (req, res) => {
   try {
-    const studentQueries = await Messages.find({ to: "Students Section" });
+    const studentQueries = await Messages.find({ to: "students section" });
     res.json(studentQueries);
   } catch (err) {
     console.error(err.message);
@@ -82,7 +82,7 @@ router.get("/queries", auth("studentsection"), async (req, res) => {
 
 router.post(
   "/queries/:messageId",
-  [auth("studentsection"), [check("query", "Please enter a query").notEmpty()]],
+  [auth("faculty"), [check("query", "Please enter a query").notEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
