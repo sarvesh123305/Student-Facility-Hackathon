@@ -21,7 +21,7 @@ const PDFDocument = require("pdfkit");
 const axios = require("axios");
 const { format } = require("date-fns");
 const SemesterCreditRegistration = require("../models/SemesterCreditRegistration");
-const {userData} = require('./userData')
+const { userData } = require("./userData");
 const mongodbURLURIOPTIMIZE = config.get("mongoURI");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
@@ -1565,84 +1565,108 @@ router.post("/fillFeeReceit", async (req, res) => {
     res.status(500).json({ error: "Server error occurred" });
   }
 });
-module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
 document.getElementById("password").value = "password123"
 */
 
-
-async function publishSubjectsToDB (userData)  {
-    
-    const semesters = userData['academicprofiles']['semesters']
-    semesterSubjectKeys = []
-    for(var i = 0; i < semesters.length;i++){
-      var currentSubjectArray = semesters[i]['subjects'];
-      var subjectKeys = [];
-      for(var j = 0; j < currentSubjectArray.length; j++){
-        var currentSubject = currentSubjectArray[j];
-        for(var k = 0; k < currentSubjectArray[j]['subjects'].length; k++){
-          var key = await addDocumentToCollection(currentSubjectArray[j]['subjects'][k],"test","subjects")
-          subjectKeys.push(key.insertedId);
-        }
+async function publishSubjectsToDB(userData) {
+  const semesters = userData["academicprofiles"]["semesters"];
+  semesterSubjectKeys = [];
+  for (var i = 0; i < semesters.length; i++) {
+    var currentSubjectArray = semesters[i]["subjects"];
+    var subjectKeys = [];
+    for (var j = 0; j < currentSubjectArray.length; j++) {
+      var currentSubject = currentSubjectArray[j];
+      for (var k = 0; k < currentSubjectArray[j]["subjects"].length; k++) {
+        var key = await addDocumentToCollection(
+          currentSubjectArray[j]["subjects"][k],
+          "test",
+          "subjects"
+        );
+        subjectKeys.push(key.insertedId);
       }
-        semesterSubjectKeys.push(subjectKeys);
     }
-    console.log(semesterSubjectKeys)
-    return semesterSubjectKeys;
+    semesterSubjectKeys.push(subjectKeys);
+  }
+  console.log(semesterSubjectKeys);
+  return semesterSubjectKeys;
 }
 
-async function publishAcademicDetailsToDB(userData,semesterSubjectKeys) {
-    // Insert academicDetails
-    var academicProfileData = userData['academicprofiles']
-    console.log(academicProfileData)
+async function publishAcademicDetailsToDB(userData, semesterSubjectKeys) {
+  // Insert academicDetails
+  var academicProfileData = userData["academicprofiles"];
+  console.log(academicProfileData);
 
-    for(var i = 0; i < semesterSubjectKeys.length; i++){
-      academicProfileData['semesters'][i]['subjects'][0]['subjects'] = []; 
-      academicProfileData['semesters'][i]['subjects'][0]['subjects'] = semesterSubjectKeys[i]; 
-    }
-    var academicProfileKey = await addDocumentToCollection(academicProfileData,"test","academicprofiles")
-    console.log(academicProfileData)
-    console.log(academicProfileKey.insertedId)
-    return academicProfileKey.insertedId
+  for (var i = 0; i < semesterSubjectKeys.length; i++) {
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] = [];
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] =
+      semesterSubjectKeys[i];
+  }
+  var academicProfileKey = await addDocumentToCollection(
+    academicProfileData,
+    "test",
+    "academicprofiles"
+  );
+  console.log(academicProfileData);
+  console.log(academicProfileKey.insertedId);
+  return academicProfileKey.insertedId;
 }
 
-async function publishStudentDetailsToDB(userData){
-    // Insert Student Details
+async function publishStudentDetailsToDB(userData) {
+  // Insert Student Details
 
-    var studentDetailsData = userData['studentinformations']
-    console.log(studentDetailsData)
-    var studentInformationKey = await addDocumentToCollection(studentDetailsData,"test","studentinformations")
-    console.log(studentInformationKey.insertedId)
-    return studentInformationKey.insertedId;
+  var studentDetailsData = userData["studentinformations"];
+  console.log(studentDetailsData);
+  var studentInformationKey = await addDocumentToCollection(
+    studentDetailsData,
+    "test",
+    "studentinformations"
+  );
+  console.log(studentInformationKey.insertedId);
+  return studentInformationKey.insertedId;
 }
 
-async function publishStudentDataToDB(userData,academicProfileKey,studentInformationKey){
-    // insert to the first instance Document : 
-    var studentData = userData;
-    studentData['studentinformations'] = studentInformationKey
-    studentData['academicprofiles'] = academicProfileKey
-    var studentKey = await addDocumentToCollection(studentData,"test","students")
-    console.log(studentKey.insertedId)
-    return studentKey.insertedId
+async function publishStudentDataToDB(
+  userData,
+  academicProfileKey,
+  studentInformationKey
+) {
+  // insert to the first instance Document :
+  var studentData = userData;
+  studentData["studentinformations"] = studentInformationKey;
+  studentData["academicprofiles"] = academicProfileKey;
+  var studentKey = await addDocumentToCollection(
+    studentData,
+    "test",
+    "students"
+  );
+  console.log(studentKey.insertedId);
+  return studentKey.insertedId;
 }
 router.post("/postToDB", async (req, res) => {
+  // const id = req.student.id;
+  try {
+    const { userData } = req.body;
+    // console.log(userData)
+    res.json({ message: "hi" });
 
-    // const id = req.student.id;
-try{
-  const {userData} = req.body;
-  // console.log(userData)
-  res.json({message:'hi'})
-  
-  var semesterSubjectKeys = await publishSubjectsToDB(userData) 
-  var academicProfileKey = await publishAcademicDetailsToDB(userData,semesterSubjectKeys)
-  var studentInformationKey = await publishStudentDetailsToDB(userData)
+    var semesterSubjectKeys = await publishSubjectsToDB(userData);
+    var academicProfileKey = await publishAcademicDetailsToDB(
+      userData,
+      semesterSubjectKeys
+    );
+    var studentInformationKey = await publishStudentDetailsToDB(userData);
 
-  // the following key would not be needed tho as MIS would be the PK for accessing the values
-  var userDataUploadAccessKey = await publishStudentDataToDB(userData,academicProfileKey, studentInformationKey)
-  console.log(userDataUploadAccessKey)
-}catch(err){
-  console.log(err)
-}
-
+    // the following key would not be needed tho as MIS would be the PK for accessing the values
+    var userDataUploadAccessKey = await publishStudentDataToDB(
+      userData,
+      academicProfileKey,
+      studentInformationKey
+    );
+    console.log(userDataUploadAccessKey);
+  } catch (err) {
+    console.log(err);
+  }
 });
+module.exports = router;
