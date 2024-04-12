@@ -1331,7 +1331,7 @@ router.post("/FeeReceipt", async (req, res) => {
 // Function to draw a table in the PDF document with custom column widths and alignments
 function drawTable1(doc, table, options) {
   let { x, y, padding, lineSpace, colWidths } = options;
-  const rowHeight = 20;
+  const rowHeight = 18;
 
   doc.font("Helvetica");
   doc.fontSize(11);
