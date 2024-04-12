@@ -36,6 +36,8 @@ router.post(
   ],
   async (req, res) => {
     const errors = validationResult(req);
+    const salt = await genSalt(10); // 10 is number of rounds it takes , that is how secureit must be
+    console.log("Passowrd", await hash("password123", salt));
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() }); //bad request
     }

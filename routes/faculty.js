@@ -7,6 +7,11 @@ const config = require("config");
 const Faculty = require("../models/Faculty");
 const auth = require("../middleware/auth")
 
+const { MongoClient } = require('mongodb');
+
+const uri = 'mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper'; // MongoDB Atlas connection URI
+const client = new MongoClient(uri);
+
 //@routes POST api/faculty
 //@desc Register to a faculty;
 //@access public
@@ -63,32 +68,222 @@ router.post(
     }
   }
 );
+async function connectToAtlas() {
+  try {
+      await client.connect();
+      console.log('Connected to MongoDB Atlas');
+  } catch (error) {
+      console.error('Error connecting to MongoDB Atlas:', error);
+  }
+}
 
 
-// router.get("/elective", auth("faculty"), async (req, res) =>  {
+async function getAllDocumentsFromCollection(dbName, col) {
+  try {
 
-//   try {
-//     // get result of eletives alloted to the students
-//     const result = 
+      const db = client.db(dbName);
+      const collection = db.collection(col);
+      const documents = await collection.find({}).toArray();
+      return documents;
 
-//     res.json(result);
-//   } catch (error) {
-//     res.status(500).send("Internal Server Error");
-//   }
-// });
+  } catch (error) {
+      throw error;
+  }
+}
 
-// router.post("/elective", auth("faculty"), async (req, res) =>  {
 
-// try {
+router.get("/elective/results/:dbName", async (req, res) =>  {
+
+    try {
+      // get alloted elective from the respective database
+      const dbName = req.params.dbName;
+      connectToAtlas();
+      getAllDocumentsFromCollection(dbName, "Results")
+              .then(documents => {
+                  res.json(documents)
+              })
+              .catch(error => {
+                  console.error('Error fetching documents:', error);
+              });
   
-//   const id = req.faculty.id;
-//   const {preferences} = req.body;
-//   // Create an elective form
-//   const result = 
-//   res.json(result);
-// } catch (error) {
-//   res.status(500).send("Internal Server Error");
-// }
+    } catch (error) {
+      res.status(500).send("Internal Server Error");
+    }
+
+    // await client.close()
+
+});
+
+router.get("/elective/responses/:dbName", async (req, res) =>  {
+
+  try {
+    const dbName = req.params.dbName;
+    connectToAtlas();
+    getAllDocumentsFromCollection(dbName, "Responses")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+  } 
+  catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+
+  // await client.close()
+
+});
+
+// function createSchemas(id, electivedetails){
+//   const elective = new mongoose.Schema({
+//     data: { type: mongoose.Schema.Types.Mixed, required: true },
 // });
+
+
+
+// }
+
+
+async function createCollectionInAtlas(dbName, collectionName) {
+  try {
+      const db = client.db(dbName);
+      await db.createCollection(collectionName);
+      console.log('Collection created in MongoDB Atlas:', collectionName);
+  } catch (error) {
+      console.error('Error creating collection in MongoDB Atlas:', error);
+  }
+}
+
+async function addDocumentToCollection(document, dbName, collectionName) {
+  try {
+      const db = client.db(dbName);
+      const collection = db.collection(collectionName);
+
+      const result = await collection.insertOne(document);
+      console.log('Document added to collection:', result.insertedId);
+  } catch (error) {
+      console.error('Error adding document to collection:', error);
+  }
+}
+
+
+router.post("/elective", async (req, res) =>  {
+
+try {
+  
+  const preferences = req.body;
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+
+  let db = preferences['NameOfSubject'] + " " +  currentYear;
+
+  const dbName = db.replace(/\s+/g, '_');
+
+  connectToAtlas();
+  createCollectionInAtlas(dbName, "Details")
+  addDocumentToCollection(preferences, dbName, "Details")
+  createCollectionInAtlas(dbName, "Responses")
+  createCollectionInAtlas(dbName, "Results")
+
+  res.json(preferences['NameOfSubject']);
+
+} catch (error) {
+  res.status(500).send("Internal Server Error");
+}
+});
+
+router.get("/allotElective/:dbName", async(req, res) => {
+
+  try {
+    const dbName = req.params.dbName;
+    await initAllotment(dbName)
+    res.send("Successfully Fetched")
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+
+});
+
+function sumDictionaryValues(dict) {
+  let sum = 0;
+  const values = Object.values(dict);
+  for (const value of values) {
+    if (typeof value === 'number') {
+      sum += value;
+    }
+  }
+  return sum;
+}
+const Seats ={ WST: 2, SP: 2, ADS: 2}
+const total = sumDictionaryValues(Seats)
+
+const sortDataByCGPAAndSGPA = (data) => {
+  return data.sort((a, b) => {
+    if (parseFloat(a.CGPA) !== parseFloat(b.CGPA)) {
+      return parseFloat(b.CGPA) - parseFloat(a.CGPA); // Descending order
+    } else {
+      return parseFloat(b.SGPA) - parseFloat(a.SGPA); // Descending order
+    }
+  });
+};
+
+
+const allocateSubjects = (data) => {
+  if (data.length > total) {
+    console.log("Allocation not possible");
+    return;
+  }
+  sortDataByCGPAAndSGPA(data);
+  let arr = [];
+  for(const student of data){
+    console.log(student)
+    console.log('-----------------------------------')
+  }
+
+  // Elective Allocation code should be placed here
+
+
+};
+
+
+
+async function allotElective(documents, dbName, studentCollection){
+
+try {
+  const students = []
+  const database = client.db("Student")
+  for (const document of documents) {
+    const student = await database.collection(studentCollection).findOne({ MIS: document.MIS });
+    student['Preferences'] = document['Preferences']
+    student['NameOfSubject'] = dbName
+    students.push(student)
+  }
+
+  // for(const student of students){
+  //   console.log(student)
+  //   console.log('-----------------------------------')
+  // }
+  allocateSubjects(students)
+
+
+}
+catch (error) {
+  console.error('Error fetching data:', error);
+} finally {
+  await client.close();
+}
+}
+async function initAllotment(dbName){
+  connectToAtlas();
+  getAllDocumentsFromCollection(dbName, "Responses")
+          .then(documents => {
+              allotElective(documents, dbName, "CS3")
+          })
+          .catch(error => {
+              console.error('Error fetching documents:', error);
+          });
+}
 
 module.exports = router;

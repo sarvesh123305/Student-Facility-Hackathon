@@ -5,7 +5,7 @@ import Analytics from "./pages/Analytics";
 import Authentication from "./pages/Authentication";
 import Build from "./pages/Build";
 import Settings from "./pages/Settings";
-import Stroage from "./pages/Stroage";
+import Storage from "./pages/Storage";
 import Login from "./components/auth/student/Login";
 import AuthState from "./components/context/auth/AuthState";
 import AlertState from "./components/context/alert/AlertState";
@@ -20,6 +20,9 @@ import Subjectallocation from "./pages/Student/Subjectallocation";
 import Academic from "./pages/Student/Academic";
 import Profiletry from "./pages/Student/profiletry";
 import ScholarshipQueries from "./pages/Student/ScholarshipQueries";
+import Home from "./pages/Student/Home";
+import Query from "./pages/Student/Query";
+import Allocationform from "./pages/Faculty/Allocationform";
 const App = () => {
   return (
     <AuthState>
@@ -35,6 +38,7 @@ const App = () => {
                   <Routes>
                     {/* STUDENT ROUTES*/}
                     <Route path="/academic" element={<Academic />} />
+                    <Route path="/elective" element={<Home />} />
                     <Route
                       path="/subjectallocation"
                       element={<Subjectallocation />}
@@ -69,11 +73,16 @@ const App = () => {
                       element={<Login role="other" />}
                     />
 
-                    <Route path="/stroage" element={<Stroage />} />
+                    <Route path="/storage" element={<Storage />} />
                     <Route path="/settings" element={<Settings />} />
                     <Route path="/build/:bID" element={<Build />} />
                     <Route path="/analytics/:aID" element={<Analytics />} />
                     <Route path="/profiletry" element={<Profiletry />} />
+                    <Route path="/studentquery" element={<Query />} />
+                    <Route
+                      path="/allocationform"
+                      element={<Allocationform />}
+                    />
                   </Routes>
                 </div>
               </div>

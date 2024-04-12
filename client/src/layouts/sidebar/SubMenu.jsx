@@ -36,7 +36,6 @@ const SubMenu = ({ data }) => {
         {data.menus?.map((menu) => (
           <li key={menu}>
             {/* className="hover:text-blue-600 hover:font-medium" */}
-            {console.log(menu)}
             <NavLink
               to={`/${data.name}/${removeSpaces(menu)}`}
               className="link !bg-transparent capitalize"

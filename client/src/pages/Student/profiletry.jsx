@@ -1,4 +1,5 @@
 import profileImage from "../../../public/images/coeplogo.png";
+import Academic from "./Academic";
 function Profiletry() {
   return (
     <div className="bg-white py-12 sm:py-8">
@@ -8,8 +9,16 @@ function Profiletry() {
             Student Personal Info
           </h1>
           <div className="profileoptions mt-8 sm:mt-12 pl-4">
-            <h3>Update Profile</h3>
-            <h3>Academic Profile</h3>
+            <div className="flex">
+              <ion-icon name="create-outline"></ion-icon>
+              <h3 className="ml-2">Update Profile</h3>
+            </div>
+            <div className="flex">
+              <ion-icon name="book-outline"></ion-icon>
+              <h3 className="ml-2">
+                <a href="Academic"> Academic Profile</a>
+              </h3>
+            </div>
           </div>
         </div>
         <div className="photo w-48 h-64">
@@ -22,7 +31,7 @@ function Profiletry() {
         <h2 className="text-left text-lg font-semibold leading-8 text-gray-900">
           Student Information
         </h2>
-        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-lg ">
+        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-md ">
           <div className="w-full object-contain whitespace-normal">
             <b> MIS Number </b>: 112103144
           </div>
@@ -51,7 +60,7 @@ function Profiletry() {
         <h2 className="text-left text-lg font-semibold leading-8 text-gray-900">
           Family Information
         </h2>
-        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-lg">
+        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-md">
           <div className="w-full object-contain whitespace-normal">
             <b> Father's Name</b> : XYZ
           </div>
@@ -74,7 +83,7 @@ function Profiletry() {
         <h2 className="text-left text-lg font-semibold leading-8 text-gray-900">
           Contact Information
         </h2>
-        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-lg">
+        <div className="mx-auto mb-10 px-4 py-4 grid max-w-[90%] grid-cols-1 items-center gap-x-4 gap-y-6 sm:max-w-[90vw] sm:grid-cols-2 lg:grid-cols-3 lg:max-w-none shadow-md">
           <div className="w-full object-contain whitespace-normal">
             <b> Permanent Address</b> : xyz
           </div>

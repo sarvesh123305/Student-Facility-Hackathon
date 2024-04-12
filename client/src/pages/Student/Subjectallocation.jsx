@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "../../css/Subjectallocation.css";
 
 function Subjectallocation() {
-  const options = ["WST", "ADS", "SP"];
+  const options = ["WST", "ADS", "SP", "BP"];
 
   return (
     <div className="electives bg-white">
@@ -46,33 +46,18 @@ function Subjectallocation() {
           </Box>
         </div>
         <div className="preference">
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={options}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Preference 1" />
-            )}
-          />
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={options}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Preference 2" />
-            )}
-          />
-          <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={options}
-            sx={{ width: 300 }}
-            renderInput={(params) => (
-              <TextField {...params} label="Preference 3" />
-            )}
-          />
+          {options.map((option, index) => (
+            <Autocomplete
+              key={index}
+              disablePortal
+              id="combo-box-demo"
+              options={options}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label={`Preference ${index + 1}`} />
+              )}
+            />
+          ))}
         </div>
       </div>
       <div className="text-center">

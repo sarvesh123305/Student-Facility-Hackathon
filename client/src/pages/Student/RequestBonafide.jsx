@@ -38,14 +38,14 @@ const RequestBonafide = () => {
   };
   return (
     <div className="">
-      <div className="bg-white m-2 flex flex-1 flex-col ">
+      <div className="bg-white m-2 flex flex-1 flex-col h-screen">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Request for bonafide
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
+        <div className="px-2 mt-10 sm:mx-auto sm:w-full sm:max-w-xl">
           <form className="space-y-6" id="loginform" onSubmit={onSubmit}>
             <fieldset>
               <legend className="text-md font-bold leading-6 text-gray-900">

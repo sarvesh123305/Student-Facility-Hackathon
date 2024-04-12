@@ -5,6 +5,7 @@ const StudentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+
   mis: {
     type: String,
     required: true,
@@ -14,12 +15,6 @@ const StudentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  sgpa: {
-    type: Map,
-    of: String,
-    required: true,
-    default: {},
-  },
   totalCreditsEarned: {
     type: String,
     required: true,
@@ -28,10 +23,7 @@ const StudentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  department: {
-    type: String,
-    required: true,
-  },
+
   currentyear: {
     type: String,
     required: true,
@@ -40,6 +32,19 @@ const StudentSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+
+  // ref studentInformation
+  studentInformation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "StudentInformation",
+  },
+  // Reference to AcademicProfile schema
+  academicProfile: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "AcademicProfile",
+  },
+  // ref Academic Profile
+  //
   date: {
     type: Date,
     default: Date.now,
