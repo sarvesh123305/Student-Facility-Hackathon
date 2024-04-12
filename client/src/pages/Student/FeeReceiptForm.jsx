@@ -1,17 +1,42 @@
 import React, { useState } from "react";
-
+import axios from "axios";
 const FeeReceiptForm = () => {
   // Initialize state for form values
   const [formData, setFormData] = useState({
     FullName: "",
-    year: "",
+    Year: "",
     MobileNumber: "",
-    MIS: "",
-    branch: "",
-    category: "",
+    Mis: "",
+    Branch: "",
+    Category: "",
     DateOfPayment: "",
-    TutionFee: "",
-    // Add more fields as needed
+    TutionFee: 0,
+    DevelopmentFee: "",
+    GymkhanaFee: 0,
+    TnpFee: 0,
+    Library: 0,
+    Laboratory: 0,
+    InternetAndEmail: 0,
+    Gathering: 0,
+    Cmd: 0,
+    BoatClubFee: 0,
+    BoatClubMemFee: 0,
+    StudentAidFund: 0,
+    ExamFee: 0,
+    IdentityCard: 0,
+    UniversityFee: 0,
+    AluminiFee: 0,
+    HostelFee: 0,
+    HostelDepost: 0,
+    AraiLibFee: 0,
+    AraiCompFee: 0,
+    AraiLabFee: 0,
+    AraiAluminiFee: 0,
+    LeavingCert: 0,
+    StudentAid: 0,
+    Fine: 0,
+    Other: 0,
+    uploadSbiReceit: "",
   });
 
   // Function to handle input change
@@ -26,22 +51,11 @@ const FeeReceiptForm = () => {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(e.target[0].getAttribute(value))
-    // Create an object containing form data
-    // const formDataObject = {
-    //     FullName: formData.FullName,
-    //     year: formData.year,
-    //     MobileNumber: formData.MobileNumber,
-    //     MIS: formData.MIS,
-    //     branch: formData.branch,
-    //   category: formData.category,
-    //     DateOfPayment: formData.DateOfPayment,
-    //     TutionFee: formData.TutionFee,
-    //     // Add more fields as needed
-    // };
     console.log("Hellloooooooo");
     // Do something with formDataObject, like sending it to an API
     console.log(formData);
+    const res = axios.post("/api/student/FeeReceipt", { formData });
+    console.log(res.data);
   };
 
   return (
@@ -65,15 +79,15 @@ const FeeReceiptForm = () => {
         </div>
         <div>
           <label
-            for="year"
+            for="Year"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Year
           </label>
-          {/* <input type="text" id="year" className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required /> */}
           <select
-            id="year"
+            id="Year"
             onChange={handleInputChange}
+            value={formData.Year}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="" disabled>
@@ -104,14 +118,14 @@ const FeeReceiptForm = () => {
         </div>
         <div>
           <label
-            for="MIS"
+            for="Mis"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
-            MIS
+            Mis
           </label>
           <input
             type="text"
-            id="MIS"
+            id="Mis"
             onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
@@ -119,47 +133,58 @@ const FeeReceiptForm = () => {
         </div>
         <div>
           <label
-            for="branch"
+            for="Branch"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Branch
           </label>
-          {/* <input type="text" id="year" className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required /> */}
           <select
-            id="branch"
+            id="Branch"
             onChange={handleInputChange}
+            value={formData.Branch}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
             <option value="" disabled>
               Select
             </option>
-            <option value="CS">Computer Engineering</option>
-            <option value="EE">Electrical Engineering</option>
-            <option value="ENTC">
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="Electrical Engineering">
+              Electrical Engineering
+            </option>
+            <option value="Electronics and Telecommunication Engineering">
               Electronics and Telecommunication Engineering
             </option>
-            <option value="Civil">Civil Engineering</option>
-            <option value="Mech">Mechanical Engineering</option>
-            <option value="Instru">
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Mechanical Engineering">
+              Mechanical Engineering
+            </option>
+            <option value="Instrumentation and Control Engineering">
               Instrumentation and Control Engineering
             </option>
-            <option value="Prod">Production Engineering</option>
-            <option value="Robo">Robotics and AI Engineering</option>
+            <option value="Production Engineering">
+              Production Engineering
+            </option>
+            <option value="Robotics and AI Engineering">
+              Robotics and AI Engineering
+            </option>
           </select>
         </div>
         <div>
           <label
-            for="category"
+            for="Category"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
-            Year
+            Category
           </label>
-          {/* <input type="text" id="year" className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="" required /> */}
           <select
-            id="category"
+            id="Category"
             onChange={handleInputChange}
+            value={formData.Category}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           >
+            <option value="" disabled>
+              Select
+            </option>
             <option value="Open">Open</option>
             <option value="TFWS">TFWS</option>
             <option value="SC/ST">SC/ST</option>
@@ -196,7 +221,7 @@ const FeeReceiptForm = () => {
             Tution Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="TutionFee"
             onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -211,8 +236,9 @@ const FeeReceiptForm = () => {
             Development Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="DevelopmentFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -225,22 +251,24 @@ const FeeReceiptForm = () => {
             Gymkhana Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="GymkhanaFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="TNP"
+            for="TnpFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Training and Placement
           </label>
           <input
-            type="text"
-            id="TNP"
+            type="number"
+            id="TnpFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -253,8 +281,9 @@ const FeeReceiptForm = () => {
             Library
           </label>
           <input
-            type="text"
+            type="number"
             id="Library"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -267,22 +296,24 @@ const FeeReceiptForm = () => {
             Laboratory
           </label>
           <input
-            type="text"
+            type="number"
             id="Laboratory"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="InternetEmail"
+            for="InternetAndEmail"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Internet & Email
           </label>
           <input
-            type="text"
-            id="InternetEmail"
+            type="number"
+            id="InternetAndEmail"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -295,22 +326,24 @@ const FeeReceiptForm = () => {
             Gathering
           </label>
           <input
-            type="text"
+            type="number"
             id="Gathering"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="CMD"
+            for="Cmd"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             C. M. D. (Refundable)
           </label>
           <input
-            type="text"
-            id="CMD"
+            type="number"
+            id="Cmd"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -323,36 +356,39 @@ const FeeReceiptForm = () => {
             Boat Club Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="BoatClubFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="BoatClubMembership"
+            for="BoatClubMemFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Boat Club Membership
           </label>
           <input
-            type="text"
-            id="BoatClubMembership"
+            type="number"
+            id="BoatClubMemFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="StudentAid"
+            for="StudentAidFund"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Student Aid Fund
           </label>
           <input
-            type="text"
-            id="StudentAid"
+            type="number"
+            id="StudentAidFund"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -365,50 +401,54 @@ const FeeReceiptForm = () => {
             Exam Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="ExamFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="IDCard"
+            for="IdentityCard"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Identity Card
           </label>
           <input
-            type="text"
-            id="IDCard"
+            type="number"
+            id="IdentityCard"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="UniverityFee"
+            for="UniversityFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Univerity Fee
           </label>
           <input
-            type="text"
-            id="UniverityFee"
+            type="number"
+            id="UniversityFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="AlumniMembershipFee"
+            for="AluminiFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Alumni Membership Fee
           </label>
           <input
-            type="text"
-            id="AlumniMembershipFee"
+            type="number"
+            id="AluminiFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -421,106 +461,114 @@ const FeeReceiptForm = () => {
             Hostel Fee
           </label>
           <input
-            type="text"
+            type="number"
             id="HostelFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="HostelDeposit"
+            for="HostelDepost"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Hostel Deposit
           </label>
           <input
-            type="text"
-            id="HostelDeposit"
+            type="number"
+            id="HostelDepost"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="ARAILibrary"
+            for="AraiLibFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             ARAI Library Fee
           </label>
           <input
-            type="text"
-            id="ARAILibrary"
+            type="number"
+            id="AraiLibFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="ARAIComputer"
+            for="AraiCompFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             ARAI Computer Lab Fee
           </label>
           <input
-            type="text"
-            id="ARAIComputer"
+            type="number"
+            id="AraiCompFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="ARAILab"
+            for="AraiLabFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             ARAI Lab Fee
           </label>
           <input
-            type="text"
-            id="ARAILab"
+            type="number"
+            id="AraiLabFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="ARAIAlumni"
+            for="AraiAluminiFee"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             ARAI Alumni Association Fee
           </label>
           <input
-            type="text"
-            id="ARAIAlumni"
+            type="number"
+            id="AraiAluminiFee"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="LC"
+            for="LeavingCert"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Leaving Certificate/Transfer Certificate
           </label>
           <input
-            type="text"
-            id="LC"
+            type="number"
+            id="LeavingCert"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="Insurance"
+            for="StudentAid"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Student Accident Insurance Premium
           </label>
           <input
-            type="text"
-            id="Insurance"
+            type="number"
+            id="StudentAid"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -533,8 +581,9 @@ const FeeReceiptForm = () => {
             Fine
           </label>
           <input
-            type="text"
+            type="number"
             id="Fine"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -546,24 +595,27 @@ const FeeReceiptForm = () => {
           >
             Other (Please Specify Fee)
           </label>
-          <textarea
+          <input
             id="Other"
+            type="number"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
         </div>
         <div>
           <label
-            for="ReceiptUpload"
+            for="uploadSbiReceit"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
             Upload SBI Collect Fee Receipt
           </label>
           <input
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
             aria-describedby="file_input_help"
-            id="ReceiptUpload"
+            id="uploadSbiReceit"
             type="file"
             accept=".pdf, .png, .jpeg, .jpg"
           />
@@ -576,6 +628,7 @@ const FeeReceiptForm = () => {
       <div className="text-center">
         <button
           type="submit"
+          onChange={handleInputChange}
           className="bg-blue-500 text-lg text-white px-5 py-2 rounded-lg hover:bg-blue-600"
         >
           Save
