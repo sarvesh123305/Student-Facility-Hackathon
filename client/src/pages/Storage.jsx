@@ -1,5 +1,0 @@
-const storage = () => {
-  return <h1>storage</h1>;
-};
-
-export default storage;

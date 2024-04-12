@@ -35,8 +35,7 @@ module.exports = function (role) {
       next(); //Next function is used to pass control to the next middleware function in the request-response
       // cycle.
     } catch (err) {
-      console.log("invaid");
-      res.status(401).json({ msg: "Token is not valid" });
+      res.status(401).json({ msg: "Token is not valid!" });
     }
   };
 };

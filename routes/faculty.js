@@ -242,12 +242,8 @@ const allocateSubjects = (data) => {
     console.log('-----------------------------------')
   }
 
-  // Elective Allocation code should be placed here
-
-
+  // Elective Allocation code should be placed heret
 };
-
-
 
 async function allotElective(documents, dbName, studentCollection){
 

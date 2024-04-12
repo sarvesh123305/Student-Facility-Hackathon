@@ -12,7 +12,7 @@ import UserState from "./components/context/user/UserState";
 import Subjectallocation from "./pages/Student/Subjectallocation";
 import Academic from "./pages/Student/Academic";
 import Profile from "./pages/Student/Profile";
-import ScholarshipQueries from "./pages/Student/ScholarshipQueries";
+// import ScholarshipQueries from "./pages/Student/ScholarshipQueries";
 import Home from "./pages/Student/Home";
 import Query from "./pages/Student/Query";
 import Allocationform from "./pages/Faculty/Allocationform";

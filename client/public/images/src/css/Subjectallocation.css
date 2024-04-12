@@ -1,0 +1,39 @@
+.electives {
+    width: 90%;
+    padding: 2rem;
+    margin: 5rem auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  
+  .MuiInputBase-root {
+    margin: 1rem 0rem;
+  }
+  
+  .electivesform {
+    margin: auto;
+    justify-content: space-around;
+    padding: 1rem 3rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .electives h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 550px) {
+    .electives {
+      padding: 2rem 1rem;
+    }
+    .css-xn6ruc > :not(style) {
+      margin: 4px !important;
+      width: 20ch !important;
+    }
+    .css-1wuilmg-MuiAutocomplete-root {
+      width: 20ch !important;
+    }
+  }
+  @media (max-width: 450px) {
+    .electives {
+      padding: 2rem 0.5rem;
+    }
+  }

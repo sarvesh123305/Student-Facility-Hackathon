@@ -5,16 +5,23 @@ import Autocomplete from "@mui/material/Autocomplete";
 import "../../css/Subjectallocation.css";
 
 function Subjectallocation() {
-  const options = ["WST", "ADS", "SP", "BP"];
+  const options = ["WST", "ADS", "SP"];
 
   return (
-    <div className="electives bg-white">
+    <div className="electives">
       <h1>
         <b>Electives Allocation</b>
       </h1>
       <div className="electivesform">
         <div className="info">
-          <Box component="form" noValidate autoComplete="off">
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
             <h4>MIS</h4>
             <TextField
               required
@@ -39,18 +46,33 @@ function Subjectallocation() {
           </Box>
         </div>
         <div className="preference">
-          {options.map((option, index) => (
-            <Autocomplete
-              key={index}
-              disablePortal
-              id="combo-box-demo"
-              options={options}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label={`Preference ${index + 1}`} />
-              )}
-            />
-          ))}
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={options}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Preference 1" />
+            )}
+          />
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={options}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Preference 2" />
+            )}
+          />
+          <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={options}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} label="Preference 3" />
+            )}
+          />
         </div>
       </div>
       <div className="text-center">
