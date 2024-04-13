@@ -7,6 +7,8 @@ const config = require("config");
 const Faculty = require("../models/Faculty");
 const auth = require("../middleware/auth")
 const Notifications = require("../models/Notifications");
+const Marks = require("../models/Marks");
+
 
 const { MongoClient } = require('mongodb');
 
@@ -114,6 +116,52 @@ router.get("/elective/results/:dbName", async (req, res) =>  {
     // await client.close()
 
 });
+
+router.post("/uploadMarks", [], async (req, res) => {
+  const { finalSubmitData } = req.body;
+  try {
+    console.log("Data", finalSubmitData);
+
+// Loop through each row of finalSubmitData and save to the database
+for (const data of finalSubmitData) {
+  try {
+    if ('MIS' in data && 'Name' in data && 'T1' in data && 'T2' in data && 'ESE' in data && 'Total' in data) {
+      const MIS = data.MIS;
+      const Name = data.Name;
+      const T1 = data.T1;
+      const T2 = data.T2;
+      const ESE = data.ESE;
+      const Total = data.Total;
+
+      const marks = new Marks({
+        mis:MIS,
+        name:Name,
+        t1:T1,
+        t2:T2,
+        ese:ESE,
+        total:Total
+      });
+
+      // console.log("Inner Data:", marks.mis, marks.name, marks.t1, marks.t2, marks.ese, marks.total);
+      // Log the entire marks object
+      // console.log("Marks Object:", marks);
+      const result = await marks.save();
+    } else {
+      console.error("Error: Missing or misspelled property in data object");
+    }
+  } catch (err) {
+    console.error("Error saving data:", err);
+  }
+}
+
+    console.log("Data submitted");
+    res.json({ msg: "Data submitted" });
+  } catch (err) {
+    console.log("Error:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 router.get("/elective/responses/:dbName", async (req, res) =>  {
 
