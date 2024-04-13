@@ -107,3 +107,41 @@ Innovative Solution: Stand out with a creative solution that reimagines traditio
 
 Future-Ready: Prepare students for success in a digital world with a forward-thinking platform that adapts to evolving needs and technologies.
 
+
+
+1. Fee Paid Receipt
+The user would apply for the fee paid receipt to the student section. Upload SBI Collect document
+Student Section receives document and request from user, approves or rejects
+If Approved the user gets the pdf of fee receipt with **Digitally Signed by {username} of the student section staff**
+
+2. Scholarship Approval
+	- Add photos of the error for quering to the scholarship staff
+- Add FAQs for the scholarship section
+
+3. Add Transcript  
+- Show result 
+**If everything goes well** -> Add a chatbot to predict required grades for getting target CGPA
+
+Further implement to be discussed
+
+
+Additional Features 
+
+Leaving Certificates Generation\ 
+Local and Bus Pass Application
+Vehicle Pass Generator for Hostel Students (Upload/Check if Hostel Student)\
+Club Fund Reimbursement Approval/Application/Status\
+- Club event permission from (add deadlines/ expiration time for approval)\
+For Student Section *application letter formats to be uploaded which can be downloaded by students and others.
+- Data Center services:\
+	1. Outlook password reset form
+2. WiFi registration request form
+
+upload student certs and details for nba/naac verifications
+Access data for 5 Years ( Every department should be able to access data of its students)
+
+
+- Letter of Recommendation from faculty to user login
+
+- 
+
