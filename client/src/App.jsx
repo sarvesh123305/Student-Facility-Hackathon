@@ -33,6 +33,7 @@ import Queries from "./pages/StudentSection/Queries";
 import UploadMarks from "./pages/Faculty/UploadMarks";
 import FeeReceiptForm from "./pages/Student/FeeReceiptForm";
 import LeavingCertificateForm from "./pages/Student/LeavingCertificateForm";
+import FAQ from "./pages/Student/FAQ"
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
@@ -121,6 +122,12 @@ const App = () => {
                         path="/notifications/"
                         element={<Notifications />}
                       />
+                      
+                      <Route
+                        path="/faq/"
+                        element={<FAQ />}
+                      />
+                 
                       <Route
                         path="/Faculty/UploadMarks"
                         element={<UploadMarks />}

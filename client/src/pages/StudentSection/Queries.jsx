@@ -21,6 +21,7 @@ const Queries = ({
     const newQueries = queries.filter((rec) => rec._id == record._id);
     // queries = newQueries;
   };
+  
   return (
     <div>
       <h1 className="p-2">Queries from student</h1>
