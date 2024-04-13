@@ -2,6 +2,7 @@ import {
   GET_STUDENT_DETAILS,
   GET_QUERIES,
   UPDATE_STUDENT,
+  GET_BONAFIDE_STATUS,
 } from "../actions/types";
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   userType: null,
   bonafide: [],
   queries: [],
+  bonafidePresent: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -30,6 +32,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         studentInformation: action.payload,
+      };
+    case GET_BONAFIDE_STATUS:
+      return {
+        ...state,
+        bonafidePresent: action.payload,
       };
     default:
       return state;
