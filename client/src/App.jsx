@@ -31,10 +31,9 @@ import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
 import UploadMarks from "./pages/Faculty/UploadMarks";
-import AllocateGrades from "./pages/Faculty/AllocateGrades";
 import FeeReceiptForm from "./pages/Student/FeeReceiptForm";
 import LeavingCertificateForm from "./pages/Student/LeavingCertificateForm";
-import FAQ from "./pages/Student/FAQ"
+import FAQ from "./pages/Student/FAQ";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import StudentRegistration from "./pages/StudentSection/StudentRegistration";
@@ -93,13 +92,21 @@ const App = () => {
                       />
 
                       <Route
-                        path="/Scholarship/RequestBonafide"
+                        path="/Applications/RequestBonafide"
                         element={<RequestBonafide />}
                       />
-                      <Route path="/Scholarship/Queries" element={<Query />} />
+                      <Route path="/Applications/Queries" element={<Query />} />
                       <Route
-                        path="/Scholarship/LetterFormats"
+                        path="/Applications/LetterFormats"
                         element={<LetterFormats />}
+                      />
+                      <Route
+                        path="/Applications/FeeReceipt/"
+                        element={<FeeReceiptForm />}
+                      />
+                      <Route
+                        path="/Applications/LeavingCertificate/"
+                        element={<LeavingCertificateForm />}
                       />
 
                       <Route path="/result" element={<Result />} />
@@ -125,26 +132,11 @@ const App = () => {
                         element={<Notifications />}
                       />
 
-                      <Route
-                        path="/faq/"
-                        element={<FAQ />}
-                      />
+                      <Route path="/faq/" element={<FAQ />} />
 
                       <Route
                         path="/Faculty/UploadMarks"
                         element={<UploadMarks />}
-                      />
-                      <Route
-                        path="/Faculty/AllocateGrades"
-                        element={<AllocateGrades />}
-                      />
-                      <Route
-                        path="/Applications/FeeReceipt/"
-                        element={<FeeReceiptForm />}
-                      />
-                      <Route
-                        path="/Applications/LeavingCertificate/"
-                        element={<LeavingCertificateForm />}
                       />
                       {/* FACULTY ROUTES*/}
                       <Route
@@ -200,7 +192,7 @@ const App = () => {
                         element={<Scholarships />}
                       />
                       <Route
-                        path="/StudentSection/Bonafides"
+                        path="/StudentSection/Scholarship/RequestedBonafides"
                         element={<Bonafides />}
                       />
                       <Route

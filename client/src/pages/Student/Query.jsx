@@ -62,17 +62,17 @@ const Query = ({
 }) => {
   // const [selected, setSelected] = useState(relatedOptions[0]);
   const [message, setMessage] = useState("");
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   //query type
-  //   sendQuery({
-  //     query: message,
-  //     type: selected.name,
-  //     to: "Students Section",
-  //     from: studentDetails._id,
-  //     image: image,
-  //   });
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //query type
+    sendQuery({
+      query: message,
+      type: selected.name,
+      to: "Students Section",
+      from: studentDetails._id,
+      image: image,
+    });
+  };
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
@@ -255,7 +255,7 @@ const Query = ({
             >
               Query
             </label>
-            {/* <textarea
+            <textarea
               id="message"
               rows="4"
               name="message"
@@ -265,7 +265,7 @@ const Query = ({
               placeholder="Write your query here..."
               defaultValue={""}
               required
-            ></textarea> */}
+            ></textarea>{" "}
           </div>
         </div>
         <div class=" max-w-screen-lg flex flex-row mx-auto mt-5 ">
