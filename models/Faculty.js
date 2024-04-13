@@ -18,6 +18,22 @@ const FacultySchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  assignedSubjects: [
+    {
+      subjectCode: {
+        type: String,
+        required: true,
+      },
+      subjectName: {
+        type: String,
+        required: true,
+      },
+      credits: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,

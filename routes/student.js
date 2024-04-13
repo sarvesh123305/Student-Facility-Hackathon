@@ -324,13 +324,14 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() }); //bad request
     }
-    const { query, type, to, from } = req.body;
+    console.log("In");
+    const { query, type, from } = req.body;
     const uuid = uuidv4();
     try {
       user = new Message({
         query,
         type,
-        to,
+        to: "Students Section",
         from,
         messageId: uuid,
       });

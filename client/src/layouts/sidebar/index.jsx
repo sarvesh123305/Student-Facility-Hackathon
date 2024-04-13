@@ -86,12 +86,14 @@ const Sidebar = () => {
       menus: ["Academic Profile", "Semester Credit Registration"],
     },
     {
-      name: "Scholarship",
+      name: "Applications",
       icon: TbReportAnalytics,
       menus: [
         // "Scholarships Available",
         "Request Bonafide",
         "Letter Formats",
+        "Fee Receipt",
+        "Leaving Certificate",
         "Queries",
       ],
     },
@@ -222,14 +224,15 @@ const Sidebar = () => {
         {(open || isTabletMid) && (
           <div className="border-slate-300">
             {subMenusListStudent?.map((menu) => (
-              <div key={menu.name} className="flex flex-col gap-1 items-stretch hover:bg-white-600 hover:text-black">
+              <div
+                key={menu.name}
+                className="flex flex-col gap-1 items-stretch hover:bg-white-600"
+              >
                 <SubMenu data={menu} />
               </div>
             ))}
           </div>
         )}
-
-
 
         <li>
           <NavLink
