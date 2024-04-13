@@ -43,6 +43,7 @@ const Navbar = ({ student, initialLoadUser }) => {
   }, []);
 
   function searchDatabase(obj, input) {
+    setResults([]);
     function searchInObject(currentObj, input) {
       for (const key in currentObj) {
         if (typeof currentObj[key] === "object") {
@@ -67,7 +68,7 @@ const Navbar = ({ student, initialLoadUser }) => {
     setInput(value);
     const result = searchDatabase(student, value);
     console.log(result);
-    setResults(result);
+    // setResults(result);
     // console.log(student)
     // console.log("On change called")
   };
