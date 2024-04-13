@@ -7,6 +7,7 @@ const config = require("config");
 const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
+const Bonafide = require("../models/Bonafide");
 // const Message = require("../models/Messages");
 //@routes POST api/others
 //@desc Register to a others;
@@ -107,6 +108,37 @@ router.post(
 
       const newMessage = await user.save();
       res.json(newMessage);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error occured");
+    }
+  }
+);
+
+
+
+//@routes POST api/faculty/bonafideApproval
+//@desc Approve to reject bonafide
+//@access public
+
+router.put(
+  "/bonafideApproval",
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //bad request
+    }
+    try{
+      const { mis, status } = req.body;
+      const findBonafide = await Bonafide.findOne({ mis });
+      if (!findBonafide) {
+        return res.json({ msg: "No document found" });
+      }
+      
+      findBonafide.status = status;
+      const updatedBonafide = await findBonafide.save();
+      
+      res.json(updatedBonafide);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error occured");
