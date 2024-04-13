@@ -76,12 +76,12 @@ router.get("/queries", auth("studentsection"), async (req, res) => {
   }
 });
 
-//@routes POST api/faculty/queries
+//@routes POST api/studentsection/queries
 //@desc Reply to query send by student
 //@access public
 
 router.post(
-  "/queries/:messageId",
+"/queries/:messageId",
   [auth("studentsection"), [check("query", "Please enter a query").notEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
@@ -113,4 +113,26 @@ router.post(
     }
   }
 );
+
+router.delete("/queries/:messageId", async (req, res) => {
+  try {
+    const { messageId } = req.params;
+    console.log(messageId)
+    // Check if message exists
+    const message = await Messages.findOne({ messageId });
+    if (!message) {
+      return res.status(404).json({ message: "Message not found" });
+    }
+
+    // Delete the message
+    await Messages.deleteOne({ messageId });
+
+    // Return success message
+    res.json({ message: "Message deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 module.exports = router;

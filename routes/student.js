@@ -1047,45 +1047,45 @@ router.get("/semesterCreditRegistration", async (req, res) => {
 //@access public
 
 router.post("/FeeReceipt", async (req, res) => {
-  const { formData } = req.body;
-  console.log("IN axis", formData);
+  // const { formData } = req.body;
+  // console.log("IN axis", formData);
   // console.log(formData.TutionFee + formData.TnpFee);
-  // const formData = {
-  //   FullName: "Sanika Kulkarni",
-  //   Year: 2024,
-  //   MobileNumber: "1234567890",
-  //   Mis: 142203011,
-  //   Branch: "Computer Science",
-  //   Category: "General",
-  //   DateOfPayment: "2024-04-12",
-  //   TutionFee: 5000,
-  //   DevelopmentFee: 2000,
-  //   GymkhanaFee: 1000,
-  //   TnpFee: 1500,
-  //   Library: 500,
-  //   Laboratory: 1000,
-  //   InternetAndEmail: 200,
-  //   Gathering: 300,
-  //   Cmd: 400,
-  //   BoatClubFee: 100,
-  //   BoatClubMemFee: 50,
-  //   StudentAidFund: 200,
-  //   ExamFee: 800,
-  //   IdentityCard: 100,
-  //   UniversityFee: 3000,
-  //   AluminiFee: 200,
-  //   HostelFee: 5000,
-  //   HostelDepost: 2000,
-  //   AraiLibFee: 300,
-  //   AraiCompFee: 400,
-  //   AraiLabFee: 500,
-  //   AraiAluminiFee: 100,
-  //   LeavingCert: 200,
-  //   StudentAid: 300,
-  //   Fine: 50,
-  //   Other: 100,
-  //   uploadSbiFee: 200,
-  // };
+  const formData = {
+    FullName: "Sanika Kulkarni",
+    Year: 2024,
+    MobileNumber: "1234567890",
+    Mis: 142203011,
+    Branch: "Computer Science",
+    Category: "General",
+    DateOfPayment: "2024-04-12",
+    TutionFee: 5000,
+    DevelopmentFee: 2000,
+    GymkhanaFee: 1000,
+    TnpFee: 1500,
+    Library: 500,
+    Laboratory: 1000,
+    InternetAndEmail: 200,
+    Gathering: 300,
+    Cmd: 400,
+    BoatClubFee: 100,
+    BoatClubMemFee: 50,
+    StudentAidFund: 200,
+    ExamFee: 800,
+    IdentityCard: 100,
+    UniversityFee: 3000,
+    AluminiFee: 200,
+    HostelFee: 5000,
+    HostelDepost: 2000,
+    AraiLibFee: 300,
+    AraiCompFee: 400,
+    AraiLabFee: 500,
+    AraiAluminiFee: 100,
+    LeavingCert: 200,
+    StudentAid: 300,
+    Fine: 50,
+    Other: 100,
+    uploadSbiFee: 200,
+  };
   try {
     const studentData = req.body;
     const currentDateTime = new Date();
@@ -1094,44 +1094,44 @@ router.post("/FeeReceipt", async (req, res) => {
     console.log(req.body);
     const cwd = process.cwd();
     // Convert number fields to integers
-    const formDataWithInt = {
-      TutionFee: parseInt(formData.TutionFee),
-      DevelopmentFee: parseInt(formData.DevelopmentFee),
-      GymkhanaFee: parseInt(formData.GymkhanaFee),
-      TnpFee: parseInt(formData.TnpFee),
-      Library: parseInt(formData.Library),
-      Laboratory: parseInt(formData.Laboratory),
-      InternetAndEmail: parseInt(formData.InternetAndEmail),
-      Gathering: parseInt(formData.Gathering),
-      Cmd: parseInt(formData.Cmd),
-      BoatClubFee: parseInt(formData.BoatClubFee),
-      BoatClubMemFee: parseInt(formData.BoatClubMemFee),
-      StudentAidFund: parseInt(formData.StudentAidFund),
-      ExamFee: parseInt(formData.ExamFee),
-      IdentityCard: parseInt(formData.IdentityCard),
-      UniversityFee: parseInt(formData.UniversityFee),
-      AluminiFee: parseInt(formData.AluminiFee),
-      HostelFee: parseInt(formData.HostelFee),
-      HostelDepost: parseInt(formData.HostelDepost),
-      AraiLibFee: parseInt(formData.AraiLibFee),
-      AraiCompFee: parseInt(formData.AraiCompFee),
-      AraiLabFee: parseInt(formData.AraiLabFee),
-      AraiAluminiFee: parseInt(formData.AraiAluminiFee),
-      LeavingCert: parseInt(formData.LeavingCert),
-      StudentAid: parseInt(formData.StudentAid),
-      Fine: parseInt(formData.Fine),
-      Other: parseInt(formData.Other),
-    };
+    // const formDataWithInt = {
+    //   TutionFee: parseInt(formData.TutionFee),
+    //   DevelopmentFee: parseInt(formData.DevelopmentFee),
+    //   GymkhanaFee: parseInt(formData.GymkhanaFee),
+    //   TnpFee: parseInt(formData.TnpFee),
+    //   Library: parseInt(formData.Library),
+    //   Laboratory: parseInt(formData.Laboratory),
+    //   InternetAndEmail: parseInt(formData.InternetAndEmail),
+    //   Gathering: parseInt(formData.Gathering),
+    //   Cmd: parseInt(formData.Cmd),
+    //   BoatClubFee: parseInt(formData.BoatClubFee),
+    //   BoatClubMemFee: parseInt(formData.BoatClubMemFee),
+    //   StudentAidFund: parseInt(formData.StudentAidFund),
+    //   ExamFee: parseInt(formData.ExamFee),
+    //   IdentityCard: parseInt(formData.IdentityCard),
+    //   UniversityFee: parseInt(formData.UniversityFee),
+    //   AluminiFee: parseInt(formData.AluminiFee),
+    //   HostelFee: parseInt(formData.HostelFee),
+    //   HostelDepost: parseInt(formData.HostelDepost),
+    //   AraiLibFee: parseInt(formData.AraiLibFee),
+    //   AraiCompFee: parseInt(formData.AraiCompFee),
+    //   AraiLabFee: parseInt(formData.AraiLabFee),
+    //   AraiAluminiFee: parseInt(formData.AraiAluminiFee),
+    //   LeavingCert: parseInt(formData.LeavingCert),
+    //   StudentAid: parseInt(formData.StudentAid),
+    //   Fine: parseInt(formData.Fine),
+    //   Other: parseInt(formData.Other),
+    // };
 
     // Calculate total sum
-    let totalSum = 0;
-    for (const field in formDataWithInt) {
-      if (!isNaN(formDataWithInt[field])) {
-        totalSum += formDataWithInt[field];
-      }
-    }
+    // let totalSum = 0;
+    // for (const field in formDataWithInt) {
+    //   if (!isNaN(formDataWithInt[field])) {
+    //     totalSum += formDataWithInt[field];
+    //   }
+    // }
 
-    console.log("Total sum:", totalSum);
+    // console.log("Total sum:", totalSum);
 
     // console.log("Total fees:", totalFees);
     tableData1 = [
@@ -1169,7 +1169,7 @@ router.post("/FeeReceipt", async (req, res) => {
       ["Student Accident Insurance Premium", `${formData.StudentAid}`],
       ["Fine", `${formData.Fine}`],
       ["Others", `${formData.Other}`],
-      ["Total", `${totalSum}`],
+      // ["Total", `${totalSum}`],
     ];
 
     tableData3 = [
