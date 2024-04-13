@@ -1992,6 +1992,11 @@ async function publishStudentDataToDB(
   console.log(studentKey.insertedId);
   return studentKey.insertedId;
 }
+
+
+
+
+
 router.post("/postToDB", async (req, res) => {
   // const id = req.student.id;
   try {
