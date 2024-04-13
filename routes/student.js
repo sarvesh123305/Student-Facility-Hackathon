@@ -1479,18 +1479,18 @@ function drawTable2(doc, table, options) {
 }
 
 router.post("/sendBonafideRequest", async (req, res) => {
-  const { mis,name,dept,programme,purpose,year ,academicYear} = req.body;
+  const { mis, name, dept, programme, purpose, year, academicYear } = req.body;
   try {
     // console.log("FORMDATA : ",formData,mis);
     // Create a new Bonafide document
     const newBonafide = new Bonafide({
-      mis ,
-      name ,
+      mis,
+      name,
       dept,
       year,
       academicYear,
       programme,
-      purpose
+      purpose,
     });
 
     // Save the new Bonafide document to the database
@@ -1502,8 +1502,7 @@ router.post("/sendBonafideRequest", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-module.exports = router;
-=======
+
 router.post("/LeavingCertificate", async (req, res) => {
   const formData = {
     FullName: "Chinmay Milind Sheth",
@@ -1538,15 +1537,15 @@ router.post("/LeavingCertificate", async (req, res) => {
       ["7.", "Date of Admission", `${formData.DateOfAdmission}`],
       ["8.", "Progress", `${formData.Progress}`],
       ["9.", "Conduct", `${formData.Conduct}`],
-      ["10.","Date of Leaving the University", `${formData.DateofLeave}`],
-      ["11.", "Remarks", `${formData.Remarks}`]
+      ["10.", "Date of Leaving the University", `${formData.DateofLeave}`],
+      ["11.", "Remarks", `${formData.Remarks}`],
     ];
 
     // studentDetails = {};
     // await fetchData(studentData, res);
 
-    const doc = new PDFDocument({ size: "A4"});
-    
+    const doc = new PDFDocument({ size: "A4" });
+
     res.setHeader(
       "Content-Disposition",
       'attachment; filename="table_example.pdf"'
@@ -1561,15 +1560,12 @@ router.post("/LeavingCertificate", async (req, res) => {
       rows: tableData1.slice(1),
     };
 
-    doc.image(
-      cwd + "/routes/COEP_Logo.png",
-      {
-        width: 40,
-        height: 40,
-        x: 80,
-        y: 45,
-      }
-    );
+    doc.image(cwd + "/routes/COEP_Logo.png", {
+      width: 40,
+      height: 40,
+      x: 80,
+      y: 45,
+    });
 
     doc.image(
       // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/watermark.png",
@@ -1583,26 +1579,27 @@ router.post("/LeavingCertificate", async (req, res) => {
       }
     );
 
-    doc.image(
-      cwd + "/routes/Images/greenTick.png",
-      {
-        width: 50,
-        height: 50,
-        x: 450,
-        y: 720,
-        opacity: 0.1,
-      }
-    );
-    
+    doc.image(cwd + "/routes/Images/greenTick.png", {
+      width: 50,
+      height: 50,
+      x: 450,
+      y: 720,
+      opacity: 0.1,
+    });
+
     doc
       .fontSize(18)
       .font("Helvetica-Bold")
-      .text("COEP TECHNOLOGICAL UNIVERSITY, PUNE", 110, 50, { align: "center" });
+      .text("COEP TECHNOLOGICAL UNIVERSITY, PUNE", 110, 50, {
+        align: "center",
+      });
 
     doc
       .fontSize(14)
       .font("Helvetica")
-      .text("5, Wellesly Road, Shivajinagar, Pune 411005", 110, 75, { align: "center" });
+      .text("5, Wellesly Road, Shivajinagar, Pune 411005", 110, 75, {
+        align: "center",
+      });
 
     doc.rect(185, 100, 245, 40);
     doc.stroke();
@@ -1624,17 +1621,21 @@ router.post("/LeavingCertificate", async (req, res) => {
     doc
       .fontSize(13)
       .font("Helvetica-Bold")
-      .text(`Sr. No. : 1019`, 50, 170, {align: "left" });
-
+      .text(`Sr. No. : 1019`, 50, 170, { align: "left" });
 
     doc
       .font("Helvetica-Bold")
-      .text(`Register No. : Comp/08/59`, 50, 170, {align: "right" });
+      .text(`Register No. : Comp/08/59`, 50, 170, { align: "right" });
 
     doc
       .fontSize(11)
       .font("Helvetica")
-      .text("Note: No change in any entry in this Leaving Certificate is to be made except by the authority issuing this Leaving Certificate, Infringement of this rule will be punished with rustication.", 30, 205, { align: "left" });
+      .text(
+        "Note: No change in any entry in this Leaving Certificate is to be made except by the authority issuing this Leaving Certificate, Infringement of this rule will be punished with rustication.",
+        30,
+        205,
+        { align: "left" }
+      );
 
     // doc
     //   // .fontSize(15)
@@ -1646,22 +1647,17 @@ router.post("/LeavingCertificate", async (req, res) => {
     //   .font("Helvetica-Bold")
     //   .text("Student Details", 60, 120, { align: "center" });
 
-    doc
-      .font("Helvetica-Bold")
-      .text(`Place : Pune`, 50, 720, {align: "Left" });
+    doc.font("Helvetica-Bold").text(`Place : Pune`, 50, 720, { align: "Left" });
 
     doc
       .font("Helvetica-Bold")
-      .text(`Date: ${currentDate}`, 50, 740, {align: "left" });
-
+      .text(`Date: ${currentDate}`, 50, 740, { align: "left" });
 
     doc
       .font("Helvetica-Bold")
-      .text(`Digitally Signed By`, 50, 710, {align: "right" });
+      .text(`Digitally Signed By`, 50, 710, { align: "right" });
 
-    doc
-      .font("Helvetica")
-      .text(`Registrar`, 10, 730, {align: "right" });
+    doc.font("Helvetica").text(`Registrar`, 10, 730, { align: "right" });
 
     doc
       .fontSize(12)
@@ -1685,7 +1681,7 @@ router.post("/LeavingCertificate", async (req, res) => {
       lineSpace: 3,
       colWidths: [50, 230, 275],
     });
-    
+
     doc.end();
   } catch (error) {
     console.error("Error generating PDF:", error);
@@ -1721,7 +1717,7 @@ function drawTable1(doc, table, options) {
     let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
     row.forEach((cell, i) => {
       const align = i === 1 ? "left" : "left"; // Align 'Course Name' column to the left
-      
+
       doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
       if (rowIndex === table.rows.length - 1) {
         // Change 3 to the index of the row you want to make bold
@@ -1769,7 +1765,7 @@ function drawTable2(doc, table, options) {
   });
 
   doc.font("Helvetica");
-  doc.fontSize(11); 
+  doc.fontSize(11);
 
   // Draw table rows with custom column widths and alignments
   let yOffset = y + rowHeight + lineSpace;
@@ -1777,7 +1773,7 @@ function drawTable2(doc, table, options) {
     let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
     row.forEach((cell, i) => {
       const align = i === 1 ? "center" : "left"; // Align 'Course Name' column to the left
-      
+
       doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
       if (rowIndex === table.rows.length - 1) {
         // Change 3 to the index of the row you want to make bold
@@ -2018,10 +2014,6 @@ async function publishStudentDataToDB(
   console.log(studentKey.insertedId);
   return studentKey.insertedId;
 }
-
-
-
-
 
 router.post("/postToDB", async (req, res) => {
   // const id = req.student.id;

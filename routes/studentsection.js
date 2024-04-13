@@ -8,10 +8,8 @@ const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
 
-const bonafides = require('../models/Bonafide');
-// const { default: Bonafides } = require("../client/src/pages/StudentSection/Bonafides");  
+const Bonafide = require("../models/Bonafide");
 
-// const Bonafide = require("../models/Bonafide");
 // const Message = require("../models/Messages");
 //@routes POST api/others
 //@desc Register to a others;
@@ -119,90 +117,54 @@ router.post(
   }
 );
 
-router.get('/bonafideApplications', async (req, res) => {
+router.post("/bonafideApplications", async (req, res) => {
   try {
+    const { mis } = req.body;
     // Fetch all bonafide applications from the collection
-    const bonafideApplications = await Bonafide.find();
 
-    // Check if any bonafide applications were found
-    if (!bonafideApplications || bonafideApplications.length === 0) {
-      return res.json({ msg: 'No bonafide applications found' });
-    }
+    const bonafideApplications = await Bonafide.findOne({ mis });
+    if (!bonafideApplications)
+      return res.json({ msg: "No bonafide applications found" });
 
     // Return the bonafide applications as JSON response
-    res.json(bonafideApplications);
+    res.json({ msg: "Bonafide Appliacation Found" });
   } catch (err) {
     // Log and send an error response if an error occurs
-    console.error('Error fetching bonafide applications:', err.message);
-    res.status(500).send('Server error occurred');
+    console.error("Error fetching bonafide applications:", err.message);
+    res.status(500).send("Server error occurred");
   }
 });
-
-router.post('/bonafideApplicationsStatusYes', async (req, res) => {
-  try {
-    const bonafideApplicationsStatusYes = await Bonafide.findOne({ _id: req.body._id });
-
-    bonafideApplicationsStatusYes.status = 'Accepted';
-    bonafideApplicationsStatusYes.save();
-
-    if (!bonafideApplicationsStatusYes || bonafideApplicationsStatusYes.length === 0) {
-      return res.json({ msg: 'No bonafide applications found' });
-    }
-
-    res.json(bonafideApplications);
-  } catch (err) {
-    console.error('Error fetching bonafide applications:', err.message);
-    res.status(500).send('Server error occurred');
-  }
-});
-
-
-router.post('/bonafideApplicationsStatusNo', async (req, res) => {
-  try {
-    const bonafideApplicationsStatusNo = await Bonafide.findOne({ _id: req.body._id });
-
-    bonafideApplicationsStatusNo.status = 'Rejected';
-    bonafideApplicationsStatusNo.save();
-
-    if (!bonafideApplicationsStatusNo || bonafideApplicationsStatusNo.length === 0) {
-      return res.json({ msg: 'No bonafide applications found' });
-    }
-
-    res.json(bonafideApplications);
-  } catch (err) {
-    console.error('Error fetching bonafide applications:', err.message);
-    res.status(500).send('Server error occurred');
-  }
-})
-
-
 
 //@routes POST api/faculty/bonafideApproval
 //@desc Approve to reject bonafide
 //@access public
 
-router.put(
-  "/bonafideApproval",
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() }); //bad request
-    }
-    try{
-      const { mis, status } = req.body;
-      const findBonafide = await Bonafide.findOne({ mis });
-      if (!findBonafide) {
-        return res.json({ msg: "No document found" });
-      }
-      
-      findBonafide.status = status;
-      const updatedBonafide = await findBonafide.save();
-      
-      res.json(updatedBonafide);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server error occured");
-    }
+router.put("/bonafideApproval", async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() }); // Bad request
   }
-);
+
+  try {
+    const { mis, status } = req.body;
+    console.log("MIS<STUA", mis, status);
+
+    // Update the status of the bonafide document
+    const updatedBonafide = await Bonafide.findOneAndUpdate(
+      { mis },
+      { status },
+      { new: true }
+    );
+
+    if (!updatedBonafide) {
+      return res.status(404).json({ msg: "No document found" });
+    }
+
+    res.json(updatedBonafide);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error occurred");
+  }
+});
+
 module.exports = router;

@@ -7,12 +7,16 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {
   bonafideDownload,
-  initialLoadUser,sendBonafideRequest
+  initialLoadUser,
+  sendBonafideRequest,
+  getBonafideStatus,
 } from "../../redux/actions/logActions";
 const RequestBonafide = ({
-  student: { studentDetails, academicProfile },
+  student: { studentDetails, academicProfile, bonafidePresent },
   bonafideDownload,
-  initialLoadUser,sendBonafideRequest
+  initialLoadUser,
+  sendBonafideRequest,
+  getBonafideStatus,
 }) => {
   const [bonafideDetails, setBonafideDetails] = useState({
     reason: "",
@@ -70,10 +74,13 @@ const RequestBonafide = ({
       programme: "Btech",
       purpose: "Scholarship",
     };
-    console.log("FORM",formData);
+    console.log("FORM", formData);
 
     sendBonafideRequest(formData);
   };
+  useEffect(() => {
+    studentDetails && getBonafideStatus(studentDetails.mis);
+  }, [studentDetails]);
   useEffect(() => {
     if (pdfData) {
       const pdfUrl = URL.createObjectURL(pdfData);
@@ -221,7 +228,7 @@ const RequestBonafide = ({
                 </div>
               </div>
             </fieldset>
-            
+
             <div>
               <label
                 htmlFor="email"
@@ -229,41 +236,45 @@ const RequestBonafide = ({
               >
                 Reason For Certificate
               </label>
-              <div className="mt-2"> 
-
+              <div className="mt-2">
                 <textarea
                   id="reason"
                   type="text"
                   name="reason"
-                  v alue={reason}
+                  v
+                  alue={reason}
                   onChange={onChange}
                   required
-                  class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Write a reason..."/>
+                  class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                  placeholder="Write a reason..."
+                />
               </div>
             </div>
-            
+
             <div>
-            <button
-              onClick={handleSendRequest}
-              className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              {" "}
-              Send Request
-            </button>
+              <button
+                onClick={handleSendRequest}
+                className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {" "}
+                Send Request
+              </button>
             </div>
           </form>
           {
             //Testing Bonafide
+            bonafidePresent && (
+              <div>
+                <button
+                  onClick={handleBonafideDownload}
+                  className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                >
+                  {" "}
+                  Download Bonafide
+                </button>
+              </div>
+            )
           }
-          <div>
-            <button
-              onClick={handleBonafideDownload}
-              className="flex w-full mt-10 justify-center rounded-md bg-blue-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              {" "}
-              Download Bonafide
-            </button>
-          </div>
           {/* <p className="mt-10 text-center text-lg text-gray-500">
               Not a member?{' '}
               <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
@@ -279,6 +290,9 @@ const RequestBonafide = ({
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps, { bonafideDownload, initialLoadUser,sendBonafideRequest })(
-  RequestBonafide
-);
+export default connect(mapStateToProps, {
+  bonafideDownload,
+  initialLoadUser,
+  sendBonafideRequest,
+  getBonafideStatus,
+})(RequestBonafide);

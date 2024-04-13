@@ -34,8 +34,10 @@ import UploadMarks from "./pages/Faculty/UploadMarks";
 import AllocateGrades from "./pages/Faculty/AllocateGrades";
 import FeeReceiptForm from "./pages/Student/FeeReceiptForm";
 import LeavingCertificateForm from "./pages/Student/LeavingCertificateForm";
+import FAQ from "./pages/Student/FAQ"
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import StudentRegistration from "./pages/StudentSection/StudentRegistration";
 
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
@@ -122,6 +124,12 @@ const App = () => {
                         path="/notifications/"
                         element={<Notifications />}
                       />
+
+                      <Route
+                        path="/faq/"
+                        element={<FAQ />}
+                      />
+
                       <Route
                         path="/Faculty/UploadMarks"
                         element={<UploadMarks />}
@@ -182,6 +190,10 @@ const App = () => {
                       <Route
                         path="/StudentSection/notifications"
                         element={<StudentSectionNotifications />}
+                      />
+                      <Route
+                        path="/StudentSection/StudentRegistration"
+                        element={<StudentRegistration />}
                       />
                       <Route
                         path="/StudentSection/Scholarship/ScholarshipsAvailable"
