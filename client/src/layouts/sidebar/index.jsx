@@ -10,6 +10,7 @@ import { AiOutlineAppstore } from "react-icons/ai";
 import { BsPerson } from "react-icons/bs";
 import { HiOutlineDatabase } from "react-icons/hi";
 import { TbReportAnalytics } from "react-icons/tb";
+import { FaQuestion } from "react-icons/fa";
 import { useMediaQuery } from "react-responsive";
 import { MdEdit, MdMenu, MdNotifications } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
@@ -211,12 +212,15 @@ const Sidebar = () => {
         {(open || isTabletMid) && (
           <div className="border-slate-300">
             {subMenusListStudent?.map((menu) => (
-              <div key={menu.name} className="flex flex-col gap-1">
+              <div key={menu.name} className="flex flex-col gap-1 items-stretch hover:bg-white-600 hover:text-black">
                 <SubMenu data={menu} />
               </div>
             ))}
           </div>
         )}
+
+
+
         <li>
           <NavLink
             to={"/result"}
@@ -234,6 +238,15 @@ const Sidebar = () => {
           >
             <MdNotifications size={23} className="min-w-max" />
             Notifications
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            to={"/faq"}
+            className="link hover:bg-white-600 hover:text-black"
+          >
+            <FaQuestion size={23} className="min-w-max" />
+            FAQ's
           </NavLink>
         </li>
       </ul>
