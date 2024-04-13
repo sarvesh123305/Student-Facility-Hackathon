@@ -1505,20 +1505,20 @@ function drawTable2(doc, table, options) {
 // });
 
 router.post("/LeavingCertificate", async (req, res) => {
-  const formData = {
-    FullName: "Chinmay Milind Sheth",
-    Religion: "Hindu",
-    Caste: "Gujar",
-    Nationality: "Indian",
-    PlaceOfBirth: "Mahad",
-    DateOfBirth: "17/06/2003",
-    LastAttended: "Institute of Petrochemical Engineering, Lonere",
-    DateOfAdmission: "28/11/2022",
-    Progress: "Good",
-    Conduct: "Good",
-    DateofLeave: "15/06/2025",
-    Remarks: "No Dues",
-  };
+  // const formData = {
+  //   FullName: "Chinmay Milind Sheth",
+  //   Religion: "Hindu",
+  //   Caste: "Gujar",
+  //   Nationality: "Indian",
+  //   PlaceOfBirth: "Mahad",
+  //   DateOfBirth: "17/06/2003",
+  //   LastAttended: "Institute of Petrochemical Engineering, Lonere",
+  //   DateOfAdmission: "28/11/2022",
+  //   Progress: "Good",
+  //   Conduct: "Good",
+  //   DateofLeave: "15/06/2025",
+  //   Remarks: "No Dues",
+  // };
   try {
     const { formData } = req.body;
     const currentDateTime = new Date();
