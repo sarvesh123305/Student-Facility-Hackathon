@@ -4,13 +4,17 @@ const LeavingCertificateForm = () => {
   // Initialize state for form values
   const [formData, setFormData] = useState({
     FullName: "",
-    year: "",
-    MobileNumber: "",
-    MIS: "",
-    branch: "",
-    category: "",
-    DateOfPayment: "",
-    TutionFee: "",
+    Religion: "",
+    Caste: "",
+    Nationality: "",
+    DateOfBirth: "",
+    PlaceOfBirth: "",
+    LastSchoolAttended: "",
+    DateOfAdmission: "",
+    Progress: "",
+    Conduct: "",
+    DateOfLeaving: "",
+    Remarks: ""
     // Add more fields as needed
   });
 
@@ -133,6 +137,8 @@ const LeavingCertificateForm = () => {
           <input
             type="text"
             id="PlaceOfBirth"
+            onChange={handleInputChange}
+
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -169,20 +175,6 @@ const LeavingCertificateForm = () => {
         </div>
         <div>
           <label
-            for="GymkhanaFee"
-            className="block mb-2 text-lg font-medium text-gray-900"
-          >
-            Gymkhana Fee
-          </label>
-          <input
-            type="text"
-            id="GymkhanaFee"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            required
-          />
-        </div>
-        <div>
-          <label
             for="Progress"
             className="block mb-2 text-lg font-medium text-gray-900"
           >
@@ -191,6 +183,7 @@ const LeavingCertificateForm = () => {
           <input
             type="text"
             id="Progress"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -205,6 +198,7 @@ const LeavingCertificateForm = () => {
           <input
             type="text"
             id="Conduct"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -231,8 +225,9 @@ const LeavingCertificateForm = () => {
           >
             Remarks
           </label>
-          <textarea
+          <textarea 
             id="Remarks"
+            onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />

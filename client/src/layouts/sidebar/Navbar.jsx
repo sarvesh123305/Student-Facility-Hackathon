@@ -39,16 +39,37 @@ const Navbar = ({  student,initialLoadUser }) => {
       });
   };
 
+  let results = [];
 
   useEffect(() =>{
       initialLoadUser();
   },[])
+
+  function searchDatabase(obj, input) {
+    function searchInObject(currentObj, input) {
+      for (const key in currentObj) {
+        if (typeof currentObj[key] === 'object') {
+          searchInObject(currentObj[key], input); // Recursive call for nested objects
+        } else {
+          if (String(key).toLowerCase().includes(input.toLowerCase()) || String(currentObj[key]).toLowerCase().includes(input.toLowerCase())) {
+            results.push({ key, value: currentObj[key] });
+          }
+        }
+      }
+    }
+
+    searchInObject(obj,input)
+  
+    return results;
+  }
+
   const handleChange = (value) => {
     setInput(value)
-    // console.log(value)
-    fetchData(value);
-    
-    console.log("On change called")
+    results = []
+    results = searchDatabase(student,value)
+    console.log(results)
+    // console.log(student)
+    // console.log("On change called")
   }
 
 
@@ -63,7 +84,6 @@ const Navbar = ({  student,initialLoadUser }) => {
         />
       </div>
       */}
-      {console.log(student.studentInformation)}
       {toggle ? <NotificationDialog/> : ""}
       {logoutToggle ? <LogoutDropDown/> : ""}
       {results && results.length > 0 && <SearchDropdown results={results} />}
@@ -157,4 +177,4 @@ const mapStateToProps = (state) => ({
   student: state.student,
 });
 
-export default connect(mapStateToProps, { initialLoadUser })(Navbar);
+export default connect(mapStateToProps  , { initialLoadUser })(Navbar);

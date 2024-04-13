@@ -31,7 +31,7 @@ const SubMenu = ({ data, userType }) => {
                 height: 0,
               }
         }
-        className="flex h-0 flex-col pl-14 text-[0.8rem] font-normal overflow-hidden"
+        className="flex h-0 flex-col pl-14 text-[0.8rem] font-normal overflow-hidden text-white-600 hover:text-white"
       >
         {data.menus?.map((menu) => (
           <li key={menu}>
