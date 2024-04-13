@@ -29,10 +29,11 @@ const AuthState = (props) => {
 
   //Load User
   const loadUser = async (userType) => {
-    if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
+    // if (localStorage.token) {
+    //   setAuthToken(localStorage.token);
+    // }
 
+    console.log("User in auth", userType);
     try {
       console.log("User in auth", userType);
       const res = await axios.get(`/api/auth/${userType}`);
@@ -46,7 +47,7 @@ const AuthState = (props) => {
       });
       console.log("Completed in auth", userType);
     } catch (err) {
-      console.log("Some error in API", err);
+      console.log("Some error in API");
       dispatch({
         type: AUTH_ERROR,
       });
@@ -109,7 +110,7 @@ const AuthState = (props) => {
   //Login Faculty User
   const Facultylogin = async (formData) => {
     try {
-      console.log(formData);
+      // console.log(formData);
       const res = await axios.post("/api/auth/faculty", formData);
       console.log("data to be seen", res.data.token);
       dispatch({
@@ -118,7 +119,6 @@ const AuthState = (props) => {
       });
       // loadUser();
     } catch (err) {
-
       dispatch({
         type: LOGIN_FAIL,
         payload: err.response.data.msg,
@@ -129,10 +129,14 @@ const AuthState = (props) => {
   //Students Section login
 
   const StudentSectionlogin = async (formData) => {
+    if (localStorage.token) {
+      setAuthToken(localStorage.token);
+    }
     try {
       console.log("Student section login ", formData);
       const res = await axios.post("/api/auth/studentsection", formData);
       // console.log("data to be seen", res.data.token);
+
       dispatch({
         type: LOGIN_SUCCESS_STUDENTSECTION,
         payload: res.data,
@@ -140,7 +144,6 @@ const AuthState = (props) => {
       // loadUser();
       console.log("Ssadja");
     } catch (err) {
-
       console.log("error student section", err);
       // dispatch({
       //   type: LOGIN_FAIL,

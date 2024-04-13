@@ -17,6 +17,7 @@ module.exports = function (role) {
     try {
       const decoded = jwt.verify(token, config.get("jwtsecret"));
       // req.student = decoded.user;
+      console.log("Role is : ", role, decoded);
       switch (role) {
         case "student":
           req.student = decoded.Student;

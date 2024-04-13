@@ -9,7 +9,6 @@ const Login = (props) => {
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
   const authContext = useContext(AuthContext);
-
   const {
     Studentlogin,
     Facultylogin,
@@ -22,7 +21,6 @@ const Login = (props) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
-      setShowSidebarAndNavbar(true);
       if (role === "Student") navigate("/");
       if (role === "Faculty") navigate("/Faculty/");
       if (role === "StudentsSection") navigate("/StudentSection/");
@@ -44,14 +42,14 @@ const Login = (props) => {
 
   const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
     console.log(mis, password);
     if (mis === "" || password === "") {
       setAlert("Please fill in all fields", "danger");
     } else {
       if (role === "Student") {
-        await Studentlogin({
+        Studentlogin({
           mis,
           password,
         });
@@ -59,11 +57,7 @@ const Login = (props) => {
         Facultylogin({ empno: mis, password: password });
       } else if (role === "StudentsSection") {
         console.log("students sections");
-
-        await Facultylogin({ empno: mis, password: password });
-      } else if (role === "StudentsSection") {
-        console.log("students sections");
-        await StudentSectionlogin({
+        StudentSectionlogin({
           empno: mis,
           password,
         });

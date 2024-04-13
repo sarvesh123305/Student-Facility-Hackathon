@@ -43,6 +43,7 @@ router.get("/faculty", auth("faculty"), async (req, res) => {
 
 router.get("/studentsection", auth("studentsection"), async (req, res) => {
   try {
+    // console.log("first", req);
     const user = await Others.findById(req.studentsection.id).select(
       "-password"
     );
@@ -161,6 +162,7 @@ router.post(
     check("password", "Please enter a valid password").exists(),
   ],
   async (req, res) => {
+    // console.log("I amm login");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() }); //bad request
