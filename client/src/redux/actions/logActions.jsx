@@ -1,4 +1,9 @@
-import { GET_STUDENT_DETAILS, GET_QUERIES, UPDATE_STUDENT } from "./types";
+import {
+  GET_STUDENT_DETAILS,
+  GET_QUERIES,
+  UPDATE_STUDENT,
+  GET_BONAFIDE_STATUS,
+} from "./types";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from "axios";
 export const initialLoadUser = () => async (dispatch) => {
@@ -13,7 +18,7 @@ export const initialLoadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log("got here bangged", err);
+    // console.log("got here bangged", err);
   }
 };
 export const bonafideDownload = (formData, setPdfData) => async (dispatch) => {
@@ -135,10 +140,50 @@ export const updateStudent = (mis, formData) => async (dispatch) => {
 
 export const sendBonafideRequest = (formData) => async (dispatch) => {
   try {
+    // Check if formData.mis in bonafides
+    const repeat = await axios.post(
+      "/api/studentsection/bonafideApplications",
+      {
+        mis: formData.mis,
+      }
+    );
+
+    if (repeat.data.msg === "Bonafide Appliacation Found") {
+      alert("Duplicate Entry Exists");
+      return;
+    }
+    console.log("SEND ", formData.mis);
     const res = await axios.post("/api/student/sendBonafideRequest", formData);
   } catch (err) {
     console.log(err);
   }
 };
+
+export const getBonafideStatus = (mis) => async (dispatch) => {
+  try {
+    // Check if formData.mis in bonafides
+    console.log("Yes yes in");
+    const getResp = await axios.post(
+      "/api/studentsection/bonafideApplications",
+      {
+        mis: mis,
+      }
+    );
+    if (getResp.data.msg === "Bonafide Appliacation Found") {
+      dispatch({
+        type: GET_BONAFIDE_STATUS,
+        payload: true,
+      });
+      return;
+    }
+    dispatch({
+      type: GET_BONAFIDE_STATUS,
+      payload: false,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 /*
  */
