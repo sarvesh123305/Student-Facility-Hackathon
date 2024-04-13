@@ -328,4 +328,28 @@ router.delete("/queries/:messageId", async (req, res) => {
   }
 });
 
+router.put('/updateLCRequest/:mis', async (req, res) => {
+  const { mis } = req.params;
+  const { name, age, /* other fields you want to update */ } = req.body;
+
+  try {
+    const db = getDB();
+    const collection = db.collection('LCRequests'); // Assuming your collection name is 'students'
+
+    const result = await collection.updateOne(
+      { mis: mis }, // Filter by MIS
+      { $set: { name: name, age: age, /* other fields to update */ } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: 'Student not found' });
+    }
+
+    res.status(200).json({ message: 'Student updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 module.exports = router;
