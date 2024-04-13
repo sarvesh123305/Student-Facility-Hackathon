@@ -135,5 +135,41 @@ router.get('/bonafideApplications', async (req, res) => {
   }
 });
 
+router.post('/bonafideApplicationsStatusYes', async (req, res) => {
+  try {
+    const bonafideApplicationsStatusYes = await bonafides.findOne({ _id: req.body._id });
+
+    bonafideApplicationsStatusYes.status = 'Accepted';
+    bonafideApplicationsStatusYes.save();
+
+    if (!bonafideApplicationsStatusYes || bonafideApplicationsStatusYes.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    res.json(bonafideApplications);
+  } catch (err) {
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+});
+
+
+router.post('/bonafideApplicationsStatusNo', async (req, res) => {
+  try {
+    const bonafideApplicationsStatusNo = await bonafides.findOne({ _id: req.body._id });
+
+    bonafideApplicationsStatusNo.status = 'Rejected';
+    bonafideApplicationsStatusNo.save();
+
+    if (!bonafideApplicationsStatusNo || bonafideApplicationsStatusNo.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    res.json(bonafideApplications);
+  } catch (err) {
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+})
 
 module.exports = router;

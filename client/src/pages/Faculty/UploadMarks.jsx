@@ -110,7 +110,6 @@ const UploadMarks = () => {
       totalMarksLabel.value = Total;
 
     }
-    
   }
 
   return (

@@ -137,6 +137,14 @@ export const sendBonafideRequest = (formData) => async (dispatch) => {
   try {
 
     // Check if formData.mis in bonafides
+    const repeat = await axios.get('/api/studentsection/bonafideApplications');
+
+    for (let i = 0; i < repeat.data.length; i++) {
+      if (repeat.data[i].mis === formData.mis) {
+        alert("You have already applied for bonafide certificate");
+        return;
+      }
+    }
 
     console.log("SEND ",formData.mis)
     const res = await axios.post("/api/student/sendBonafideRequest", formData);
