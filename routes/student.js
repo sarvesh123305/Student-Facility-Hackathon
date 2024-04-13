@@ -9,13 +9,16 @@ const auth = require("../middleware/auth");
 const Bonafide = require("../models/Bonafide");
 const Message = require("../models/Messages");
 const { v4: uuidv4 } = require("uuid");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require('mongodb');
 const Subject = require("../models/Subject");
 const AcademicProfile = require("../models/AcademicProfile");
 const Notifications = require("../models/Notifications");
 const StudentInformation = require("../models/StudentInformation");
-
+const multer = require('multer');
 const fs = require("fs");
+// const Image = require('../models/Image');
+const path = require('path')
+const mongoose = require('mongoose')
 
 const PDFDocument = require("pdfkit");
 const axios = require("axios");
@@ -26,6 +29,7 @@ const mongodbURLURIOPTIMIZE = config.get("mongoURI");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
 const client = new MongoClient(uri);
+
 
 //@routes POST api/student/
 //@desc Register to a user
@@ -1402,3 +1406,74 @@ module.exports = router;
 document.getElementById("mis").value = "142203012"
 document.getElementById("password").value = "password123"
 */
+
+// Multer configuration
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//       cb(null, 'uploads/'); // Save uploaded files to the 'uploads' directory
+//   },
+//   filename: (req, file, cb) => {
+//       cb(null, file.originalname); // Use the original filename
+//   },
+// });
+
+// const upload = multer({ storage: storage });
+
+// POST request to handle file upload
+
+// router.post('/upload', upload.single('image'), async (req, res) => {
+//     try {
+//         await client.connect();
+//         const database = client.db('test');
+//         const collection = database.collection('images');
+
+//         const image = {
+//             filename: req.file.originalname,
+//             path: req.file.path,
+//         };
+
+//         const result = await collection.insertOne(image);
+//         res.json({ message: 'Image uploaded successfully', id: result.insertedId });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Error uploading image' });
+//     } finally {
+//         await client.close();
+//     }
+// });
+
+// router.get('/image/:id', async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//       await client.connect();
+//       const database = client.db('test');
+//       const collection = database.collection('images');
+//       const validObjectId = new ObjectId('6619a41148d3c1c7169e5fa6');
+//       console.log(validObjectId)
+//       const image = await collection.findOne({ _id: validObjectId});
+//       if (!image) {
+//           return res.status(404).json({ message: 'Image not found' });
+//       }
+
+//       // Generate remote URL based on your server configuration
+//       const remoteURL = `https://mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/ContactKeeper/${image.filename}`;
+
+//       res.json({ image: remoteURL });
+//   } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ message: 'Error retrieving image' });
+//   } finally {
+//       await client.close();
+//   }
+// });
+
+router.post("/upload", async(req, res) => {
+  const {base64} = req.body;
+  try{
+    Images.create({image: base64});
+    res.send({Status: 'OK'})
+  }catch(error){
+    res.send({Status: "error", data:error})
+  } 
+});

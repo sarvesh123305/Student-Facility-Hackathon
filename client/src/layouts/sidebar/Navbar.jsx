@@ -7,6 +7,7 @@ import { initialLoadUser } from "../../redux/actions/logActions";
 import { useState } from "react";
 import NotificationDialog from "../../pages/Student/NotificationDialog";
 import LogoutDropDown from "../../pages/Student/LogoutDropDown";
+import SearchDropdown from "../../pages/Student/SearchDropdown";
 const Navbar = ({ initialLoadUser }) => {
   const authContext = useContext(AuthContext);
   const {user} = authContext
@@ -19,11 +20,31 @@ const Navbar = ({ initialLoadUser }) => {
   const [toggle, setToggle] = useState(false);
   const [logoutToggle, setLogoutToggle] = useState(false);
   const [input, setInput] = useState("");
+  const [results, setResults] = useState([]);
+
+  const fetchData = (value) => {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((json) => {
+        const result = json.filter((user) => {
+          return (
+            value &&
+            user &&
+            user.name &&
+            user.name.toLowerCase().includes(value)
+          );
+        });
+        // console.log(result)
+        setResults(result);
+      });
+  };
 
   const handleChange = (value) => {
     setInput(value)
-    console.log("On change called")
+    // console.log(value)
+    fetchData(value);
   }
+
 
   return (
     <div className="flex flex-row  p-2 bg-white justify-between items-center">
@@ -38,9 +59,9 @@ const Navbar = ({ initialLoadUser }) => {
       */}
       {toggle ? <NotificationDialog/> : ""}
       {logoutToggle ? <LogoutDropDown/> : ""}
+      {results && results.length > 0 && <SearchDropdown results={results} />}
       {/* {searchToggle ? <SearchDropdown/> : ""} */}
       
-      {/* <SearchDropdown/> */}
       <div></div>
 {/*      
         <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -51,7 +72,7 @@ const Navbar = ({ initialLoadUser }) => {
         <input type="search" id="default-search" class="block w-1/2 p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Mockups, Logos..." required />
         <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button> */}
 
-        <form class="flex items-center sm:w-1/2 max-w-md mx-auto p-1">
+        <form class=" flex items-center sm:w-1/2 max-w-md mx-auto p-1 ">
           <label for="simple-search" class="sr-only">Search</label>
           <div class="relative w-full m-1 ">
 

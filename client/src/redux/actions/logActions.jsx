@@ -47,7 +47,7 @@ export const resultDownload = (formData, setPdfData) => async (dispatch) => {
 export const sendQuery = (message) => async (dispatch) => {
   try {
     console.log(message);
-    await axios.post("/api/student/queries", message);
+    await axios.post("/api/student/upload", message);
   } catch (err) {
     console.log(err);
   }
