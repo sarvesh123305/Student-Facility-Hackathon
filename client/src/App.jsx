@@ -31,6 +31,8 @@ import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
 import UploadMarks from "./pages/Faculty/UploadMarks";
+
+import AllocateGrades from "./pages/Faculty/AllocateGrades";
 import FeeReceiptForm from "./pages/Student/FeeReceiptForm";
 import LeavingCertificateForm from "./pages/Student/LeavingCertificateForm";
 import { Provider } from "react-redux";
@@ -126,6 +128,10 @@ const App = () => {
                         element={<UploadMarks />}
                       />
                       <Route
+                        path="/Faculty/AllocateGrades"
+                        element={<AllocateGrades />}
+                      />
+                      <Route
                         path="/Applications/FeeReceipt/"
                         element={<FeeReceiptForm />}
                       />
@@ -183,7 +189,7 @@ const App = () => {
                         element={<Scholarships />}
                       />
                       <Route
-                        path="/StudentSection/Scholarship/RequestedBonafides"
+                        path="/StudentSection/Bonafides"
                         element={<Bonafides />}
                       />
                       <Route

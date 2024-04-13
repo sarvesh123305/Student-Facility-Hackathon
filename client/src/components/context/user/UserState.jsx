@@ -34,7 +34,7 @@ const UserState = (props) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log("got here bangged", err);
+      // console.log("got here bangged", err);
       // dispatch({
       //   type: AUTH_ERROR,
       // });

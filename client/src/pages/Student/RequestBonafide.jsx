@@ -7,12 +7,12 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {
   bonafideDownload,
-  initialLoadUser,
+  initialLoadUser,sendBonafideRequest
 } from "../../redux/actions/logActions";
 const RequestBonafide = ({
   student: { studentDetails, academicProfile },
   bonafideDownload,
-  initialLoadUser,
+  initialLoadUser,sendBonafideRequest
 }) => {
   const [bonafideDetails, setBonafideDetails] = useState({
     reason: "",
@@ -70,7 +70,9 @@ const RequestBonafide = ({
       programme: "Btech",
       purpose: "Scholarship",
     };
-    // sendBonafideRequest
+    console.log("FORM",formData);
+
+    sendBonafideRequest(formData);
   };
   useEffect(() => {
     if (pdfData) {
@@ -219,7 +221,7 @@ const RequestBonafide = ({
                 </div>
               </div>
             </fieldset>
-            {/* 
+            
             <div>
               <label
                 htmlFor="email"
@@ -239,7 +241,7 @@ const RequestBonafide = ({
                   class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 " placeholder="Write a reason..."/>
               </div>
             </div>
-            */}
+            
             <div>
             <button
               onClick={handleSendRequest}
@@ -277,6 +279,6 @@ const RequestBonafide = ({
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps, { bonafideDownload, initialLoadUser })(
+export default connect(mapStateToProps, { bonafideDownload, initialLoadUser,sendBonafideRequest })(
   RequestBonafide
 );

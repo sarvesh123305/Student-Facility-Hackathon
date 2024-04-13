@@ -15,6 +15,8 @@ const AcademicProfile = require("../models/AcademicProfile");
 const Notifications = require("../models/Notifications");
 const StudentInformation = require("../models/StudentInformation");
 const multer = require('multer');
+
+const FeeReceipt = require("../models/FeeReceipt");
 const fs = require("fs");
 // const Image = require('../models/Image');
 const path = require('path')
@@ -24,7 +26,7 @@ const PDFDocument = require("pdfkit");
 const axios = require("axios");
 const { format } = require("date-fns");
 const SemesterCreditRegistration = require("../models/SemesterCreditRegistration");
-
+const { userData } = require("./userData");
 const mongodbURLURIOPTIMIZE = config.get("mongoURI");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
@@ -412,6 +414,7 @@ async function addDocumentToCollection(document, dbName, collectionName) {
 
     const result = await collection.insertOne(document);
     console.log("Document added to collection:", result.insertedId);
+    return result;
   } catch (error) {
     console.error("Error adding document to collection:", error);
   }
@@ -1046,10 +1049,50 @@ router.get("/semesterCreditRegistration", async (req, res) => {
 });
 
 //@routes GET api/student/FeeReceipt
-//@desc Get Fee Receit
+
+//@desc Get Fee Receit m,jgkljdjgkjldlkjdtlkjjdflkjy
 //@access public
 
 router.post("/FeeReceipt", async (req, res) => {
+  const { formData } = req.body;
+  console.log("IN axis", formData);
+  // console.log(formData.TutionFee + formData.TnpFee);
+  // const formData = {
+  //   FullName: "Sanika Kulkarni",
+  //   Year: 2024,
+  //   MobileNumber: "1234567890",
+  //   Mis: 142203011,
+  //   Branch: "Computer Science",
+  //   Category: "General",
+  //   DateOfPayment: "2024-04-12",
+  //   TutionFee: 5000,
+  //   DevelopmentFee: 2000,
+  //   GymkhanaFee: 1000,
+  //   TnpFee: 1500,
+  //   Library: 500,
+  //   Laboratory: 1000,
+  //   InternetAndEmail: 200,
+  //   Gathering: 300,
+  //   Cmd: 400,
+  //   BoatClubFee: 100,
+  //   BoatClubMemFee: 50,
+  //   StudentAidFund: 200,
+  //   ExamFee: 800,
+  //   IdentityCard: 100,
+  //   UniversityFee: 3000,
+  //   AluminiFee: 200,
+  //   HostelFee: 5000,
+  //   HostelDepost: 2000,
+  //   AraiLibFee: 300,
+  //   AraiCompFee: 400,
+  //   AraiLabFee: 500,
+  //   AraiAluminiFee: 100,
+  //   LeavingCert: 200,
+  //   StudentAid: 300,
+  //   Fine: 50,
+  //   Other: 100,
+  //   uploadSbiFee: 200,
+  // };
   try {
     const studentData = req.body;
     const currentDateTime = new Date();
@@ -1058,42 +1101,83 @@ router.post("/FeeReceipt", async (req, res) => {
     console.log(req.body);
     const cwd = process.cwd();
 
+    // Convert number fields to integers
+    const formDataWithInt = {
+      TutionFee: parseInt(formData.TutionFee),
+      DevelopmentFee: parseInt(formData.DevelopmentFee),
+      GymkhanaFee: parseInt(formData.GymkhanaFee),
+      TnpFee: parseInt(formData.TnpFee),
+      Library: parseInt(formData.Library),
+      Laboratory: parseInt(formData.Laboratory),
+      InternetAndEmail: parseInt(formData.InternetAndEmail),
+      Gathering: parseInt(formData.Gathering),
+      Cmd: parseInt(formData.Cmd),
+      BoatClubFee: parseInt(formData.BoatClubFee),
+      BoatClubMemFee: parseInt(formData.BoatClubMemFee),
+      StudentAidFund: parseInt(formData.StudentAidFund),
+      ExamFee: parseInt(formData.ExamFee),
+      IdentityCard: parseInt(formData.IdentityCard),
+      UniversityFee: parseInt(formData.UniversityFee),
+      AluminiFee: parseInt(formData.AluminiFee),
+      HostelFee: parseInt(formData.HostelFee),
+      HostelDepost: parseInt(formData.HostelDepost),
+      AraiLibFee: parseInt(formData.AraiLibFee),
+      AraiCompFee: parseInt(formData.AraiCompFee),
+      AraiLabFee: parseInt(formData.AraiLabFee),
+      AraiAluminiFee: parseInt(formData.AraiAluminiFee),
+      LeavingCert: parseInt(formData.LeavingCert),
+      StudentAid: parseInt(formData.StudentAid),
+      Fine: parseInt(formData.Fine),
+      Other: parseInt(formData.Other),
+    };
+
+    // Calculate total sum
+    let totalSum = 0;
+    for (const field in formDataWithInt) {
+      if (!isNaN(formDataWithInt[field])) {
+        totalSum += formDataWithInt[field];
+      }
+    }
+
+    console.log("Total sum:", totalSum);
+
+    // console.log("Total fees:", totalFees);
     tableData1 = [
-      ["Name", "Chinmay Milind Sheth"],
-      ["Mobile Number", "9273606333"],
-      ["Class", "Third Year BTech"],
-      ["MIS", "142203003"],
-      ["Branch", "Computer Engineering"],
-      ["Category", "EWS"],
+      ["Name", `${formData.FullName}`],
+      ["Mobile Number", `${formData.MobileNumber}`],
+      ["Class", `${formData.Year}`], //third year
+      ["MIS", `${formData.Mis}`],
+      ["Branch", `${formData.Branch}`],
+      ["Category", `${formData.Category}`],
       ["Date of Payment", `${currentDate}`],
     ];
 
     tableData2 = [
       ["Particulars", "Amount"],
-      ["Tuition Fee", "7500"],
-      ["Development Fee", "39850"],
-      ["Gymkhana Fee", "1800"],
-      ["Training and Placement", "1000"],
-      ["Library", "4500"],
-      ["Laboratoty", "15000"],
-      ["Internet and Email", "2200"],
-      ["Gathering", "1500"],
-      ["C. M. D. (Refundable)", "5000"],
-      ["Boat Club Fee", "600"],
-      ["Boat Club Membership", "150"],
-      ["Student Aid Fund", "250"],
-      ["Examination Fee", "750"],
-      ["Identity Card", "100"],
-      ["University Fee", "200"],
-      ["Alumni Membership Fee", "1000"],
-      ["Hostel Fee", "0"],
-      ["Hostel Deposit", "0"],
-      ["ARAI Fee", "0"],
-      ["Leaving Certificate / Transfer Certificate", "50"],
-      ["Student Accident Insurance Premium", "150"],
-      ["Fine", "0"],
-      ["Others", "0"],
-      ["Total", "82600"],
+      ["Tuition Fee", `${formData.TutionFee}`],
+      ["Development Fee", `${formData.DevelopmentFee}`],
+      ["Gymkhana Fee", `${formData.GymkhanaFee}`],
+      ["Training and Placement", `${formData.TnpFee}`],
+      ["Library", `${formData.Library}`],
+      ["Laboratoty", `${formData.Laboratory}`],
+      ["Internet and Email", `${formData.InternetAndEmail}`],
+      ["Gathering", `${formData.Gathering}`],
+      ["C. M. D. (Refundable)", `${formData.Cmd}`],
+      ["Boat Club Fee", `${formData.BoatClubFee}`],
+      ["Boat Club Membership", `${formData.BoatClubMemFee}`],
+      ["Student Aid Fund", `${formData.StudentAidFund}`],
+      ["Examination Fee", `${formData.ExamFee}`],
+      ["Identity Card", `${formData.IdentityCard}`],
+      ["University Fee", `${formData.UniversityFee}`],
+      ["Alumni Membership Fee", `${formData.AluminiFee}`],
+      ["Hostel Fee", `${formData.HostelFee}`],
+      ["Hostel Deposit", `${formData.HostelDepost}`],
+      ["ARAI Fee", `${formData.AraiLibFee}`],
+      ["Leaving Certificate / Transfer Certificate", `${formData.LeavingCert}`],
+      ["Student Accident Insurance Premium", `${formData.StudentAid}`],
+      ["Fine", `${formData.Fine}`],
+      ["Others", `${formData.Other}`],
+      ["Total", `${totalSum}`],
     ];
 
     tableData3 = [
@@ -1291,7 +1375,7 @@ router.post("/FeeReceipt", async (req, res) => {
 // Function to draw a table in the PDF document with custom column widths and alignments
 function drawTable1(doc, table, options) {
   let { x, y, padding, lineSpace, colWidths } = options;
-  const rowHeight = 20;
+  const rowHeight = 18;
 
   doc.font("Helvetica");
   doc.fontSize(11);
@@ -1401,7 +1485,468 @@ function drawTable2(doc, table, options) {
     rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
-module.exports = router;
+
+
+router.post("/sendBonafideRequest", async (req, res) => {
+  const { mis,name,dept,programme,purpose,year ,academicYear} = req.body;
+  try {
+    // console.log("FORMDATA : ",formData,mis);
+    // Create a new Bonafide document
+    const newBonafide = new Bonafide({
+      mis ,
+      name ,
+      dept,
+      year,
+      academicYear,
+      programme,
+      purpose
+    });
+
+    // Save the new Bonafide document to the database
+    const result = await newBonafide.save();
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+router.post("/LeavingCertificate", async (req, res) => {
+  const formData = {
+    FullName: "Chinmay Milind Sheth",
+    Religion: "Hindu",
+    Caste: "Gujar",
+    Nationality: "Indian",
+    PlaceOfBirth: "Mahad",
+    DateOfBirth: "17/06/2003",
+    LastAttended: "Institute of Petrochemical Engineering, Lonere",
+    DateOfAdmission: "28/11/2022",
+    Progress: "Good",
+    Conduct: "Good",
+    DateofLeave: "15/06/2025",
+    Remarks: "No Dues",
+  };
+  try {
+    const studentData = req.body;
+    const currentDateTime = new Date();
+    const formattedDateTime = format(currentDateTime, "dd/MM/yyyy HH:mm:ss");
+    const currentDate = format(new Date(), "dd/MM/yyyy");
+    console.log(req.body);
+    const cwd = process.cwd();
+
+    tableData1 = [
+      ["1.", "Name of the Student", `${formData.FullName}`],
+      ["2.", "Religion", `${formData.Religion}`],
+      ["3.", "Caste", `${formData.Caste}`],
+      ["3.", "Nationality", `${formData.Nationality}`],
+      ["4.", "Place of Birth", `${formData.PlaceOfBirth}`],
+      ["5.", "Date of Birth", `${formData.DateOfBirth}`],
+      ["6.", "Institute/College Last Attended", `${formData.LastAttended}`],
+      ["7.", "Date of Admission", `${formData.DateOfAdmission}`],
+      ["8.", "Progress", `${formData.Progress}`],
+      ["9.", "Conduct", `${formData.Conduct}`],
+      ["10.","Date of Leaving the University", `${formData.DateofLeave}`],
+      ["11.", "Remarks", `${formData.Remarks}`]
+    ];
+
+    // studentDetails = {};
+    // await fetchData(studentData, res);
+
+    const doc = new PDFDocument({ size: "A4"});
+    
+    res.setHeader(
+      "Content-Disposition",
+      'attachment; filename="table_example.pdf"'
+    );
+    res.setHeader("Content-Type", "application/pdf");
+
+    doc.pipe(res);
+
+    doc.fontSize(11);
+    const table1 = {
+      headers: tableData1[0],
+      rows: tableData1.slice(1),
+    };
+
+    doc.image(
+      cwd + "/routes/COEP_Logo.png",
+      {
+        width: 40,
+        height: 40,
+        x: 80,
+        y: 45,
+      }
+    );
+
+    doc.image(
+      // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/watermark.png",
+      cwd + "/routes/watermark.png",
+      {
+        width: 400,
+        height: 500,
+        x: 100,
+        y: 200,
+        opacity: 0.01,
+      }
+    );
+
+    doc.image(
+      cwd + "/routes/Images/greenTick.png",
+      {
+        width: 50,
+        height: 50,
+        x: 450,
+        y: 720,
+        opacity: 0.1,
+      }
+    );
+    
+    doc
+      .fontSize(18)
+      .font("Helvetica-Bold")
+      .text("COEP TECHNOLOGICAL UNIVERSITY, PUNE", 110, 50, { align: "center" });
+
+    doc
+      .fontSize(14)
+      .font("Helvetica")
+      .text("5, Wellesly Road, Shivajinagar, Pune 411005", 110, 75, { align: "center" });
+
+    doc.rect(185, 100, 245, 40);
+    doc.stroke();
+
+    doc.rect(20, 20, 555, 750);
+    doc.stroke();
+
+    doc.rect(20, 190, 555, 0);
+    doc.stroke();
+
+    doc.rect(20, 195, 555, 0);
+    doc.stroke();
+
+    doc
+      .fontSize(25)
+      .font("Helvetica-Bold")
+      .text("Leaving Certificate", 90, 110, { align: "center" });
+
+    doc
+      .fontSize(13)
+      .font("Helvetica-Bold")
+      .text(`Sr. No. : 1019`, 50, 170, {align: "left" });
+
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Register No. : Comp/08/59`, 50, 170, {align: "right" });
+
+    doc
+      .fontSize(11)
+      .font("Helvetica")
+      .text("Note: No change in any entry in this Leaving Certificate is to be made except by the authority issuing this Leaving Certificate, Infringement of this rule will be punished with rustication.", 30, 205, { align: "left" });
+
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica")
+    //   .text("Note: Certified that the above information is in the accordance with the University Register.", 50, 680, { align: "center" });
+
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica-Bold")
+    //   .text("Student Details", 60, 120, { align: "center" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Place : Pune`, 50, 720, {align: "Left" });
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Date: ${currentDate}`, 50, 740, {align: "left" });
+
+
+    doc
+      .font("Helvetica-Bold")
+      .text(`Digitally Signed By`, 50, 710, {align: "right" });
+
+    doc
+      .font("Helvetica")
+      .text(`Registrar`, 10, 730, {align: "right" });
+
+    doc
+      .fontSize(12)
+      .font("Helvetica-Bold")
+      .text(`Date: ${formattedDateTime}`, 90, 750, { align: "right" });
+
+    // doc
+    //   .font("Helvetica-Bold")
+    //   .text(
+    //     `Note: Please retain this copy till pass out from college.`,
+    //     50,
+    //     900,
+    //     { align: "center" }
+    //   );
+
+    // Draw the table
+    drawTable1(doc, table1, {
+      x: 20,
+      y: 240,
+      padding: 5,
+      lineSpace: 3,
+      colWidths: [50, 230, 275],
+    });
+    
+    doc.end();
+  } catch (error) {
+    console.error("Error generating PDF:", error);
+    res.status(500).send("Error generating PDF");
+  }
+});
+
+// Function to draw a table in the PDF document with custom column widths and alignments
+function drawTable1(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 35;
+
+  doc.font("Helvetica");
+  doc.fontSize(15);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      //align: "left",
+      align: i === 1 ? "left" : "left",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(15);
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "left" : "left"; // Align 'Course Name' column to the left
+      
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
+
+function drawTable2(doc, table, options) {
+  let { x, y, padding, lineSpace, colWidths } = options;
+  const rowHeight = 18;
+
+  doc.font("Helvetica-Bold");
+  doc.fontSize(11);
+
+  // Draw table headers with custom column widths
+  table.headers.forEach((header, i) => {
+    doc.rect(x, y, colWidths[i], rowHeight + lineSpace).stroke();
+    doc.text(header, x + padding, y + padding, {
+      width: colWidths[i] - 2 * padding,
+      align: "center",
+    });
+    x += colWidths[i];
+  });
+
+  doc.font("Helvetica");
+  doc.fontSize(11); 
+
+  // Draw table rows with custom column widths and alignments
+  let yOffset = y + rowHeight + lineSpace;
+  table.rows.forEach((row, rowIndex) => {
+    let xOffset = x - colWidths.reduce((acc, val) => acc + val, 0);
+    row.forEach((cell, i) => {
+      const align = i === 1 ? "center" : "left"; // Align 'Course Name' column to the left
+      
+      doc.rect(xOffset, yOffset, colWidths[i], rowHeight + lineSpace).stroke();
+      if (rowIndex === table.rows.length - 1) {
+        // Change 3 to the index of the row you want to make bold
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      } else {
+        doc
+          .font("Helvetica")
+          .text(cell.toString(), xOffset + padding, yOffset + padding, {
+            width: colWidths[i] - 2 * padding,
+            align,
+          });
+      }
+      xOffset += colWidths[i];
+    });
+    yOffset += rowHeight + lineSpace;
+  });
+
+  // Draw outer table border
+  const tableWidth = colWidths.reduce((acc, val) => acc + val, 0);
+  const tableHeight =
+    rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
+  doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
+}
+
+router.post("/fillFeeReceit", async (req, res) => {
+  try {
+    // Parse request body to extract data
+    const {
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    } = req.body;
+
+    // Create a new document using the AcademicProfile schema
+    const feereceitt = new FeeReceipt({
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    });
+
+    // Save the new document to the database
+    const data = await feereceitt.save();
+    // res.status(201).json({ message: "Fee Receit Data Saved successfully" });
+    res.send(data);
+  } catch (error) {
+    console.error("Error saving academic profile:", error);
+    res.status(500).json({ error: "Server error occurred" });
+  }
+});
+
+router.post("/FillLeaving", async (req, res) => {
+  try {
+    // Parse request body to extract data
+    const {
+      FullName,
+      Religion,
+      Caste,
+      Nationality,
+      DateOfBirth,
+      PlaceOfBirth,
+      LastSchoolAttended,
+      DateOfAdmission,
+      Progress,
+      Conduct,
+      DateofLeaving,
+      Remarks,
+    } = req.body;
+
+    // Create a new document using the AcademicProfile schema
+    const FillLeaving = new FillLeaving({
+      FullName,
+      Religion,
+      Caste,
+      Nationality,
+      DateOfBirth,
+      PlaceOfBirth,
+      LastSchoolAttended,
+      DateOfAdmission,
+      Progress,
+      Conduct,
+      DateofLeaving,
+      Remarks,
+    });
+
+    // Save the new document to the database
+    const data = await FillLeaving.save();
+    // res.status(201).json({ message: "Fee Receit Data Saved successfully" });
+    res.send(data);
+  } catch (error) {
+    console.error("Error saving academic profile:", error);
+    res.status(500).json({ error: "Server error occurred" });
+  }
+});
+
 /*
 document.getElementById("mis").value = "142203012"
 document.getElementById("password").value = "password123"
@@ -1477,3 +2022,108 @@ router.post("/upload", async(req, res) => {
     res.send({Status: "error", data:error})
   } 
 });
+async function publishSubjectsToDB(userData) {
+  const semesters = userData["academicprofiles"]["semesters"];
+  semesterSubjectKeys = [];
+  for (var i = 0; i < semesters.length; i++) {
+    var currentSubjectArray = semesters[i]["subjects"];
+    var subjectKeys = [];
+    for (var j = 0; j < currentSubjectArray.length; j++) {
+      var currentSubject = currentSubjectArray[j];
+      for (var k = 0; k < currentSubjectArray[j]["subjects"].length; k++) {
+        var key = await addDocumentToCollection(
+          currentSubjectArray[j]["subjects"][k],
+          "test",
+          "subjects"
+        );
+        subjectKeys.push(key.insertedId);
+      }
+    }
+    semesterSubjectKeys.push(subjectKeys);
+  }
+  console.log(semesterSubjectKeys);
+  return semesterSubjectKeys;
+}
+
+async function publishAcademicDetailsToDB(userData, semesterSubjectKeys) {
+  // Insert academicDetails
+  var academicProfileData = userData["academicprofiles"];
+  console.log(academicProfileData);
+
+  for (var i = 0; i < semesterSubjectKeys.length; i++) {
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] = [];
+    academicProfileData["semesters"][i]["subjects"][0]["subjects"] =
+      semesterSubjectKeys[i];
+  }
+  var academicProfileKey = await addDocumentToCollection(
+    academicProfileData,
+    "test",
+    "academicprofiles"
+  );
+  console.log(academicProfileData);
+  console.log(academicProfileKey.insertedId);
+  return academicProfileKey.insertedId;
+}
+
+async function publishStudentDetailsToDB(userData) {
+  // Insert Student Details
+
+  var studentDetailsData = userData["studentinformations"];
+  console.log(studentDetailsData);
+  var studentInformationKey = await addDocumentToCollection(
+    studentDetailsData,
+    "test",
+    "studentinformations"
+  );
+  console.log(studentInformationKey.insertedId);
+  return studentInformationKey.insertedId;
+}
+
+async function publishStudentDataToDB(
+  userData,
+  academicProfileKey,
+  studentInformationKey
+) {
+  // insert to the first instance Document :
+  var studentData = userData;
+  studentData["studentinformations"] = studentInformationKey;
+  studentData["academicprofiles"] = academicProfileKey;
+  var studentKey = await addDocumentToCollection(
+    studentData,
+    "test",
+    "students"
+  );
+  console.log(studentKey.insertedId);
+  return studentKey.insertedId;
+}
+
+
+
+
+
+router.post("/postToDB", async (req, res) => {
+  // const id = req.student.id;
+  try {
+    const { userData } = req.body;
+    // console.log(userData)
+    res.json({ message: "hi" });
+
+    var semesterSubjectKeys = await publishSubjectsToDB(userData);
+    var academicProfileKey = await publishAcademicDetailsToDB(
+      userData,
+      semesterSubjectKeys
+    );
+    var studentInformationKey = await publishStudentDetailsToDB(userData);
+
+    // the following key would not be needed tho as MIS would be the PK for accessing the values
+    var userDataUploadAccessKey = await publishStudentDataToDB(
+      userData,
+      academicProfileKey,
+      studentInformationKey
+    );
+    console.log(userDataUploadAccessKey);
+  } catch (err) {
+    console.log(err);
+  }
+});
+module.exports = router;
