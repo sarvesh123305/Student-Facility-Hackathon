@@ -39,6 +39,19 @@ const SubjectSchema = mongoose.Schema({
         type: String,
         required: true,
       },
+
+      t1: {
+        type: String,
+        required: true,
+      },
+      t2: {
+        type: String,
+        required: true,
+      },
+      endsem: {
+        type: String,
+        required: true,
+      },
     },
   ],
 });
