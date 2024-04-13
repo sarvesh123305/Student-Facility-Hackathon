@@ -14,7 +14,7 @@ const Subject = require("../models/Subject");
 const AcademicProfile = require("../models/AcademicProfile");
 const Notifications = require("../models/Notifications");
 const StudentInformation = require("../models/StudentInformation");
-
+const FeeReceipt = require("../models/FeeReceipt");
 const fs = require("fs");
 
 const PDFDocument = require("pdfkit");
@@ -1047,6 +1047,45 @@ router.get("/semesterCreditRegistration", async (req, res) => {
 //@access public
 
 router.post("/FeeReceipt", async (req, res) => {
+  const { formData } = req.body;
+  console.log("IN axis", formData);
+  // console.log(formData.TutionFee + formData.TnpFee);
+  // const formData = {
+  //   FullName: "Sanika Kulkarni",
+  //   Year: 2024,
+  //   MobileNumber: "1234567890",
+  //   Mis: 142203011,
+  //   Branch: "Computer Science",
+  //   Category: "General",
+  //   DateOfPayment: "2024-04-12",
+  //   TutionFee: 5000,
+  //   DevelopmentFee: 2000,
+  //   GymkhanaFee: 1000,
+  //   TnpFee: 1500,
+  //   Library: 500,
+  //   Laboratory: 1000,
+  //   InternetAndEmail: 200,
+  //   Gathering: 300,
+  //   Cmd: 400,
+  //   BoatClubFee: 100,
+  //   BoatClubMemFee: 50,
+  //   StudentAidFund: 200,
+  //   ExamFee: 800,
+  //   IdentityCard: 100,
+  //   UniversityFee: 3000,
+  //   AluminiFee: 200,
+  //   HostelFee: 5000,
+  //   HostelDepost: 2000,
+  //   AraiLibFee: 300,
+  //   AraiCompFee: 400,
+  //   AraiLabFee: 500,
+  //   AraiAluminiFee: 100,
+  //   LeavingCert: 200,
+  //   StudentAid: 300,
+  //   Fine: 50,
+  //   Other: 100,
+  //   uploadSbiFee: 200,
+  // };
   try {
     const studentData = req.body;
     const currentDateTime = new Date();
@@ -1054,43 +1093,83 @@ router.post("/FeeReceipt", async (req, res) => {
     const currentDate = format(new Date(), "dd/MM/yyyy");
     console.log(req.body);
     const cwd = process.cwd();
+    // Convert number fields to integers
+    const formDataWithInt = {
+      TutionFee: parseInt(formData.TutionFee),
+      DevelopmentFee: parseInt(formData.DevelopmentFee),
+      GymkhanaFee: parseInt(formData.GymkhanaFee),
+      TnpFee: parseInt(formData.TnpFee),
+      Library: parseInt(formData.Library),
+      Laboratory: parseInt(formData.Laboratory),
+      InternetAndEmail: parseInt(formData.InternetAndEmail),
+      Gathering: parseInt(formData.Gathering),
+      Cmd: parseInt(formData.Cmd),
+      BoatClubFee: parseInt(formData.BoatClubFee),
+      BoatClubMemFee: parseInt(formData.BoatClubMemFee),
+      StudentAidFund: parseInt(formData.StudentAidFund),
+      ExamFee: parseInt(formData.ExamFee),
+      IdentityCard: parseInt(formData.IdentityCard),
+      UniversityFee: parseInt(formData.UniversityFee),
+      AluminiFee: parseInt(formData.AluminiFee),
+      HostelFee: parseInt(formData.HostelFee),
+      HostelDepost: parseInt(formData.HostelDepost),
+      AraiLibFee: parseInt(formData.AraiLibFee),
+      AraiCompFee: parseInt(formData.AraiCompFee),
+      AraiLabFee: parseInt(formData.AraiLabFee),
+      AraiAluminiFee: parseInt(formData.AraiAluminiFee),
+      LeavingCert: parseInt(formData.LeavingCert),
+      StudentAid: parseInt(formData.StudentAid),
+      Fine: parseInt(formData.Fine),
+      Other: parseInt(formData.Other),
+    };
 
+    // Calculate total sum
+    let totalSum = 0;
+    for (const field in formDataWithInt) {
+      if (!isNaN(formDataWithInt[field])) {
+        totalSum += formDataWithInt[field];
+      }
+    }
+
+    console.log("Total sum:", totalSum);
+
+    // console.log("Total fees:", totalFees);
     tableData1 = [
-      ["Name", "Chinmay Milind Sheth"],
-      ["Mobile Number", "9273606333"],
-      ["Class", "Third Year BTech"],
-      ["MIS", "142203003"],
-      ["Branch", "Computer Engineering"],
-      ["Category", "EWS"],
+      ["Name", `${formData.FullName}`],
+      ["Mobile Number", `${formData.MobileNumber}`],
+      ["Class", `${formData.Year}`], //third year
+      ["MIS", `${formData.Mis}`],
+      ["Branch", `${formData.Branch}`],
+      ["Category", `${formData.Category}`],
       ["Date of Payment", `${currentDate}`],
     ];
 
     tableData2 = [
       ["Particulars", "Amount"],
-      ["Tuition Fee", "7500"],
-      ["Development Fee", "39850"],
-      ["Gymkhana Fee", "1800"],
-      ["Training and Placement", "1000"],
-      ["Library", "4500"],
-      ["Laboratoty", "15000"],
-      ["Internet and Email", "2200"],
-      ["Gathering", "1500"],
-      ["C. M. D. (Refundable)", "5000"],
-      ["Boat Club Fee", "600"],
-      ["Boat Club Membership", "150"],
-      ["Student Aid Fund", "250"],
-      ["Examination Fee", "750"],
-      ["Identity Card", "100"],
-      ["University Fee", "200"],
-      ["Alumni Membership Fee", "1000"],
-      ["Hostel Fee", "0"],
-      ["Hostel Deposit", "0"],
-      ["ARAI Fee", "0"],
-      ["Leaving Certificate / Transfer Certificate", "50"],
-      ["Student Accident Insurance Premium", "150"],
-      ["Fine", "0"],
-      ["Others", "0"],
-      ["Total", "82600"],
+      ["Tuition Fee", `${formData.TutionFee}`],
+      ["Development Fee", `${formData.DevelopmentFee}`],
+      ["Gymkhana Fee", `${formData.GymkhanaFee}`],
+      ["Training and Placement", `${formData.TnpFee}`],
+      ["Library", `${formData.Library}`],
+      ["Laboratoty", `${formData.Laboratory}`],
+      ["Internet and Email", `${formData.InternetAndEmail}`],
+      ["Gathering", `${formData.Gathering}`],
+      ["C. M. D. (Refundable)", `${formData.Cmd}`],
+      ["Boat Club Fee", `${formData.BoatClubFee}`],
+      ["Boat Club Membership", `${formData.BoatClubMemFee}`],
+      ["Student Aid Fund", `${formData.StudentAidFund}`],
+      ["Examination Fee", `${formData.ExamFee}`],
+      ["Identity Card", `${formData.IdentityCard}`],
+      ["University Fee", `${formData.UniversityFee}`],
+      ["Alumni Membership Fee", `${formData.AluminiFee}`],
+      ["Hostel Fee", `${formData.HostelFee}`],
+      ["Hostel Deposit", `${formData.HostelDepost}`],
+      ["ARAI Fee", `${formData.AraiLibFee}`],
+      ["Leaving Certificate / Transfer Certificate", `${formData.LeavingCert}`],
+      ["Student Accident Insurance Premium", `${formData.StudentAid}`],
+      ["Fine", `${formData.Fine}`],
+      ["Others", `${formData.Other}`],
+      ["Total", `${totalSum}`],
     ];
 
     tableData3 = [
@@ -1398,6 +1477,94 @@ function drawTable2(doc, table, options) {
     rowHeight * (table.rows.length + 1) + lineSpace * table.rows.length;
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
+
+router.post("/fillFeeReceit", async (req, res) => {
+  try {
+    // Parse request body to extract data
+    const {
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    } = req.body;
+
+    // Create a new document using the AcademicProfile schema
+    const feereceitt = new FeeReceipt({
+      FullName,
+      Year,
+      MobileNumber,
+      Mis,
+      Branch,
+      Category,
+      DateOfPayment,
+      TutionFee,
+      DevelopmentFee,
+      GymkhanaFee,
+      TnpFee,
+      Library,
+      Laboratory,
+      InternetAndEmail,
+      Gathering,
+      Cmd,
+      BoatClubFee,
+      BoatClubMemFee,
+      StudentAidFund,
+      ExamFee,
+      IdentityCard,
+      UniversityFee,
+      AluminiFee,
+      HostelFee,
+      HostelDepost,
+      AraiLibFee,
+      AraiCompFee,
+      AraiLabFee,
+      AraiAluminiFee,
+      LeavingCert,
+      StudentAid,
+      Fine,
+      Other,
+      uploadSbiFee,
+    });
+
+    // Save the new document to the database
+    const data = await feereceitt.save();
+    // res.status(201).json({ message: "Fee Receit Data Saved successfully" });
+    res.send(data);
+  } catch (error) {
+    console.error("Error saving academic profile:", error);
+    res.status(500).json({ error: "Server error occurred" });
+  }
+});
 module.exports = router;
 /*
 document.getElementById("mis").value = "142203012"
