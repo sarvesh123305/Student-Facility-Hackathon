@@ -135,4 +135,4 @@ const mapStateToProps = (state) => ({
   student: state.student,
 });
 
-export default connect(mapStateToProps, { initialLoadUser })(Navbar);
+export default connect(mapStateToProps  , { initialLoadUser })(Navbar);

@@ -6,6 +6,7 @@ const BonafideSchema = mongoose.Schema({
   dept: { type: String, required: true },
   year: { type: String, required: true },
   academicYear: { type: String, required: true },
+  status : {type:String},
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
