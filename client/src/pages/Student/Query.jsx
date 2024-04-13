@@ -3,11 +3,25 @@ import { Fragment, useEffect, useState } from "react";
 import { Listbox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import {
+  getDownloadURL,
+  ref as storageRef,
+  uploadBytes,
+} from "firebase/storage";
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+
+import { db, storage } from "../../utils/useFirebase";
+import {
   sendQuery,
   getQueries,
   initialLoadUser,
 } from "../../redux/actions/logActions";
 import { connect } from "react-redux";
+import { Upload } from "lucide-react";
 
 const relatedOptions = [
   {
@@ -46,19 +60,19 @@ const Query = ({
   getQueries,
   initialLoadUser,
 }) => {
-  const [selected, setSelected] = useState(relatedOptions[0]);
+  // const [selected, setSelected] = useState(relatedOptions[0]);
   const [message, setMessage] = useState("");
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //query type
-    sendQuery({
-      query: message,
-      type: selected.name,
-      to: "Students Section",
-      from: studentDetails._id,
-      image: image,
-    });
-  };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   //query type
+  //   sendQuery({
+  //     query: message,
+  //     type: selected.name,
+  //     to: "Students Section",
+  //     from: studentDetails._id,
+  //     image: image,
+  //   });
+  // };
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
@@ -70,19 +84,75 @@ const Query = ({
     getQueries();
   }, [queries]);
 
-  const [image, setImage] = useState("");
-  const handleSupportingdocs = (e) => {
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      // console.log(reader.result);
-      setImage(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log(error);
-    };
-  };
+  // const [image, setImage] = useState("");
+  // const handleSupportingdocs = (e) => {
+  //   var reader = new FileReader();
+  //   reader.readAsDataURL(e.target.files[0]);
+  //   reader.onload = () => {
+  //      setImage(reader.result);
+  //   };
+  //   reader.onerror = (error) => {
+  //     console.log(error);
+  //   };
+  // };
 
+  // const handleUpload = async () => {
+  //     try {
+  //         const formData = new FormData();
+  //         formData.append('image', file);
+
+  //         await axios.post('http://localhost:5000/api/student/upload', formData, {
+  //           headers: {
+  //             'Content-Type': 'multipart/form-data',
+  //           },
+  //         });
+  //         alert('Image uploaded successfully');
+
+  //     } catch (error) {
+  //         console.error('Error uploading image:', error);
+  //         alert('Error uploading image');
+  //     }
+  // };
+
+  // function uploadImage(){
+  //   fetch("http://localhost:5000/api/student/upload", {
+  //     method: "POST",
+  //     crossDomain: true,
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Accept: "application/json",
+  //       "Access-Control-Allow-Origin":"*",
+  //     },
+  //     body: JSON.stringify({
+  //       base64: image,
+  //     }),
+  //   }).then((res) => res.json()).then((data) => console.log(data))
+  // }
+
+  const [imageUpload, setImageUpload] = useState(null);
+  const uploadFile = (e) => {
+    e.preventDefault();
+    if (imageUpload === null) {
+      console.log("Please select an image");
+      return;
+    }
+    const imageRef = storageRef(storage, students / sample.png);
+
+    uploadBytes(imageRef, imageUpload)
+      .then((snapshot) => {
+        getDownloadURL(snapshot.ref)
+          .then((url) => {
+            // saveData(url);
+            console.log("image saved ", url);
+          })
+          .catch((error) => {
+            console.log(error.message);
+          });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  };
   return (
     <div className="isolate bg-white px-6">
       <div className="mx-auto max-w-2xl text-center">
@@ -92,14 +162,14 @@ const Query = ({
       </div>
 
       <hr className="mt-5" />
-      <form className="mx-auto mt-16 max-w-xl sm:mt-10" onSubmit={handleSubmit}>
+      <form className="mx-auto mt-16 max-w-xl sm:mt-10">
         <div className="mx-auto max-w-2xl text-center">
           <i className="text-red-500">
             Please read FAQ before sending the query
           </i>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <Listbox value={selected} onChange={setSelected}>
+          {/* <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
               <>
                 <div className="relative mt-2">
@@ -177,7 +247,7 @@ const Query = ({
                 </div>
               </>
             )}
-          </Listbox>
+          </Listbox> */}
           <div className="sm:col-span-2">
             <label
               htmlFor="message"
@@ -185,7 +255,7 @@ const Query = ({
             >
               Query
             </label>
-            <textarea
+            {/* <textarea
               id="message"
               rows="4"
               name="message"
@@ -195,7 +265,7 @@ const Query = ({
               placeholder="Write your query here..."
               defaultValue={""}
               required
-            ></textarea>
+            ></textarea> */}
           </div>
         </div>
         <div class=" max-w-screen-lg flex flex-row mx-auto mt-5 ">
@@ -207,7 +277,7 @@ const Query = ({
               Upload Supporting Documents
             </label>
             <div class=" max-w-screen-lg flex flex-row  ">
-              {image === "" ? (
+              {/* {image === "" ? (
                 ""
               ) : (
                 <img
@@ -216,7 +286,7 @@ const Query = ({
                   src={image}
                   alt="image description"
                 />
-              )}
+              )} */}
               <div class="flex w-full mx-auto flex-col justify-center ml-5">
                 <label
                   class="block mb-2 text-sm font-medium text-gray-900 "
@@ -224,12 +294,22 @@ const Query = ({
                 >
                   Update Profile Photo
                 </label>
+                <a
+                  id="downloadLink"
+                  href="https://firebasestorage.googleapis.com/v0/b/student-facility.appspot.com/o/students%2Fsample.png?alt=media&token=116ea86c-05a8-441e-a14c-60b1c6a91642"
+                >
+                  Download PDF
+                </a>
                 <input
                   class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none "
                   aria-describedby="file_input_help"
                   id="file_input"
-                  accept="image/*"
-                  onChange={handleSupportingdocs}
+                  accept="/"
+                  // onChange={handleFileChange}
+                  // onChange={handleSupportingdocs}
+                  onChange={(e) => {
+                    setImageUpload(e.target.files[0]);
+                  }}
                   type="file"
                 />
                 <p class="mt-1 text-lg text-gray-500 " id="file_input_help">
@@ -242,6 +322,8 @@ const Query = ({
         <div className="mt-10">
           <button
             type="submit"
+            // onClick={handleUpload}
+            onClick={uploadFile}
             className="block w-full rounded-md bg-blue-700 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Submit
