@@ -20,14 +20,37 @@ const Navbar = ({  student,initialLoadUser }) => {
   const [logoutToggle, setLogoutToggle] = useState(false);
   const [input, setInput] = useState("");
 
+  let results = [];
 
   useEffect(() =>{
       initialLoadUser();
   },[])
+
+  function searchDatabase(obj, input) {
+    function searchInObject(currentObj, input) {
+      for (const key in currentObj) {
+        if (typeof currentObj[key] === 'object') {
+          searchInObject(currentObj[key], input); // Recursive call for nested objects
+        } else {
+          if (String(key).toLowerCase().includes(input.toLowerCase()) || String(currentObj[key]).toLowerCase().includes(input.toLowerCase())) {
+            results.push({ key, value: currentObj[key] });
+          }
+        }
+      }
+    }
+
+    searchInObject(obj,input)
+  
+    return results;
+  }
+
   const handleChange = (value) => {
     setInput(value)
-    
-    console.log("On change called")
+    results = []
+    results = searchDatabase(student,value)
+    console.log(results)
+    // console.log(student)
+    // console.log("On change called")
   }
 
   return (
@@ -41,7 +64,6 @@ const Navbar = ({  student,initialLoadUser }) => {
         />
       </div>
       */}
-      {console.log(student.studentInformation)}
       {toggle ? <NotificationDialog/> : ""}
       {logoutToggle ? <LogoutDropDown/> : ""}
       {/* {searchToggle ? <SearchDropdown/> : ""} */}
@@ -135,4 +157,4 @@ const mapStateToProps = (state) => ({
   student: state.student,
 });
 
-export default connect(mapStateToProps, { initialLoadUser })(Navbar);
+export default connect(mapStateToProps  , { initialLoadUser })(Navbar);
