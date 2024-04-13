@@ -9,6 +9,8 @@ const Other = require("../models/Others");
 const Messages = require("../models/Messages");
 const bonafides = require('../models/Bonafide');
 // const { default: Bonafides } = require("../client/src/pages/StudentSection/Bonafides");  
+=======
+const Bonafide = require("../models/Bonafide");
 // const Message = require("../models/Messages");
 //@routes POST api/others
 //@desc Register to a others;
@@ -172,4 +174,35 @@ router.post('/bonafideApplicationsStatusNo', async (req, res) => {
   }
 })
 
+=======
+
+
+//@routes POST api/faculty/bonafideApproval
+//@desc Approve to reject bonafide
+//@access public
+
+router.put(
+  "/bonafideApproval",
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); //bad request
+    }
+    try{
+      const { mis, status } = req.body;
+      const findBonafide = await Bonafide.findOne({ mis });
+      if (!findBonafide) {
+        return res.json({ msg: "No document found" });
+      }
+      
+      findBonafide.status = status;
+      const updatedBonafide = await findBonafide.save();
+      
+      res.json(updatedBonafide);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server error occured");
+    }
+  }
+);
 module.exports = router;

@@ -42,7 +42,7 @@ const AuthState = (props) => {
         payload: res.data,
       });
     } catch (err) {
-      console.log("got here bangged");
+      // console.log("got here bangged");
       dispatch({
         type: AUTH_ERROR,
       });

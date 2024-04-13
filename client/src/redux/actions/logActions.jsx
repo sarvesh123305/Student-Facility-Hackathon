@@ -13,7 +13,7 @@ export const initialLoadUser = () => async (dispatch) => {
       payload: res.data,
     });
   } catch (err) {
-    console.log("got here bangged", err);
+    // console.log("got here bangged", err);
   }
 };
 export const bonafideDownload = (formData, setPdfData) => async (dispatch) => {

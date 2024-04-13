@@ -7,7 +7,7 @@ import { initialLoadUser } from "../../redux/actions/logActions";
 import { useState } from "react";
 import NotificationDialog from "../../pages/Student/NotificationDialog";
 import LogoutDropDown from "../../pages/Student/LogoutDropDown";
-const Navbar = ({ initialLoadUser }) => {
+const Navbar = ({  student,initialLoadUser }) => {
   const authContext = useContext(AuthContext);
   const {user} = authContext
   useEffect(() => {
@@ -20,8 +20,13 @@ const Navbar = ({ initialLoadUser }) => {
   const [logoutToggle, setLogoutToggle] = useState(false);
   const [input, setInput] = useState("");
 
+
+  useEffect(() =>{
+      initialLoadUser();
+  },[])
   const handleChange = (value) => {
     setInput(value)
+    
     console.log("On change called")
   }
 
@@ -36,6 +41,7 @@ const Navbar = ({ initialLoadUser }) => {
         />
       </div>
       */}
+      {console.log(student.studentInformation)}
       {toggle ? <NotificationDialog/> : ""}
       {logoutToggle ? <LogoutDropDown/> : ""}
       {/* {searchToggle ? <SearchDropdown/> : ""} */}
@@ -124,4 +130,9 @@ const Navbar = ({ initialLoadUser }) => {
 Navbar.propTypes = {
   initialLoadUser: PropTypes.func.isRequired,
 };
-export default connect(null, { initialLoadUser })(Navbar);
+
+const mapStateToProps = (state) => ({
+  student: state.student,
+});
+
+export default connect(mapStateToProps, { initialLoadUser })(Navbar);
