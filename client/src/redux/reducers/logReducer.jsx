@@ -3,6 +3,8 @@ import {
   GET_QUERIES,
   UPDATE_STUDENT,
   GET_BONAFIDE_STATUS,
+  GET_LC_STATUS,
+  GET_FEERECEIPT_STATUS,
 } from "../actions/types";
 
 const initialState = {
@@ -13,6 +15,8 @@ const initialState = {
   bonafide: [],
   queries: [],
   bonafidePresent: false,
+  feereceiptStatus: false,
+  leavingcertificateStatus: false,
 };
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -37,6 +41,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         bonafidePresent: action.payload,
+      };
+    case GET_FEERECEIPT_STATUS:
+      return {
+        ...state,
+        feereceiptStatus: action.payload,
+      };
+    case GET_LC_STATUS:
+      return {
+        ...state,
+        leavingcertificateStatus: action.payload,
       };
     default:
       return state;

@@ -1,6 +1,16 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
-const LeavingCertificateForm = () => {
+import {
+  initialLoadUser,
+  LeavingCertificateDownload,
+} from "../../redux/actions/logActions";
+const LeavingCertificateForm = ({
+  student: { studentInformation, studentDetails, leavingcertificateStatus },
+  initialLoadUser,
+  LeavingCertificateDownload,
+}) => {
   // Initialize state for form values
   const [formData, setFormData] = useState({
     FullName: "",
@@ -14,7 +24,7 @@ const LeavingCertificateForm = () => {
     Progress: "",
     Conduct: "",
     DateOfLeaving: "",
-    Remarks: ""
+    Remarks: "",
     // Add more fields as needed
   });
 
@@ -51,6 +61,13 @@ const LeavingCertificateForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="grid gap-6 mb-6 md:grid-cols-2 lg:grid-cols-2 p-10">
+        <button
+          className="bg-blue-500 text-lg text-white px-5 py-2 ml-2 rounded-lg hover:bg-blue-600"
+          onClick={handleDownload}
+        >
+          {" "}
+          Download Fee Receit
+        </button>
         <div>
           <label
             for="FullName"
@@ -138,7 +155,6 @@ const LeavingCertificateForm = () => {
             type="text"
             id="PlaceOfBirth"
             onChange={handleInputChange}
-
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
           />
@@ -225,7 +241,7 @@ const LeavingCertificateForm = () => {
           >
             Remarks
           </label>
-          <textarea 
+          <textarea
             id="Remarks"
             onChange={handleInputChange}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -245,5 +261,13 @@ const LeavingCertificateForm = () => {
     </form>
   );
 };
-
-export default LeavingCertificateForm;
+LeavingCertificateForm.propTypes = {
+  initialLoadUser: PropTypes.func.isRequired,
+};
+const mapStateToProps = (state) => ({
+  student: state.student,
+});
+export default connect(mapStateToProps, {
+  initialLoadUser,
+  LeavingCertificateDownload,
+})(LeavingCertificateForm);

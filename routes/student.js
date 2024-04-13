@@ -1252,17 +1252,17 @@ router.post("/FeeReceipt", async (req, res) => {
     doc
       // .fontSize(15)
       .font("Helvetica-Bold")
-      .text("Fee Receipt", 60, 330, { align: "center" });
+      .text("Fee Receipt", 60, 420, { align: "center" });
 
-    doc
-      // .fontSize(15)
-      .font("Helvetica-Bold")
-      .text("Online Payment Details", 170, 900, { align: "left" });
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica-Bold")
+    //   .text("Online Payment Details", 170, 1000, { align: "left" });
 
-    doc
-      // .fontSize(15)
-      .font("Helvetica-Bold")
-      .text("Demand Draft Payment", 450, 900, { align: "center" });
+    // doc
+    //   // .fontSize(15)
+    //   .font("Helvetica-Bold")
+    //   .text("Demand Draft Payment", 450, 1000, { align: "center" });
 
     doc
       // .fontSize(15)
@@ -1329,34 +1329,34 @@ router.post("/FeeReceipt", async (req, res) => {
     drawTable1(doc, table1, {
       x: 50,
       y: 140,
-      padding: 5,
+      padding: 3,
       lineSpace: 3,
       colWidths: [365, 365],
     });
 
     drawTable2(doc, table2, {
       x: 50,
-      y: 350,
+      y: 450,
       padding: 5,
       lineSpace: 3,
       colWidths: [365, 365],
     });
 
-    drawTable2(doc, table3, {
-      x: 50,
-      y: 920,
-      padding: 5,
-      lineSpace: 3,
-      colWidths: [87, 87, 87, 87],
-    });
+    // drawTable2(doc, table3, {
+    //   x: 50,
+    //   y: 920,
+    //   padding: 5,
+    //   lineSpace: 3,
+    //   colWidths: [87, 87, 87, 87],
+    // });
 
-    drawTable2(doc, table4, {
-      x: 430,
-      y: 920,
-      padding: 5,
-      lineSpace: 3,
-      colWidths: [85, 85, 85, 85],
-    });
+    // drawTable2(doc, table4, {
+    //   x: 430,
+    //   y: 920,
+    //   padding: 5,
+    //   lineSpace: 3,
+    //   colWidths: [85, 85, 85, 85],
+    // });
 
     doc.end();
   } catch (error) {
@@ -1368,7 +1368,7 @@ router.post("/FeeReceipt", async (req, res) => {
 // Function to draw a table in the PDF document with custom column widths and alignments
 function drawTable1(doc, table, options) {
   let { x, y, padding, lineSpace, colWidths } = options;
-  const rowHeight = 18;
+  const rowHeight = 15;
 
   doc.font("Helvetica");
   doc.fontSize(11);
@@ -1520,7 +1520,7 @@ router.post("/LeavingCertificate", async (req, res) => {
     Remarks: "No Dues",
   };
   try {
-    const studentData = req.body;
+    const { formData } = req.body;
     const currentDateTime = new Date();
     const formattedDateTime = format(currentDateTime, "dd/MM/yyyy HH:mm:ss");
     const currentDate = format(new Date(), "dd/MM/yyyy");
@@ -2042,7 +2042,7 @@ router.post("/postToDB", async (req, res) => {
   }
 });
 
-router.post("/sendScholarshipRequest", async(req, res) => {
+router.post("/sendScholarshipRequest", async (req, res) => {
   try {
     const data = req.body;
     connectToAtlas();
@@ -2051,9 +2051,9 @@ router.post("/sendScholarshipRequest", async(req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.post("/sendBonafideRequest", async(req, res) => {
+router.post("/sendBonafideRequest", async (req, res) => {
   try {
     const data = req.body;
     connectToAtlas();
@@ -2062,9 +2062,9 @@ router.post("/sendBonafideRequest", async(req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.post("/sendFeeReceiptRequest", async(req, res) => {
+router.post("/sendFeeReceiptRequest", async (req, res) => {
   try {
     const data = req.body;
     connectToAtlas();
@@ -2073,9 +2073,9 @@ router.post("/sendFeeReceiptRequest", async(req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.post("/sendLCRequest", async(req, res) => {
+router.post("/sendLCRequest", async (req, res) => {
   try {
     const data = req.body;
     connectToAtlas();
@@ -2084,7 +2084,6 @@ router.post("/sendLCRequest", async(req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
-
+});
 
 module.exports = router;

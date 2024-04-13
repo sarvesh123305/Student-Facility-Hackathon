@@ -8,7 +8,7 @@ const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
 const { MongoClient } = require("mongodb");
-
+const FeeReceipt = require("../models/FeeReceipt");
 const Bonafide = require("../models/Bonafide");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
@@ -79,14 +79,12 @@ router.post(
 
 async function getAllDocumentsFromCollection(dbName, col) {
   try {
-
-      const db = client.db(dbName);
-      const collection = db.collection(col);
-      const documents = await collection.find({}).toArray();
-      return documents;
-
+    const db = client.db(dbName);
+    const collection = db.collection(col);
+    const documents = await collection.find({}).toArray();
+    return documents;
   } catch (error) {
-      throw error;
+    throw error;
   }
 }
 
@@ -160,6 +158,22 @@ router.post("/bonafideApplications", async (req, res) => {
   }
 });
 
+router.post("/FeeReceitApplications", async (req, res) => {
+  try {
+    const { mis } = req.body;
+    // Fetch all bonafide applications from the collection
+
+    const feeReceit = await FeeReceipt.findOne({ mis });
+    if (!feeReceit) return res.json({ msg: "No Fee Receipts found" });
+
+    // Return the bonafide applications as JSON response
+    res.json({ msg: "Fee Receipts found" });
+  } catch (err) {
+    // Log and send an error response if an error occurs
+    console.error("Error  Fee Receipt applications:", err.message);
+    res.status(500).send("Server error occurred");
+  }
+});
 //@routes POST api/faculty/bonafideApproval
 //@desc Approve to reject bonafide
 //@access public
@@ -192,25 +206,23 @@ router.put("/bonafideApproval", async (req, res) => {
   }
 });
 
-router.get("/getQueries", async(req, res) => {
+router.get("/getQueries", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "Messages")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
+});
 
-})
-
-router.post("/sendReply", async(req, res) => {
+router.post("/sendReply", async (req, res) => {
   try {
     const data = req.body;
     connectToAtlas();
@@ -219,94 +231,87 @@ router.post("/sendReply", async(req, res) => {
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.post("/getReplies", async(req, res) => {
+router.post("/getReplies", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "Replies")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
+});
 
-})
-
-router.get("/getBonafideRequests", async(req, res) => {
+router.get("/getBonafideRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "BonafideRequests")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
+});
 
-})
-
-router.get("/getLCRequests", async(req, res) => {
+router.get("/getLCRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "LCRequests")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.get("/getScholarshipRequests", async(req, res) => {
+router.get("/getScholarshipRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "ScholarshipRequests")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 
-router.get("/getFeeReceiptRequests", async(req, res) => {
+router.get("/getFeeReceiptRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas();
     getAllDocumentsFromCollection("test", "FeeReceiptRequests")
-            .then(documents => {
-                res.json(documents)
-            })
-            .catch(error => {
-                console.error('Error fetching documents:', error);
-            });
-
+      .then((documents) => {
+        res.json(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
   } catch (error) {
     res.status(500).send("Internal Server Error");
   }
-})
+});
 router.delete("/queries/:messageId", async (req, res) => {
   try {
     const { messageId } = req.params;
@@ -328,27 +333,27 @@ router.delete("/queries/:messageId", async (req, res) => {
   }
 });
 
-router.put('/updateLCRequest/:mis', async (req, res) => {
+router.put("/updateLCRequest/:mis", async (req, res) => {
   const { mis } = req.params;
-  const { name, age, /* other fields you want to update */ } = req.body;
+  const { name, age /* other fields you want to update */ } = req.body;
 
   try {
     const db = getDB();
-    const collection = db.collection('LCRequests'); // Assuming your collection name is 'students'
+    const collection = db.collection("LCRequests"); // Assuming your collection name is 'students'
 
     const result = await collection.updateOne(
       { mis: mis }, // Filter by MIS
-      { $set: { name: name, age: age, /* other fields to update */ } }
+      { $set: { name: name, age: age /* other fields to update */ } }
     );
 
     if (result.modifiedCount === 0) {
-      return res.status(404).json({ message: 'Student not found' });
+      return res.status(404).json({ message: "Student not found" });
     }
 
-    res.status(200).json({ message: 'Student updated successfully' });
+    res.status(200).json({ message: "Student updated successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

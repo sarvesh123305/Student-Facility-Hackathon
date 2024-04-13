@@ -3,6 +3,7 @@ import {
   GET_QUERIES,
   UPDATE_STUDENT,
   GET_BONAFIDE_STATUS,
+  GET_FEERECEIPT_STATUS,
 } from "./types";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from "axios";
@@ -49,6 +50,43 @@ export const resultDownload = (formData, setPdfData) => async (dispatch) => {
     console.error("Error downloading PDF:", error.message);
   }
 };
+
+export const FeeReceiptDownload =
+  (formData, setPdfData) => async (dispatch) => {
+    try {
+      console.log(formData);
+      const response = await axios.post(
+        "/api/student/FeeReceipt",
+        { formData },
+        {
+          responseType: "arraybuffer",
+        }
+      );
+      // Store the PDF content in the component state
+      setPdfData(new Blob([response.data], { type: "application/pdf" }));
+    } catch (error) {
+      console.error("Error downloading PDF:", error.message);
+    }
+  };
+
+export const LeavingCertificateDownload =
+  (formData, setPdfData) => async (dispatch) => {
+    try {
+      console.log(formData);
+      const response = await axios.post(
+        "/api/student/LeavingCertificate",
+        { formData },
+        {
+          responseType: "arraybuffer",
+        }
+      );
+      // Store the PDF content in the component state
+      setPdfData(new Blob([response.data], { type: "application/pdf" }));
+    } catch (error) {
+      console.error("Error downloading PDF:", error.message);
+    }
+  };
+
 export const sendQuery = (message) => async (dispatch) => {
   try {
     console.log(message);
@@ -172,6 +210,30 @@ export const getBonafideStatus = (mis) => async (dispatch) => {
     if (getResp.data.msg === "Bonafide Appliacation Found") {
       dispatch({
         type: GET_BONAFIDE_STATUS,
+        payload: true,
+      });
+      return;
+    }
+    dispatch({
+      type: GET_BONAFIDE_STATUS,
+      payload: false,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const getFeeReceitStatus = (mis) => async (dispatch) => {
+  try {
+    // Check if formData.mis in bonafides
+    const getResp = await axios.post(
+      "/api/studentsection/FeeReceitApplications",
+      {
+        mis: mis,
+      }
+    );
+    if (getResp.data.msg === "No Fee Receipts found") {
+      dispatch({
+        type: GET_FEERECEIPT_STATUS,
         payload: true,
       });
       return;
