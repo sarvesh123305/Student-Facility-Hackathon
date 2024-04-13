@@ -38,6 +38,7 @@ import FAQ from "./pages/Student/FAQ"
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import StudentRegistration from "./pages/StudentSection/StudentRegistration";
+import LCRequests from "./pages/StudentSection/LCRequests";
 
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
@@ -190,6 +191,16 @@ const App = () => {
                       <Route
                         path="/StudentSection/notifications"
                         element={<StudentSectionNotifications />}
+                      />
+
+                      <Route
+                        path="/StudentSection/Request/BonafideRequests"
+                        element={<Bonafides />}
+                      />
+
+                      <Route
+                        path="/StudentSection/Request/LeavingCertificateRequests"
+                        element={<LCRequests />}
                       />
                       <Route
                         path="/StudentSection/StudentRegistration"

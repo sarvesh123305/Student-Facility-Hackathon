@@ -99,16 +99,26 @@ const Sidebar = () => {
 
   const subMenusListStudentSection = [
     {
-      name: "Scholarship",
+      name: "Request",
       icon: TbReportAnalytics,
       menus: [
-        // "Scholarships Available",
-        // "Requested Bonafides",
-        // "Letter Formats",
-        "Queries",
+        "Scholarship Requests",
+        "Bonafide Requests",
+        "Fee Receipt Requests",
+        "Leaving Certificate Requests",
       ],
     },
+    {
+      name: "Queries",
+      icon: TbReportAnalytics,
+      menus: [
+        "Received Queries",
+        "Sent Replies",
+      ],
+    },
+  
   ];
+
   const subMenusListFaculty = [
     {
       name: "Manage Academics",

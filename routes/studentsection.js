@@ -7,13 +7,25 @@ const config = require("config");
 const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
+const { MongoClient } = require("mongodb");
 
 const Bonafide = require("../models/Bonafide");
+const uri =
+  "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
+const client = new MongoClient(uri);
 
 // const Message = require("../models/Messages");
 //@routes POST api/others
 //@desc Register to a others;
 //@access public
+async function connectToAtlas() {
+  try {
+    await client.connect();
+    console.log("Connected to MongoDB Atlas");
+  } catch (error) {
+    console.error("Error connecting to MongoDB Atlas:", error);
+  }
+}
 
 router.post(
   "/",
@@ -64,6 +76,19 @@ router.post(
     }
   }
 );
+
+async function getAllDocumentsFromCollection(dbName, col) {
+  try {
+
+      const db = client.db(dbName);
+      const collection = db.collection(col);
+      const documents = await collection.find({}).toArray();
+      return documents;
+
+  } catch (error) {
+      throw error;
+  }
+}
 
 // @routes GET api/other/queries
 // @desc Get all queries asked so far from different students
@@ -167,4 +192,119 @@ router.put("/bonafideApproval", async (req, res) => {
   }
 });
 
+router.get("/getQueries", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "Messages")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+
+})
+
+router.post("/sendReply", async(req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "Replies");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.post("/getReplies", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "Replies")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+
+})
+
+router.get("/getBonafideRequests", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "BonafideRequests")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+
+})
+
+router.get("/getLCRequests", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "LCRequests")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.get("/getScholarshipRequests", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "ScholarshipRequests")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.get("/getFeeReceiptRequests", async(req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas();
+    getAllDocumentsFromCollection("test", "FeeReceiptRequests")
+            .then(documents => {
+                res.json(documents)
+            })
+            .catch(error => {
+                console.error('Error fetching documents:', error);
+            });
+
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
 module.exports = router;

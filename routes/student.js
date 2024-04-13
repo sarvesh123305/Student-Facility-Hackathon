@@ -1478,30 +1478,30 @@ function drawTable2(doc, table, options) {
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
 
-router.post("/sendBonafideRequest", async (req, res) => {
-  const { mis, name, dept, programme, purpose, year, academicYear } = req.body;
-  try {
-    // console.log("FORMDATA : ",formData,mis);
-    // Create a new Bonafide document
-    const newBonafide = new Bonafide({
-      mis,
-      name,
-      dept,
-      year,
-      academicYear,
-      programme,
-      purpose,
-    });
+// router.post("/sendBonafideRequest", async (req, res) => {
+//   const { mis, name, dept, programme, purpose, year, academicYear } = req.body;
+//   try {
+//     // console.log("FORMDATA : ",formData,mis);
+//     // Create a new Bonafide document
+//     const newBonafide = new Bonafide({
+//       mis,
+//       name,
+//       dept,
+//       year,
+//       academicYear,
+//       programme,
+//       purpose,
+//     });
 
-    // Save the new Bonafide document to the database
-    const result = await newBonafide.save();
+//     // Save the new Bonafide document to the database
+//     const result = await newBonafide.save();
 
-    res.json(result);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
+//     res.json(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
 
 router.post("/LeavingCertificate", async (req, res) => {
   const formData = {
@@ -2040,4 +2040,50 @@ router.post("/postToDB", async (req, res) => {
     console.log(err);
   }
 });
+
+router.post("/sendScholarshipRequest", async(req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "ScholarshipRequests");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.post("/sendBonafideRequest", async(req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "BonafideRequests");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.post("/sendFeeReceiptRequest", async(req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "FeeReceiptRequests");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+router.post("/sendLCRequest", async(req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "LCRequests");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+})
+
+
 module.exports = router;
