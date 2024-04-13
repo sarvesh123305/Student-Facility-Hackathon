@@ -7,6 +7,9 @@ const config = require("config");
 const auth = require("../middleware/auth");
 const Other = require("../models/Others");
 const Messages = require("../models/Messages");
+const bonafides = require('../models/Bonafide');
+// const { default: Bonafides } = require("../client/src/pages/StudentSection/Bonafides");  
+=======
 const Bonafide = require("../models/Bonafide");
 // const Message = require("../models/Messages");
 //@routes POST api/others
@@ -115,6 +118,63 @@ router.post(
   }
 );
 
+router.get('/bonafideApplications', async (req, res) => {
+  try {
+    // Fetch all bonafide applications from the collection
+    const bonafideApplications = await bonafides.find();
+
+    // Check if any bonafide applications were found
+    if (!bonafideApplications || bonafideApplications.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    // Return the bonafide applications as JSON response
+    res.json(bonafideApplications);
+  } catch (err) {
+    // Log and send an error response if an error occurs
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+});
+
+router.post('/bonafideApplicationsStatusYes', async (req, res) => {
+  try {
+    const bonafideApplicationsStatusYes = await bonafides.findOne({ _id: req.body._id });
+
+    bonafideApplicationsStatusYes.status = 'Accepted';
+    bonafideApplicationsStatusYes.save();
+
+    if (!bonafideApplicationsStatusYes || bonafideApplicationsStatusYes.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    res.json(bonafideApplications);
+  } catch (err) {
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+});
+
+
+router.post('/bonafideApplicationsStatusNo', async (req, res) => {
+  try {
+    const bonafideApplicationsStatusNo = await bonafides.findOne({ _id: req.body._id });
+
+    bonafideApplicationsStatusNo.status = 'Rejected';
+    bonafideApplicationsStatusNo.save();
+
+    if (!bonafideApplicationsStatusNo || bonafideApplicationsStatusNo.length === 0) {
+      return res.json({ msg: 'No bonafide applications found' });
+    }
+
+    res.json(bonafideApplications);
+  } catch (err) {
+    console.error('Error fetching bonafide applications:', err.message);
+    res.status(500).send('Server error occurred');
+  }
+})
+
+=======
 
 
 //@routes POST api/faculty/bonafideApproval

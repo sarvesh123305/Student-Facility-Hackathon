@@ -1478,6 +1478,32 @@ function drawTable2(doc, table, options) {
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
 
+router.post("/sendBonafideRequest", async (req, res) => {
+  const { mis,name,dept,programme,purpose,year ,academicYear} = req.body;
+  try {
+    // console.log("FORMDATA : ",formData,mis);
+    // Create a new Bonafide document
+    const newBonafide = new Bonafide({
+      mis ,
+      name ,
+      dept,
+      year,
+      academicYear,
+      programme,
+      purpose
+    });
+
+    // Save the new Bonafide document to the database
+    const result = await newBonafide.save();
+
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+module.exports = router;
+=======
 router.post("/LeavingCertificate", async (req, res) => {
   const formData = {
     FullName: "Chinmay Milind Sheth",
