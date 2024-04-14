@@ -41,7 +41,9 @@ import FeeReceiptRequests from "./pages/StudentSection/FeeReceiptRequests";
 import ScholarshipRequests from "./pages/StudentSection/ScholarshipRequests";
 import Layout from "./layouts/Layout";
 import AllocateGrades from "./pages/Faculty/AllocateGrades";
-import PrivateRoute from "./components/Routing/PrivateRoute";
+import PrivateRouteStudent from "./components/Routing/PrivateRouteStudent";
+import PrivateRouteFaculty from "./components/Routing/PrivateRouteFaculty";
+import PrivateRouteStudentSection from "./components/Routing/PrivateRouteStudentSection";
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
 
@@ -69,10 +71,9 @@ const App = () => {
                   <Routes>
                     {/* STUDENT ROUTES*/}
                     <Route
-                      path="/profile"
-                      element={<PrivateRoute component={Profile} />}
+                      path="/"
+                      element={<PrivateRouteStudent component={Profile} />}
                     />
-
                     <Route
                       path="/login"
                       element={
@@ -83,60 +84,100 @@ const App = () => {
                       }
                     />
                     {/*<Route path="/" element={<Profile />} />*/}
-
                     <Route
                       path="/Academics/AcademicProfile"
-                      element={<Academic />}
+                      element={<PrivateRouteStudent component={Academic} />}
                     />
                     <Route path="/elective" element={<Home />} />
                     <Route
                       path="/Academics/ElectiveRegistration"
-                      element={<Subjectallocation />}
+                      element={
+                        <PrivateRouteStudent component={Subjectallocation} />
+                      }
                     />
-
                     <Route
                       path="/Applications/RequestBonafide"
-                      element={<RequestBonafide />}
+                      element={
+                        <PrivateRouteStudent component={RequestBonafide} />
+                      }
                     />
-                    <Route path="/Applications/Queries" element={<Query />} />
+                    <Route
+                      path="/Applications/Queries"
+                      element={<PrivateRouteStudent component={Query} />}
+                    />
                     <Route
                       path="/Applications/LetterFormats"
-                      element={<LetterFormats />}
+                      element={
+                        <PrivateRouteStudent component={LetterFormats} />
+                      }
                     />
                     <Route
                       path="/Applications/FeeReceipt/"
-                      element={<FeeReceiptForm />}
+                      element={
+                        <PrivateRouteStudent component={FeeReceiptForm} />
+                      }
                     />
                     <Route
                       path="/Applications/LeavingCertificate/"
-                      element={<LeavingCertificateForm />}
+                      element={
+                        <PrivateRouteStudent
+                          component={LeavingCertificateForm}
+                        />
+                      }
                     />
-
-                    <Route path="/result" element={<Result />} />
-                    <Route path="/notifications" element={<Notifications />} />
-                    <Route path="/updateProfile" element={<UpdateProfile />} />
                     <Route
+                      path="/result"
+                      element={<PrivateRouteStudent component={Result} />}
+                    />
+                    <Route
+                      path="/notifications"
+                      element={
+                        <PrivateRouteStudent component={Notifications} />
+                      }
+                    />
+                    <Route
+                      path="/updateProfile"
+                      element={
+                        <PrivateRouteStudent component={UpdateProfile} />
+                      }
+                    />
+                    <Route
+                      element={
+                        <PrivateRouteStudent
+                          component={SemesterCreditRegistration}
+                        />
+                      }
                       path="/Academics/SemesterCreditRegistration"
-                      element={<SemesterCreditRegistration />}
                     />
-
                     <Route
+                      element={
+                        <PrivateRouteStudent
+                          component={ScholarshipsAvailable}
+                        />
+                      }
                       path="/Scholarship/ScholarshipsAvailable"
-                      element={<ScholarshipsAvailable />}
                     />
-                    <Route path="/notifications/" element={<Notifications />} />
-
-                    <Route path="/faq/" element={<FAQ />} />
-
+                    <Route
+                      path="/notifications/"
+                      element={
+                        <PrivateRouteStudent component={Notifications} />
+                      }
+                    />
+                    <Route
+                      path="/faq/"
+                      element={<PrivateRouteStudent component={FAQ} />}
+                    />
+                    {/* FACULTY ROUTES*/}
                     <Route
                       path="/Faculty/UploadMarks"
-                      element={<UploadMarks />}
+                      element={<PrivateRouteFaculty component={UploadMarks} />}
                     />
                     <Route
                       path="/Faculty/AllocatedGrades"
-                      element={<AllocateGrades />}
+                      element={
+                        <PrivateRouteFaculty component={AllocateGrades} />
+                      }
                     />
-                    {/* FACULTY ROUTES*/}
                     <Route
                       path="/Faculty/login"
                       element={
@@ -146,22 +187,28 @@ const App = () => {
                         />
                       }
                     />
-                    <Route path="/Faculty/" element={<FacultyHome />} />
+
+                    <Route
+                      path="/Faculty/"
+                      element={<PrivateRouteFaculty component={FacultyHome} />}
+                    />
                     <Route
                       path="/Faculty/ManageAcademics/ElectiveRegistration"
-                      element={<ElectiveRegistration />}
+                      element={
+                        <PrivateRouteFaculty component={ElectiveRegistration} />
+                      }
                     />
                     <Route
                       path="/Faculty/manageResult"
-                      element={<ManageResult />}
+                      element={<PrivateRouteFaculty component={ManageResult} />}
                     />
                     <Route
                       path="/Faculty/ManageAcademics/ElectiveAllocation"
-                      element={<ElectiveAllocation />}
+                      element={
+                        <PrivateRouteFaculty component={ElectiveAllocation} />
+                      }
                     />
-
                     {/*STUDENTSECTION ROUTES*/}
-
                     <Route
                       path="/StudentSection/login"
                       element={
@@ -171,37 +218,57 @@ const App = () => {
                         />
                       }
                     />
-
                     <Route
                       path="/StudentSection/"
-                      element={<StudentSectionHome />}
+                      element={
+                        <PrivateRouteStudentSection
+                          component={StudentSectionHome}
+                        />
+                      }
                     />
-
                     <Route
                       path="/StudentSection/notifications"
-                      element={<StudentSectionNotifications />}
+                      element={
+                        <PrivateRouteStudentSection
+                          component={StudentSectionNotifications}
+                        />
+                      }
                     />
-
                     <Route
                       path="/StudentSection/Request/BonafideRequests"
-                      element={<Bonafides />}
+                      element={
+                        <PrivateRouteStudentSection component={Bonafides} />
+                      }
                     />
-
                     <Route
                       path="/StudentSection/Request/LeavingCertificateRequests"
-                      element={<LCRequests />}
+                      element={
+                        <PrivateRouteStudentSection component={LCRequests} />
+                      }
                     />
                     <Route
                       path="/StudentSection/Request/FeeReceiptRequests"
-                      element={<FeeReceiptRequests />}
+                      element={
+                        <PrivateRouteStudentSection
+                          component={FeeReceiptRequests}
+                        />
+                      }
                     />
                     <Route
                       path="/StudentSection/Request/ScholarshipRequests"
-                      element={<ScholarshipRequests />}
+                      element={
+                        <PrivateRouteStudentSection
+                          component={ScholarshipRequests}
+                        />
+                      }
                     />
                     <Route
                       path="/StudentSection/StudentRegistration"
-                      element={<StudentRegistration />}
+                      element={
+                        <PrivateRouteStudentSection
+                          component={StudentRegistration}
+                        />
+                      }
                     />
                     {/* <Route
                         path="/StudentSection/Scholarship/ScholarshipsAvailable"
@@ -209,15 +276,21 @@ const App = () => {
                       /> */}
                     <Route
                       path="/StudentSection/Scholarship/RequestedBonafides"
-                      element={<Bonafides />}
+                      element={
+                        <PrivateRouteStudentSection component={Bonafides} />
+                      }
                     />
                     <Route
                       path="/StudentSection/Scholarship/LetterFormats"
-                      element={<LetterFormat />}
+                      element={
+                        <PrivateRouteStudentSection component={LetterFormat} />
+                      }
                     />
                     <Route
                       path="/StudentSection/Scholarship/Queries"
-                      element={<Queries />}
+                      element={
+                        <PrivateRouteStudentSection component={Queries} />
+                      }
                     />
                   </Routes>
                 </Layout>

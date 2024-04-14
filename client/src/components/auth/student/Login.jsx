@@ -16,15 +16,16 @@ const Login = (props) => {
     error,
     clearErrors,
     isAuthenticated,
+    userType,
   } = authContext;
   const { role, setShowSidebarAndNavbar } = props;
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
       setShowSidebarAndNavbar(true);
-      if (role === "Student") navigate("/");
-      if (role === "Faculty") navigate("/Faculty/");
-      if (role === "StudentsSection") navigate("/StudentSection/");
+      if (userType === "student") navigate("/");
+      if (userType === "faculty") navigate("/Faculty/");
+      if (userType === "studentsection") navigate("/StudentSection/");
       //StudentsSection
     }
 

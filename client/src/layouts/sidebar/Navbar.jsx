@@ -11,10 +11,6 @@ import SearchDropdown from "../../pages/Student/SearchDropdown";
 const Navbar = ({ student, initialLoadUser }) => {
   const authContext = useContext(AuthContext);
   const { user } = authContext;
-  useEffect(() => {
-    // initialLoadUser();
-    // eslint-disable-next-line
-  }, []);
 
   const [toggle, setToggle] = useState(false);
   const [logoutToggle, setLogoutToggle] = useState(false);
@@ -37,10 +33,6 @@ const Navbar = ({ student, initialLoadUser }) => {
         setResults(result);
       });
   };
-
-  useEffect(() => {
-    initialLoadUser();
-  }, []);
 
   function searchDatabase(obj, input) {
     setResults([]);
