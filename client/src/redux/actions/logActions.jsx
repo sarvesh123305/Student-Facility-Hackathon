@@ -108,7 +108,7 @@ export const getQueries = () => async (dispatch) => {
       payload: res.data,
     });
 
-    // console.log("Completed");
+    console.log("Completed");
   } catch (err) {
     console.log(err);
   }

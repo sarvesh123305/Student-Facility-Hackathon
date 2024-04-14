@@ -8,11 +8,6 @@ import {
   uploadBytes,
 } from "firebase/storage";
 
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-} from "firebase/auth";
 
 import { db, storage } from "../../utils/useFirebase";
 import {
@@ -21,7 +16,6 @@ import {
   initialLoadUser,
 } from "../../redux/actions/logActions";
 import { connect } from "react-redux";
-import { Upload } from "lucide-react";
 
 const relatedOptions = [
   {
@@ -60,17 +54,18 @@ const Query = ({
   getQueries,
   initialLoadUser,
 }) => {
-  // const [selected, setSelected] = useState(relatedOptions[0]);
+  const [selected, setSelected] = useState(relatedOptions[0]);
   const [message, setMessage] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
     //query type
+    const url = uploadFile(e);
     sendQuery({
       query: message,
       type: selected.name,
       to: "Students Section",
       from: studentDetails._id,
-      image: image,
+      imageurl: url,
     });
   };
   const handleMessage = (e) => {
@@ -128,6 +123,14 @@ const Query = ({
   //     }),
   //   }).then((res) => res.json()).then((data) => console.log(data))
   // }
+  const url = 'https://twitter154.p.rapidapi.com/user/details?username=omarmhaimdat&user_id=96479162';
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
+      'X-RapidAPI-Host': 'twitter154.p.rapidapi.com'
+    }
+  };
 
   const [imageUpload, setImageUpload] = useState(null);
   const uploadFile = (e) => {
@@ -136,23 +139,24 @@ const Query = ({
       console.log("Please select an image");
       return;
     }
-    const imageRef = storageRef(storage, students / sample.png);
+    const imageRef = storageRef(storage, "students/sample.png");
 
     uploadBytes(imageRef, imageUpload)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
-            // saveData(url);
-            console.log("image saved ", url);
+            return url
           })
           .catch((error) => {
-            console.log(error.message);
+            return 0
           });
       })
       .catch((error) => {
-        console.log(error.message);
+        return 0
       });
+
   };
+
   return (
     <div className="isolate bg-white px-6">
       <div className="mx-auto max-w-2xl text-center">
@@ -169,7 +173,7 @@ const Query = ({
           </i>
         </div>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          {/* <Listbox value={selected} onChange={setSelected}>
+          <Listbox value={selected} onChange={setSelected}>
             {({ open }) => (
               <>
                 <div className="relative mt-2">
@@ -247,7 +251,7 @@ const Query = ({
                 </div>
               </>
             )}
-          </Listbox> */}
+          </Listbox>
           <div className="sm:col-span-2">
             <label
               htmlFor="message"
@@ -290,7 +294,7 @@ const Query = ({
               <div class="flex w-full mx-auto flex-col justify-center ml-5">
                 <label
                   class="block mb-2 text-sm font-medium text-gray-900 "
-                  htmlFor="file_input"
+                  for="file_input"
                 >
                   Update Profile Photo
                 </label>
@@ -305,8 +309,6 @@ const Query = ({
                   aria-describedby="file_input_help"
                   id="file_input"
                   accept="/"
-                  // onChange={handleFileChange}
-                  // onChange={handleSupportingdocs}
                   onChange={(e) => {
                     setImageUpload(e.target.files[0]);
                   }}

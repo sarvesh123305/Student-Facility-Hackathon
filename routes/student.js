@@ -325,7 +325,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() }); //bad request
     }
     console.log("In");
-    const { query, type, from } = req.body;
+    const { query, type, from, imageUrl } = req.body;
     const uuid = uuidv4();
     try {
       user = new Message({
@@ -334,6 +334,7 @@ router.post(
         to: "Students Section",
         from,
         messageId: uuid,
+        imageUrl,
       });
 
       const newMessage = await user.save();

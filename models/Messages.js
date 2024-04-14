@@ -7,7 +7,7 @@ const MessagesSchema = mongoose.Schema({
   type: { type: String, required: true },
   messageId: { type: String, required: true },
   reply: { type: String },
-  image: { type: String, required: true },
+  imageUrl: { type: String, required: true },
   date: {
     type: Date,
     default: Date.now,
