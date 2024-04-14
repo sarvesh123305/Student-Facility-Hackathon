@@ -26,7 +26,6 @@ import StudentSectionHome from "./pages/StudentSection/StudentSectionHome";
 import Notifications from "./pages/Student/Notifications";
 import UpdateProfile from "./pages/Student/UpdateProfile";
 import StudentSectionNotifications from "./pages/StudentSection/StudentSectionNotifications";
-import Scholarships from "./pages/StudentSection/Scholarships";
 import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
@@ -38,6 +37,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import StudentRegistration from "./pages/StudentSection/StudentRegistration";
 import LCRequests from "./pages/StudentSection/LCRequests";
+import FeeReceiptRequests from "./pages/StudentSection/FeeReceiptRequests";
+import ScholarshipRequests from "./pages/StudentSection/ScholarshipRequests";
 
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
@@ -188,20 +189,28 @@ const App = () => {
                       <Route
                         path="/StudentSection/Request/BonafideRequests"
                         element={<Bonafides />}
-                      /> */}
-{/* 
+                      /> 
+
                       <Route
                         path="/StudentSection/Request/LeavingCertificateRequests"
                         element={<LCRequests />}
-                      /> */}
+                      /> 
+                      <Route
+                        path="/StudentSection/Request/FeeReceiptRequests"
+                        element={<FeeReceiptRequests />}
+                      /> 
+                      <Route
+                        path="/StudentSection/Request/ScholarshipRequests"
+                        element={<ScholarshipRequests/>}
+                      /> 
                       <Route
                         path="/StudentSection/StudentRegistration"
                         element={<StudentRegistration />}
                       />
-                      <Route
+                      {/* <Route
                         path="/StudentSection/Scholarship/ScholarshipsAvailable"
                         element={<Scholarships />}
-                      />
+                      /> */}
                       <Route
                         path="/StudentSection/Scholarship/RequestedBonafides"
                         element={<Bonafides />}

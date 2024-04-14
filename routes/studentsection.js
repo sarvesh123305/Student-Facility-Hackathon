@@ -333,19 +333,19 @@ router.delete("/queries/:messageId", async (req, res) => {
   }
 });
 
-router.put("/updateLCRequest/:mis", async (req, res) => {
+router.post("/updateLCRequest/:mis", async (req, res) => {
   const { mis } = req.params;
 
   const data = req.body;
 
   try {
-    const db = getDB();
+    const db = client.db("test");
+
     const collection = db.collection("LCRequests"); // Assuming your collection name is 'students'
 
     const result = await collection.updateOne(
-      { mis: mis }, // Filter by MIS
-
-      data 
+      { mis: mis }, 
+      {$set: data}
     );
 
     if (result.modifiedCount === 0) {
