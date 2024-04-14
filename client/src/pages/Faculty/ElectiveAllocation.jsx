@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import axios from "axios";
 import { getElectivesList } from "../../redux/actions/facultyActions";
 const ElectiveAllocation = ({
   faculty: { electivesCategoryList },
@@ -11,13 +12,20 @@ const ElectiveAllocation = ({
   const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
+    console.log("hurrah!");
     getElectivesList();
-
-    const student = electivesCategoryList[0];
-    const findcategories = Object.keys(student.electives);
-    // console.log(categories);
-    setCategories(findcategories);
+    console.log("Elective list", electivesCategoryList);
+    // if (electivesCategoryList.length > 0) {
+    //
+    // }
   }, []);
+  useEffect(() => {
+    if (electivesCategoryList) {
+      const student = electivesCategoryList[0];
+      const findcategories = Object.keys(student.electives);
+      setCategories(findcategories);
+    }
+  }, [electivesCategoryList]);
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
     const preferencesLength = electivesCategoryList
@@ -27,39 +35,71 @@ const ElectiveAllocation = ({
     setPreferencesCount(preferencesLength);
     // console.log(preferencesLength);
   };
+  const handleAllocation = async () => {
+    const formData = electivesCategoryList.map((student) => {
+      const { mis, cgpa, sgpa } = student;
+      const selectedElectives = Object.values(
+        student.electives[selectedOption]
+      );
 
+      return { mis, cgpa, sgpa, preferences: selectedElectives };
+    });
+    console.log(formData);
+    const res = await axios.post("/api/student/electiveAllocation", {
+      formData,
+    });
+    console.log("Elective Allocation", res.data);
+  };
   return (
     <div>
       <div className="m-10">
         <h1 className="m-2">Elective Students list </h1>
-        {/*
-      
-       <button
-       type="button"
-       class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
-       px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-       >
-       Allocate All Electives
-       </button>
-      */}
+        {selectedOption && (
+          <div>
+            <div className="form-group">
+              <label htmlFor="numSubjects">Number of Subjects</label>
+              <input
+                type="number"
+                id="numSubjects"
+                min="1"
+                // value={numSubjects}
+                // onChange={handleNumSubjectsChange}
+                required
+              />
+            </div>
 
-        <form class="p-2 max-w-sm ">
+            <button
+              type="button"
+              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm
+  px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              onClick={handleAllocation}
+            >
+              Allocate Elective
+            </button>
+          </div>
+        )}
+
+        <form className="p-2 max-w-sm ">
           <label
-            for="countries"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            htmlFor="countries"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
             Select an option
           </label>
+
           <select
             id="countries"
             onChange={handleSelectChange}
-            className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500  block w-full p-2.5 bg-white border-gray-600 placeholder-gray-400 text-black "
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 block w-full p-2.5 bg-white border-gray-600 placeholder-gray-400 text-black"
+            value={selectedOption}
           >
-            <option selected disabled={selectedOption !== ""}>
+            <option value="" disabled={!selectedOption}>
               Choose an Elective Category
             </option>
             {categories?.map((category, index) => (
-              <option key={index}>{category}</option>
+              <option key={index} value={category}>
+                {category}
+              </option>
             ))}
           </select>
         </form>
@@ -90,27 +130,33 @@ const ElectiveAllocation = ({
               </tr>
             </thead>
             <tbody>
-              {selectedOption
-                ? electivesCategoryList?.map((student, index) => (
-                    <tr className="bg-white border-b " key={index}>
-                      <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-black"
-                      >
-                        {student.mis}
-                      </th>
-                      {Object.values(student.electives[selectedOption]).map(
-                        (preference, preferenceIndex) => (
-                          <td key={preferenceIndex} className="px-6 py-4">
-                            {preference}
-                          </td>
-                        )
-                      )}
-                      <td className="px-6 py-4">7.76</td>
-                      <td className="px-6 py-4">7.76</td>
-                    </tr>
-                  ))
-                : "No Data Found"}
+              {selectedOption ? (
+                electivesCategoryList?.map((student, index) => (
+                  <tr className="bg-white border-b " key={index}>
+                    <th
+                      scope="row"
+                      className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-black"
+                    >
+                      {student.mis}
+                    </th>
+                    {Object.values(student.electives[selectedOption]).map(
+                      (preference, preferenceIndex) => (
+                        <td key={preferenceIndex} className="px-6 py-4">
+                          {preference}
+                        </td>
+                      )
+                    )}
+                    <td className="px-6 py-4">{student.cgpa}</td>
+                    <td className="px-6 py-4">{student.sgpa}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={preferencesCount + 3} className="px-6 py-4">
+                    No Data Found
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         </div>

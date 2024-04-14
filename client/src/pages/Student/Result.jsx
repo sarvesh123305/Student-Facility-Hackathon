@@ -17,7 +17,8 @@ const Result = ({
   const [currentSemester, setCurrentSemester] = useState("");
   const [targetCGPA, setTargetCGPA] = useState(""); // State for target CGPA
   const [pdfData, setPdfData] = useState(null);
-
+  const [predictedSGPA, setPredictedSGPA] = useState(false);
+  const [predictedSGPACalculated, setpredictedSGPACalculated] = useState(0);
   const updateCurrentSemester = (event) => {
     setCurrentSemester(event.target.value);
   };
@@ -37,12 +38,12 @@ const Result = ({
   };
 
   const generateSG = async (e) => {
+    e.preventDefault();
     if (targetCGPA == "") return alert("Target CGPA cannot be empty");
     if (targetCGPA < 0 || targetCGPA > 10)
       return alert("Target CGPA should be between 0 and 10");
-
+    setPredictedSGPA(true);
     console.log(targetCGPA);
-    alert(targetCGPA);
     console.log(previousCredits);
 
     var totalGradePointsTillNow = 0;
@@ -72,13 +73,8 @@ const Result = ({
       totalCreditsInCurrentSemester;
     console.log(currentCGPA);
     console.log(requiredSGPA);
-    // console.log("Total Grade Points Till Now : " + totalGradePointsTillNow)
-    // console.log(currentCredits)
-    // console.log(totalCreditsTillPreviousSemester)
-    // console.log(totalCreditsInCurrentSemester)
-    // console.log(totalGradePointsRequired)
-
-    e.preventDefault();
+    setpredictedSGPACalculated(requiredSGPA);
+    // alert(requiredSGPA);
   };
 
   useEffect(() => {
@@ -193,6 +189,24 @@ const Result = ({
               placeholder="Enter target CGPA"
             />
           </div>
+          {predictedSGPA && (
+            <div className="w-full md:w-1/3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-xs font-bold mb-2"
+                htmlFor="Requried"
+              >
+                SGPA Required
+              </label>
+              <input
+                className="pointer-events-none appearance-none block w-full border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="requried-sgpa"
+                value={predictedSGPACalculated}
+                type="text" // Change type to text for pattern validation
+                pattern="[0-9]*" // Regular expression to allow only numbers
+                disabled
+              />
+            </div>
+          )}
         </div>
 
         <div className="md:w-2/3 mx-5">

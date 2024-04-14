@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { IoIosArrowDown } from "react-icons/io";
 import { NavLink, useLocation } from "react-router-dom";
-
-const SubMenu = ({ data, userType }) => {
+import AuthContext from "../../components/context/auth/authContext";
+const SubMenu = ({ data }) => {
+  const authContext = useContext(AuthContext);
+  const { userType } = authContext;
   const { pathname } = useLocation();
   const [subMenuOpen, setSubMenuOpen] = useState(false);
   function removeSpaces(inputString) {
@@ -39,7 +41,7 @@ const SubMenu = ({ data, userType }) => {
 
             <NavLink
               to={
-                userType
+                userType !== "student"
                   ? `/${userType}/${removeSpaces(data.name)}/${removeSpaces(
                       menu
                     )}`

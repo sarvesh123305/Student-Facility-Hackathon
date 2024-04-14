@@ -22,7 +22,7 @@ const Sidebar = () => {
   const sidebarRef = useRef();
   const { pathname } = useLocation();
   const authContext = useContext(AuthContext);
-  const { user, userType, loadUser } = authContext;
+  const { user, userType } = authContext;
   useEffect(() => {
     if (isTabletMid) {
       setOpen(false);
@@ -35,17 +35,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     isTabletMid && setOpen(false);
-    // loadUser
-    const userType = pathname.includes("Faculty")
-      ? "faculty"
-      : pathname.includes("student")
-      ? "student"
-      : "studentsection";
-    // console.log(userType);
-    userType && loadUser(userType);
-    // }, [pathname, userType]);
   }, [pathname]);
-
   const Nav_animation = isTabletMid
     ? {
         open: {
@@ -147,7 +137,7 @@ const Sidebar = () => {
           <div className="border-slate-300 ">
             {subMenusListFaculty?.map((menu) => (
               <div key={menu.name} className="flex flex-col gap-1">
-                <SubMenu data={menu} userType="Faculty" />
+                <SubMenu data={menu} />
               </div>
             ))}
           </div>
@@ -304,7 +294,7 @@ const Sidebar = () => {
           <div className="border-slate-300">
             {subMenusListStudentSection?.map((menu) => (
               <div key={menu.name} className="flex flex-col gap-1">
-                <SubMenu data={menu} userType="StudentSection" />
+                <SubMenu data={menu} />
               </div>
             ))}
           </div>
@@ -365,7 +355,6 @@ const Sidebar = () => {
 
         <div className="flex flex-col  h-full">
           {getMenubar(userType)}
-          {}
           {open && (
             <div className="flex-1 text-sm z-50  max-h-48 my-auto  whitespace-pre   w-full  font-medium  ">
               <div className="flex border-y border-slate-300 p-4 items-center justify-start hover:bg-zinc-600">

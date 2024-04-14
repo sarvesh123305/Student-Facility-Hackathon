@@ -31,16 +31,18 @@ const AllocateGrades = () => {
         row.splice(1, row.length - 1);
       });
 
-      data.sort((a, b) => parseInt(b[b.length - 1]) - parseInt(a[a.length - 1]));
+      data.sort(
+        (a, b) => parseInt(b[b.length - 1]) - parseInt(a[a.length - 1])
+      );
 
       setSortedData(data);
     };
 
     reader.readAsText(file);
   };
-  
+
   const calculateMean = (data) => {
-    console.log(typeof data)
+    console.log(typeof data);
     const sum = data.reduce((acc, value) => acc + value, 0);
     const mean = sum / data.length;
     return mean;
@@ -68,11 +70,11 @@ const AllocateGrades = () => {
   const plotGraph = (data) => {
     const canvas = document.getElementById("graphCanvas");
     const ctx = canvas.getContext("2d");
-  
+
     if (canvas.chart) {
-      canvas.chart.destroy(); 
+      canvas.chart.destroy();
     }
-  
+
     // const xValues = data.map((row) => parseInt(row[0])); // Assuming X values are in the first column
     const xValues = data.map((row) => {
       const value = parseInt(row[0]);
@@ -107,10 +109,9 @@ const AllocateGrades = () => {
     const pdfValues = mxValues.map((x) => normalDistribution(x));
     console.log("PDF Values:", pdfValues);
 
-    
     // Reverse the X values to match the PDF values
     xValues.reverse();
-  
+
     // Create a new Chart instance
     canvas.chart = new Chart(ctx, {
       type: "line",
@@ -130,13 +131,13 @@ const AllocateGrades = () => {
           x: {
             title: {
               display: true,
-              text: "X values",
+              text: "Marks",
             },
           },
           y: {
             title: {
               display: true,
-              text: "Y values",
+              text: "Number of Students",
             },
           },
         },
@@ -168,69 +169,104 @@ const AllocateGrades = () => {
       </div>
       <div>
         {/* Canvas to draw the graph */}
-        <canvas id="graphCanvas" width={window.innerWidth} height={window.innerHeight}></canvas>
+        <canvas
+          id="graphCanvas"
+          width={window.innerWidth}
+          height={window.innerHeight}
+        ></canvas>
 
-          <table>
-            <thead>
-              <tr>
-                <th>Grade</th>
-                <th>Start Range</th>
-                <th></th>
-                <th>End Range</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td>AA (10)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>AB (9)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>BB (8)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>BC (7)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>CC (6)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>CD (5)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>DD (4)</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-                <tr>
-                  <td>FF</td>
-                  <td><input></input></td>
-                  <td>-</td>
-                  <td><input></input></td>
-                </tr>
-            </tbody>
-          </table>
-
+        <table>
+          <thead>
+            <tr>
+              <th>Grade</th>
+              <th>Start Range</th>
+              <th></th>
+              <th>End Range</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AA (10)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>AB (9)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>BB (8)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>BC (7)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>CC (6)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>CD (5)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>DD (4)</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+            <tr>
+              <td>FF</td>
+              <td>
+                <input></input>
+              </td>
+              <td>-</td>
+              <td>
+                <input></input>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );

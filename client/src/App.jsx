@@ -40,6 +40,7 @@ import LCRequests from "./pages/StudentSection/LCRequests";
 import FeeReceiptRequests from "./pages/StudentSection/FeeReceiptRequests";
 import ScholarshipRequests from "./pages/StudentSection/ScholarshipRequests";
 import Layout from "./layouts/Layout";
+import AllocateGrades from "./pages/Faculty/AllocateGrades";
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
 
@@ -125,6 +126,10 @@ const App = () => {
                     <Route
                       path="/Faculty/UploadMarks"
                       element={<UploadMarks />}
+                    />
+                    <Route
+                      path="/Faculty/AllocatedGrades"
+                      element={<AllocateGrades />}
                     />
                     {/* FACULTY ROUTES*/}
                     <Route

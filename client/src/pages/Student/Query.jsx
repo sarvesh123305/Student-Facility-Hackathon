@@ -67,9 +67,8 @@ const Query = ({
   };
 
   useEffect(() => {
-    // console.log(queries);
     getQueries();
-  }, [queries]);
+  }, []);
 
   // const [image, setImage] = useState("");
   // const handleSupportingdocs = (e) => {

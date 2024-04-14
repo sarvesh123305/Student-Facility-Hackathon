@@ -28,11 +28,10 @@ const AuthState = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   //Load User
-  const loadUser = async (userType) => {
+  const loadUser = async () => {
     // if (localStorage.token) {
     //   setAuthToken(localStorage.token);
     // }
-    console.log("User in auth", userType);
     try {
       console.log("The data iwas ");
 

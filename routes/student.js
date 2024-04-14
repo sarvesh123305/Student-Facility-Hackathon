@@ -364,6 +364,101 @@ router.get("/queries", auth("student"), async (req, res) => {
   }
 });
 
+router.post("/electiveAllocation", async (req, res) => {
+  try {
+    const { formData } = req.body;
+    console.log("Form , ", formData);
+    // const data = [
+    //   {
+    //     srNo: "1",
+    //     name: "Sarvesh Kulkarni",
+    //     sgpa: "7.76",
+    //     cgpa: "7.76",
+    //     preferences: ["WST", "ADS", "SP"],
+    //   },
+    //   {
+    //     srNo: "2",
+    //     name: "Sanchit Rajmane",
+    //     sgpa: "8.27",
+    //     cgpa: "8.05",
+    //     preferences: ["WST", "ADS", "SP"],
+    //   },
+    //   {
+    //     srNo: "3",
+    //     name: "Aditya raul",
+    //     sgpa: "6.87",
+    //     cgpa: "7.00",
+    //     preferences: ["SP", "ADS", "WST"],
+    //   },
+    //   {
+    //     srNo: "4",
+    //     name: "Sohel Bargir",
+    //     sgpa: "9.87",
+    //     cgpa: "8.30",
+    //     preferences: ["WST", "ADS", "SP"],
+    //   },
+    //   {
+    //     srNo: "5",
+    //     name: "Avdhut Kamblr",
+    //     sgpa: "8.87",
+    //     cgpa: "7.10",
+    //     preferences: ["WST", "ADS", "SP"],
+    //   },
+    // ];
+    // console.log("Data , ", data);
+
+    const WTCSeats = 2,
+      SPSeats = 5,
+      ADSSeats = 5;
+    const total = WTCSeats + SPSeats + ADSSeats;
+    const sortDataByCGPAAndSGPA = (data) => {
+      return data.sort((a, b) => {
+        if (parseFloat(a.cgpa) !== parseFloat(b.cgpa)) {
+          return parseFloat(b.cgpa) - parseFloat(a.cgpa); // Descending order
+        } else {
+          return parseFloat(b.sgpa) - parseFloat(a.sgpa); // Descending order
+        }
+      });
+    };
+    const Seats = { WST: 1, SP: 4, ADS: 7 };
+    const allocateSubjects = (data) => {
+      if (data.length > total) {
+        console.log("Allocation not possible");
+        return;
+      }
+      sortDataByCGPAAndSGPA(data);
+      let arr = [];
+
+      data.forEach((element, index) => {
+        const { preferences, ...rest } = element; //Destructure preferences
+        let flag = false;
+        console.log("ELE", element);
+        for (let i = 0; i < preferences.length; i++) {
+          const preference = preferences[i];
+          if (flag) {
+            break;
+          }
+          if (Seats[preference] > 0) {
+            Seats[preference]--;
+            rest.preference = preference;
+            rest.preferenceNo = i + 1; // index starts from 0, so add 1 to get the preference number
+            arr.push(rest);
+            flag = true;
+          }
+        }
+      });
+      console.log("YESS", arr);
+      return arr;
+      //iterate over datas and get preference
+    };
+    res.json({ allocation: allocateSubjects(formData) });
+    // console.log(data);
+    // res.json(data);
+  } catch (error) {
+    res.status(404).send("Server Error");
+  }
+});
+
 router.post("/elective/result/:dbName", async (req, res) => {
   try {
     // get alloted elective from the respective database
@@ -993,7 +1088,7 @@ router.post(
     check("semesterName", "semesterName are required"),
   ],
   async (req, res) => {
-    const { electives, subjects, mis, semesterName } = req.body;
+    const { electives, subjects, mis, semesterName, cgpa, sgpa } = req.body;
     try {
       console.log("Hello", mis, semesterName);
       const existReg = await SemesterCreditRegistration.findOne({
@@ -1009,6 +1104,8 @@ router.post(
         semesterName,
         subjects,
         mis,
+        cgpa,
+        sgpa,
       });
       await newReg.save();
       res.json({ msg: "Semester Credit Registration Success" });
