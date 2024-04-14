@@ -335,7 +335,8 @@ router.delete("/queries/:messageId", async (req, res) => {
 
 router.put("/updateLCRequest/:mis", async (req, res) => {
   const { mis } = req.params;
-  const { name, age /* other fields you want to update */ } = req.body;
+
+  const data = req.body;
 
   try {
     const db = getDB();
@@ -343,7 +344,8 @@ router.put("/updateLCRequest/:mis", async (req, res) => {
 
     const result = await collection.updateOne(
       { mis: mis }, // Filter by MIS
-      { $set: { name: name, age: age /* other fields to update */ } }
+
+      data 
     );
 
     if (result.modifiedCount === 0) {
