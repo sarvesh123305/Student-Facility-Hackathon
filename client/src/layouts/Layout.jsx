@@ -9,7 +9,8 @@ import AuthContext from "../components/context/auth/authContext";
 
 const Layout = ({ children, showSidebarAndNavbar, initialLoadUser }) => {
   const authContext = useContext(AuthContext);
-  const { loadUser } = authContext;
+  const { loadUser, ithAuthenticated } = authContext;
+
   useEffect(() => {
     loadUser();
     initialLoadUser();

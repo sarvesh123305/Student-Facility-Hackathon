@@ -4,6 +4,7 @@ import {
   UPDATE_STUDENT,
   GET_BONAFIDE_STATUS,
   GET_FEERECEIPT_STATUS,
+  GET_LC_REQUESTS,
 } from "./types";
 import setAuthToken from "../../utils/setAuthToken";
 import axios from "axios";
@@ -222,6 +223,7 @@ export const getBonafideStatus = (mis) => async (dispatch) => {
     console.log(err);
   }
 };
+
 export const getFeeReceitStatus = (mis) => async (dispatch) => {
   try {
     // Check if formData.mis in bonafides

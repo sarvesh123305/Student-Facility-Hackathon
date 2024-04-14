@@ -41,6 +41,7 @@ import FeeReceiptRequests from "./pages/StudentSection/FeeReceiptRequests";
 import ScholarshipRequests from "./pages/StudentSection/ScholarshipRequests";
 import Layout from "./layouts/Layout";
 import AllocateGrades from "./pages/Faculty/AllocateGrades";
+import PrivateRoute from "./components/Routing/PrivateRoute";
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
 
@@ -67,6 +68,10 @@ const App = () => {
                 <Layout showSidebarAndNavbar={showSidebarAndNavbar}>
                   <Routes>
                     {/* STUDENT ROUTES*/}
+                    <Route
+                      path="/profile"
+                      element={<PrivateRoute component={Profile} />}
+                    />
 
                     <Route
                       path="/login"
@@ -77,7 +82,7 @@ const App = () => {
                         />
                       }
                     />
-                    <Route path="/" element={<Profile />} />
+                    {/*<Route path="/" element={<Profile />} />*/}
 
                     <Route
                       path="/Academics/AcademicProfile"

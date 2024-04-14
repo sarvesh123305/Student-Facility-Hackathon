@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -33,7 +33,21 @@ const LeavingCertificateForm = ({
       [id]: value,
     });
   };
+  useEffect(() => {
+    if (pdfData) {
+      const pdfUrl = URL.createObjectURL(pdfData);
+      const link = document.createElement("a");
+      link.href = pdfUrl;
+      link.setAttribute(
+        "download",
+        `${studentDetails.mis}_LeavingCertificate.pdf`
+      );
+      document.body.appendChild(link);
+      link.click();
 
+      URL.revokeObjectURL(pdfUrl);
+    }
+  }, [pdfData]);
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -79,6 +93,7 @@ const LeavingCertificateForm = ({
 
     // console.log(res.data);
   };
+
   return (
     <div>
       <button

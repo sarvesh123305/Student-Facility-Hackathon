@@ -5,6 +5,7 @@ import {
   GET_BONAFIDE_STATUS,
   GET_LC_STATUS,
   GET_FEERECEIPT_STATUS,
+  GET_LC_REQUESTS,
 } from "../actions/types";
 
 const initialState = {
@@ -52,6 +53,7 @@ export default (state = initialState, action) => {
         ...state,
         leavingcertificateStatus: action.payload,
       };
+
     default:
       return state;
   }
