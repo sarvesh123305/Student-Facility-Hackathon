@@ -290,7 +290,7 @@ const Query = ({
               <div class="flex w-full mx-auto flex-col justify-center ml-5">
                 <label
                   class="block mb-2 text-sm font-medium text-gray-900 "
-                  for="file_input"
+                  htmlFor="file_input"
                 >
                   Update Profile Photo
                 </label>

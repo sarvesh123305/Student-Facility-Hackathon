@@ -1,29 +1,11 @@
-import profileImage from "../../../public/images/coeplogo.png";
-// import Academic from "./Academic";
-import { useContext, useEffect } from "react";
-import AuthContext from "../../components/context/auth/authContext";
+import { useContext } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import {Link} from 'react-router-dom'
-import { initialLoadUser, updateStudent } from "../../redux/actions/logActions";
+import { Link } from "react-router-dom";
+import { updateStudent } from "../../redux/actions/logActions";
 const Profile = ({
   student: { studentInformation, studentDetails },
-  initialLoadUser,
   updateStudent,
 }) => {
-  const authContext = useContext(AuthContext);
-  const { user, userType, loadUser } = authContext;
-  /*
-
-}
-*/
-  useEffect(() => {
-    console.log("HEHE GHOT THS");
-    loadUser("student");
-    initialLoadUser();
-    console.log("HEHE COMPLETERD THS");
-  }, []);
-
   const handleUpdateProfile = () => {
     // updateStudent
     const fixedArr = {
@@ -72,7 +54,7 @@ const Profile = ({
                 {/* <div className="flex">
                   <ion-icon name="create-outline"></ion-icon>
                   <h3 className="ml-2">Update Profile</h3>
-                </div> */}
+                </div> 
                 {/* <div className="flex">
                   <ion-icon name="book-outline"></ion-icon>
                   <h3 className="ml-2">
@@ -97,29 +79,22 @@ const Profile = ({
               <h5 className="mb-1 text-xl font-medium text-gray-900 ">
                 KULKARNI SARVESH ANANT
               </h5>
-              <span className="text-sm text-gray-500 ">142203002</span>
+              <span className="text-sm text-gray-500 ">
+                {studentDetails.mis}
+              </span>
               <div className="flex mt-4 md:mt-6">
                 <button
-                  // href="#"
                   onClick={handleUpdateProfile}
                   className="inline-flex items-center mr-2 px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 "
                 >
-                  <Link
-            to={"/updateProfile"}
-          >
-                  Update Profile
-          </Link>
+                  <Link to={"/updateProfile"}>Update Profile</Link>
                 </button>
-                <a
-                  href="#"
+                <Link
+                  to={"/Academics/AcademicProfile"}
                   className="py-2 px-4 ms-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 "
                 >
-                   <Link
-            to={"/Academics/AcademicProfile"}
-          >
                   Academic Profile
-          </Link>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -233,12 +208,7 @@ const Profile = ({
     </div>
   );
 };
-Profile.propTypes = {
-  initialLoadUser: PropTypes.func.isRequired,
-};
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps, { initialLoadUser, updateStudent })(
-  Profile
-);
+export default connect(mapStateToProps, { updateStudent })(Profile);

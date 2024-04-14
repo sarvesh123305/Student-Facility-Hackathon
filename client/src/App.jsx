@@ -39,7 +39,7 @@ import StudentRegistration from "./pages/StudentSection/StudentRegistration";
 import LCRequests from "./pages/StudentSection/LCRequests";
 import FeeReceiptRequests from "./pages/StudentSection/FeeReceiptRequests";
 import ScholarshipRequests from "./pages/StudentSection/ScholarshipRequests";
-
+import Layout from "./layouts/Layout";
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
 
@@ -63,169 +63,154 @@ const App = () => {
           <UserState>
             <Router>
               <Fragment>
-                <div className="flex h-screen">
-                  {showSidebarAndNavbar && <Sidebar className="fixed h-full" />}
-                  <div className="flex-col w-full bg-white overflow-y-auto">
-                    {showSidebarAndNavbar && <Navbar />}
+                <Layout showSidebarAndNavbar={showSidebarAndNavbar}>
+                  <Routes>
+                    {/* STUDENT ROUTES*/}
 
-                    <Alerts />
-                    <Routes>
-                      {/* STUDENT ROUTES*/}
+                    <Route
+                      path="/login"
+                      element={
+                        <Login
+                          role="Student"
+                          setShowSidebarAndNavbar={setShowSidebarAndNavbar}
+                        />
+                      }
+                    />
+                    <Route path="/" element={<Profile />} />
 
-                      <Route
-                        path="/login"
-                        element={
-                          <Login
-                            role="Student"
-                            setShowSidebarAndNavbar={setShowSidebarAndNavbar}
-                          />
-                        }
-                      />
-                      <Route path="/" element={<Profile />} />
+                    <Route
+                      path="/Academics/AcademicProfile"
+                      element={<Academic />}
+                    />
+                    <Route path="/elective" element={<Home />} />
+                    <Route
+                      path="/Academics/ElectiveRegistration"
+                      element={<Subjectallocation />}
+                    />
 
-                      <Route
-                        path="/Academics/AcademicProfile"
-                        element={<Academic />}
-                      />
-                      <Route path="/elective" element={<Home />} />
-                      <Route
-                        path="/Academics/ElectiveRegistration"
-                        element={<Subjectallocation />}
-                      />
+                    <Route
+                      path="/Applications/RequestBonafide"
+                      element={<RequestBonafide />}
+                    />
+                    <Route path="/Applications/Queries" element={<Query />} />
+                    <Route
+                      path="/Applications/LetterFormats"
+                      element={<LetterFormats />}
+                    />
+                    <Route
+                      path="/Applications/FeeReceipt/"
+                      element={<FeeReceiptForm />}
+                    />
+                    <Route
+                      path="/Applications/LeavingCertificate/"
+                      element={<LeavingCertificateForm />}
+                    />
 
-                      <Route
-                        path="/Applications/RequestBonafide"
-                        element={<RequestBonafide />}
-                      />
-                      <Route path="/Applications/Queries" element={<Query />} />
-                      <Route
-                        path="/Applications/LetterFormats"
-                        element={<LetterFormats />}
-                      />
-                      <Route
-                        path="/Applications/FeeReceipt/"
-                        element={<FeeReceiptForm />}
-                      />
-                      <Route
-                        path="/Applications/LeavingCertificate/"
-                        element={<LeavingCertificateForm />}
-                      />
+                    <Route path="/result" element={<Result />} />
+                    <Route path="/notifications" element={<Notifications />} />
+                    <Route path="/updateProfile" element={<UpdateProfile />} />
+                    <Route
+                      path="/Academics/SemesterCreditRegistration"
+                      element={<SemesterCreditRegistration />}
+                    />
 
-                      <Route path="/result" element={<Result />} />
-                      <Route
-                        path="/notifications"
-                        element={<Notifications />}
-                      />
-                      <Route
-                        path="/updateProfile"
-                        element={<UpdateProfile />}
-                      />
-                      <Route
-                        path="/Academics/SemesterCreditRegistration"
-                        element={<SemesterCreditRegistration />}
-                      />
+                    <Route
+                      path="/Scholarship/ScholarshipsAvailable"
+                      element={<ScholarshipsAvailable />}
+                    />
+                    <Route path="/notifications/" element={<Notifications />} />
 
-                      <Route
-                        path="/Scholarship/ScholarshipsAvailable"
-                        element={<ScholarshipsAvailable />}
-                      />
-                      <Route
-                        path="/notifications/"
-                        element={<Notifications />}
-                      />
+                    <Route path="/faq/" element={<FAQ />} />
 
-                      <Route path="/faq/" element={<FAQ />} />
+                    <Route
+                      path="/Faculty/UploadMarks"
+                      element={<UploadMarks />}
+                    />
+                    {/* FACULTY ROUTES*/}
+                    <Route
+                      path="/Faculty/login"
+                      element={
+                        <Login
+                          role="Faculty"
+                          setShowSidebarAndNavbar={setShowSidebarAndNavbar}
+                        />
+                      }
+                    />
+                    <Route path="/Faculty/" element={<FacultyHome />} />
+                    <Route
+                      path="/Faculty/ManageAcademics/ElectiveRegistration"
+                      element={<ElectiveRegistration />}
+                    />
+                    <Route
+                      path="/Faculty/manageResult"
+                      element={<ManageResult />}
+                    />
+                    <Route
+                      path="/Faculty/ManageAcademics/ElectiveAllocation"
+                      element={<ElectiveAllocation />}
+                    />
 
-                      <Route
-                        path="/Faculty/UploadMarks"
-                        element={<UploadMarks />}
-                      />
-                      {/* FACULTY ROUTES*/}
-                      <Route
-                        path="/Faculty/login"
-                        element={
-                          <Login
-                            role="Faculty"
-                            setShowSidebarAndNavbar={setShowSidebarAndNavbar}
-                          />
-                        }
-                      />
-                      <Route path="/Faculty/" element={<FacultyHome />} />
-                      <Route
-                        path="/Faculty/ManageAcademics/ElectiveRegistration"
-                        element={<ElectiveRegistration />}
-                      />
-                      <Route
-                        path="/Faculty/manageResult"
-                        element={<ManageResult />}
-                      />
-                      <Route
-                        path="/Faculty/ManageAcademics/ElectiveAllocation"
-                        element={<ElectiveAllocation />}
-                      />
+                    {/*STUDENTSECTION ROUTES*/}
 
-                      {/*STUDENTSECTION ROUTES*/}
+                    <Route
+                      path="/StudentSection/login"
+                      element={
+                        <Login
+                          role="StudentsSection"
+                          setShowSidebarAndNavbar={setShowSidebarAndNavbar}
+                        />
+                      }
+                    />
 
-                      <Route
-                        path="/StudentSection/login"
-                        element={
-                          <Login
-                            role="StudentsSection"
-                            setShowSidebarAndNavbar={setShowSidebarAndNavbar}
-                          />
-                        }
-                      />
+                    <Route
+                      path="/StudentSection/"
+                      element={<StudentSectionHome />}
+                    />
 
-                      <Route
-                        path="/StudentSection/"
-                        element={<StudentSectionHome />}
-                      />
+                    <Route
+                      path="/StudentSection/notifications"
+                      element={<StudentSectionNotifications />}
+                    />
 
-                      <Route
-                        path="/StudentSection/notifications"
-                        element={<StudentSectionNotifications />}
-                      />
+                    <Route
+                      path="/StudentSection/Request/BonafideRequests"
+                      element={<Bonafides />}
+                    />
 
-                      <Route
-                        path="/StudentSection/Request/BonafideRequests"
-                        element={<Bonafides />}
-                      /> 
-
-                      <Route
-                        path="/StudentSection/Request/LeavingCertificateRequests"
-                        element={<LCRequests />}
-                      /> 
-                      <Route
-                        path="/StudentSection/Request/FeeReceiptRequests"
-                        element={<FeeReceiptRequests />}
-                      /> 
-                      <Route
-                        path="/StudentSection/Request/ScholarshipRequests"
-                        element={<ScholarshipRequests/>}
-                      /> 
-                      <Route
-                        path="/StudentSection/StudentRegistration"
-                        element={<StudentRegistration />}
-                      />
-                      {/* <Route
+                    <Route
+                      path="/StudentSection/Request/LeavingCertificateRequests"
+                      element={<LCRequests />}
+                    />
+                    <Route
+                      path="/StudentSection/Request/FeeReceiptRequests"
+                      element={<FeeReceiptRequests />}
+                    />
+                    <Route
+                      path="/StudentSection/Request/ScholarshipRequests"
+                      element={<ScholarshipRequests />}
+                    />
+                    <Route
+                      path="/StudentSection/StudentRegistration"
+                      element={<StudentRegistration />}
+                    />
+                    {/* <Route
                         path="/StudentSection/Scholarship/ScholarshipsAvailable"
                         element={<Scholarships />}
                       /> */}
-                      <Route
-                        path="/StudentSection/Scholarship/RequestedBonafides"
-                        element={<Bonafides />}
-                      />
-                      <Route
-                        path="/StudentSection/Scholarship/LetterFormats"
-                        element={<LetterFormat />}
-                      />
-                      <Route
-                        path="/StudentSection/Scholarship/Queries"
-                        element={<Queries />}
-                      />
-                    </Routes>
-                  </div>
-                </div>
+                    <Route
+                      path="/StudentSection/Scholarship/RequestedBonafides"
+                      element={<Bonafides />}
+                    />
+                    <Route
+                      path="/StudentSection/Scholarship/LetterFormats"
+                      element={<LetterFormat />}
+                    />
+                    <Route
+                      path="/StudentSection/Scholarship/Queries"
+                      element={<Queries />}
+                    />
+                  </Routes>
+                </Layout>
               </Fragment>
             </Router>
           </UserState>

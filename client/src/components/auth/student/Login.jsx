@@ -21,6 +21,7 @@ const Login = (props) => {
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
+      setShowSidebarAndNavbar(true);
       if (role === "Student") navigate("/");
       if (role === "Faculty") navigate("/Faculty/");
       if (role === "StudentsSection") navigate("/StudentSection/");
@@ -57,16 +58,11 @@ const Login = (props) => {
         Facultylogin({ empno: mis, password: password });
       } else if (role === "StudentsSection") {
         console.log("students sections");
-
-        await Facultylogin({ empno: mis, password: password });
-      } else if (role === "StudentsSection") {
-        console.log("students sections");
-        await StudentSectionlogin({
+        StudentSectionlogin({
           empno: mis,
           password,
         });
       }
-      setShowSidebarAndNavbar(true);
 
       setUser({
         mis: "",

@@ -10,48 +10,70 @@ const config = require("config");
 const auth = require("../middleware/auth");
 const Others = require("../models/Others");
 
+router.get("/user", auth(""), async (req, res) => {
+  try {
+    let user, userType;
+    if (req.student) {
+      user = await Student.findById(req.student.id).select("-password");
+      userType = "student";
+    } else if (req.faculty) {
+      user = await Faculty.findById(req.faculty.id).select("-password");
+      userType = "faculty";
+    } else if (req.studentsection) {
+      user = await Others.findById(req.studentsection.id).select("-password");
+      userType = "studentsection";
+    } else {
+      user = { msg: "No user found" };
+      userType = "Unauthenticated";
+    }
+
+    res.json({ user, userType });
+  } catch (err) {
+    res.status(500).send("server error occured");
+  }
+});
 // ------------------------------------------Student Routes-------------------------------------------
 //@routes GET api/auth/student
 //@desc Get Loggedin user
 //@access Private
 
-router.get("/student", auth("student"), async (req, res) => {
-  try {
-    const user = await Student.findById(req.student.id).select("-password");
-    res.json(user);
-  } catch (err) {
-    res.status(500).send("server error occured");
-  }
-});
+// router.get("/student", auth("student"), async (req, res) => {
+//   try {
+//     const user = await Student.findById(req.student.id).select("-password");
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).send("server error occured");
+//   }
+// });
 //@routes GET api/auth/faculty
 //@desc Get Loggedin faculty
 //@access Private
 
-router.get("/faculty", auth("faculty"), async (req, res) => {
-  try {
-    console.log("Got in ", req.faculty);
-    const user = await Faculty.findById(req.faculty.id).select("-password");
-    res.json(user);
-  } catch (err) {
-    res.status(500).send("server error occured");
-  }
-});
+// router.get("/faculty", auth("faculty"), async (req, res) => {
+//   try {
+//     console.log("Got in ", req.faculty);
+//     const user = await Faculty.findById(req.faculty.id).select("-password");
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).send("server error occured");
+//   }
+// });
 
 //@routes GET api/auth/student
 //@desc Get Loggedin user
 //@access Private
 
-router.get("/studentsection", auth("studentsection"), async (req, res) => {
-  try {
-    // console.log("first", req);
-    const user = await Others.findById(req.studentsection.id).select(
-      "-password"
-    );
-    res.json(user);
-  } catch (err) {
-    res.status(500).send("server error occured");
-  }
-});
+// router.get("/studentsection", auth("studentsection"), async (req, res) => {
+//   try {
+//     // console.log("first", req);
+//     const user = await Others.findById(req.studentsection.id).select(
+//       "-password"
+//     );
+//     res.json(user);
+//   } catch (err) {
+//     res.status(500).send("server error occured");
+//   }
+// });
 //@routes POST api/auth/student
 //@desc Auth user and get token
 //@access public

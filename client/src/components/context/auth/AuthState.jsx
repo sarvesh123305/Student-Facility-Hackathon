@@ -32,22 +32,21 @@ const AuthState = (props) => {
     // if (localStorage.token) {
     //   setAuthToken(localStorage.token);
     // }
-
     console.log("User in auth", userType);
     try {
-      console.log("User in auth", userType);
-      const res = await axios.get(`/api/auth/${userType}`);
+      console.log("The data iwas ");
+
+      const res = await axios.get("/api/auth/user");
       const data = {
         ...res.data,
-        userType,
       };
+      console.log("DATA IS ", data);
       dispatch({
         type: USER_LOADED,
         payload: data,
       });
-      console.log("Completed in auth", userType);
     } catch (err) {
-      console.log("Some error in API");
+      console.log("Some error in API", err);
       dispatch({
         type: AUTH_ERROR,
       });

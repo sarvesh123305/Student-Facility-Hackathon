@@ -113,12 +113,8 @@ const Sidebar = () => {
     {
       name: "Queries",
       icon: TbReportAnalytics,
-      menus: [
-        "Received Queries",
-        "Sent Replies",
-      ],
+      menus: ["Received Queries", "Sent Replies"],
     },
-  
   ];
 
   const subMenusListFaculty = [
@@ -335,8 +331,8 @@ const Sidebar = () => {
       case "studentsection":
         return <StudentSectionMenubar />;
       default:
-        return <StudentMenubar />;
-      // return <h1>Please Login</h1>;
+        // return "";
+        return <h1>Unauthorized Please login</h1>;
     }
   };
   return (
