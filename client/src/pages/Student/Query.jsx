@@ -282,19 +282,8 @@ const Query = ({
                   alt="image description"
                 />
               )} */}
-              <div className="flex w-full mx-auto flex-col justify-center ml-5">
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 "
-                  htmlFor="file_input"
-                >
-                  Update Profile Photo
-                </label>
-                <a
-                  id="downloadLink"
-                  href="https://firebasestorage.googleapis.com/v0/b/student-facility.appspot.com/o/students%2Fsample.png?alt=media&token=116ea86c-05a8-441e-a14c-60b1c6a91642"
-                >
-                  Download PDF
-                </a>
+              <div class="flex w-full mx-auto flex-col justify-center ml-5">
+            
                 <input
                   className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none "
                   aria-describedby="file_input_help"
