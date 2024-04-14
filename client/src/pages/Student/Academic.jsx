@@ -17,13 +17,10 @@ const xLabels = [
 ];
 
 import { connect } from "react-redux";
-import { initialLoadUser } from "../../redux/actions/logActions";
-const Academic = ({ student: { academicProfile }, initialLoadUser }) => {
+const Academic = ({ student: { academicProfile } }) => {
   const CGPA = academicProfile?.semesters.map((sem) => sem.newCGPA);
   const SGPA = academicProfile?.semesters.map((sem) => sem.newSGPA);
-  useEffect(() => {
-    initialLoadUser();
-  }, []);
+
   return (
     academicProfile && (
       <div className="resultBar mx-auto my-8 ">
@@ -272,4 +269,4 @@ const Academic = ({ student: { academicProfile }, initialLoadUser }) => {
 const mapStateToProps = (state) => ({
   student: state.student,
 });
-export default connect(mapStateToProps, { initialLoadUser })(Academic);
+export default connect(mapStateToProps, {})(Academic);

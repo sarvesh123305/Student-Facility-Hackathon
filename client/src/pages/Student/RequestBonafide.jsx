@@ -7,14 +7,12 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import {
   bonafideDownload,
-  initialLoadUser,
   sendBonafideRequest,
   getBonafideStatus,
 } from "../../redux/actions/logActions";
 const RequestBonafide = ({
   student: { studentDetails, academicProfile, bonafidePresent },
   bonafideDownload,
-  initialLoadUser,
   sendBonafideRequest,
   getBonafideStatus,
 }) => {
@@ -92,7 +90,6 @@ const RequestBonafide = ({
 
       URL.revokeObjectURL(pdfUrl);
     }
-    initialLoadUser();
   }, [pdfData]);
   return (
     <div className="">
@@ -292,7 +289,6 @@ const mapStateToProps = (state) => ({
 });
 export default connect(mapStateToProps, {
   bonafideDownload,
-  initialLoadUser,
   sendBonafideRequest,
   getBonafideStatus,
 })(RequestBonafide);

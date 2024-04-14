@@ -8,13 +8,8 @@ import {
   uploadBytes,
 } from "firebase/storage";
 
-
 import { db, storage } from "../../utils/useFirebase";
-import {
-  sendQuery,
-  getQueries,
-  initialLoadUser,
-} from "../../redux/actions/logActions";
+import { sendQuery, getQueries } from "../../redux/actions/logActions";
 import { connect } from "react-redux";
 
 const relatedOptions = [
@@ -52,7 +47,6 @@ const Query = ({
   student: { studentDetails, queries },
   sendQuery,
   getQueries,
-  initialLoadUser,
 }) => {
   const [selected, setSelected] = useState(relatedOptions[0]);
   const [message, setMessage] = useState("");
@@ -71,9 +65,7 @@ const Query = ({
   const handleMessage = (e) => {
     setMessage(e.target.value);
   };
-  useEffect(() => {
-    initialLoadUser();
-  }, []);
+
   useEffect(() => {
     // console.log(queries);
     getQueries();
@@ -123,13 +115,14 @@ const Query = ({
   //     }),
   //   }).then((res) => res.json()).then((data) => console.log(data))
   // }
-  const url = 'https://twitter154.p.rapidapi.com/user/details?username=omarmhaimdat&user_id=96479162';
+  const url =
+    "https://twitter154.p.rapidapi.com/user/details?username=omarmhaimdat&user_id=96479162";
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
-      'X-RapidAPI-Host': 'twitter154.p.rapidapi.com'
-    }
+      "X-RapidAPI-Key": "SIGN-UP-FOR-KEY",
+      "X-RapidAPI-Host": "twitter154.p.rapidapi.com",
+    },
   };
 
   const [imageUpload, setImageUpload] = useState(null);
@@ -145,16 +138,15 @@ const Query = ({
       .then((snapshot) => {
         getDownloadURL(snapshot.ref)
           .then((url) => {
-            return url
+            return url;
           })
           .catch((error) => {
-            return 0
+            return 0;
           });
       })
       .catch((error) => {
-        return 0
+        return 0;
       });
-
   };
 
   return (
@@ -272,29 +264,29 @@ const Query = ({
             ></textarea>{" "}
           </div>
         </div>
-        <div class=" max-w-screen-lg flex flex-row mx-auto mt-5 ">
-          <div class="flex w-full mx-auto flex-col justify-center ">
+        <div className=" max-w-screen-lg flex flex-row mx-auto mt-5 ">
+          <div className="flex w-full mx-auto flex-col justify-center ">
             <label
               htmlFor="message"
               className="block mb-2 text-sm font-medium text-gray-900 "
             >
               Upload Supporting Documents
             </label>
-            <div class=" max-w-screen-lg flex flex-row  ">
+            <div className=" max-w-screen-lg flex flex-row  ">
               {/* {image === "" ? (
                 ""
               ) : (
                 <img
                   width={100}
-                  class="  rounded-md"
+                  className="  rounded-md"
                   src={image}
                   alt="image description"
                 />
               )} */}
-              <div class="flex w-full mx-auto flex-col justify-center ml-5">
+              <div className="flex w-full mx-auto flex-col justify-center ml-5">
                 <label
-                  class="block mb-2 text-sm font-medium text-gray-900 "
-                  for="file_input"
+                  className="block mb-2 text-sm font-medium text-gray-900 "
+                  htmlFor="file_input"
                 >
                   Update Profile Photo
                 </label>
@@ -305,7 +297,7 @@ const Query = ({
                   Download PDF
                 </a>
                 <input
-                  class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none "
+                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50  focus:outline-none "
                   aria-describedby="file_input_help"
                   id="file_input"
                   accept="/"
@@ -314,7 +306,7 @@ const Query = ({
                   }}
                   type="file"
                 />
-                <p class="mt-1 text-lg text-gray-500 " id="file_input_help">
+                <p className="mt-1 text-lg text-gray-500 " id="file_input_help">
                   PNG, JPG (MAX. 800x400px).
                 </p>
               </div>
@@ -433,5 +425,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   sendQuery,
   getQueries,
-  initialLoadUser,
 })(Query);

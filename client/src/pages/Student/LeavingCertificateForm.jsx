@@ -2,13 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import {
-  initialLoadUser,
-  LeavingCertificateDownload,
-} from "../../redux/actions/logActions";
+import { LeavingCertificateDownload } from "../../redux/actions/logActions";
 const LeavingCertificateForm = ({
   student: { studentInformation, studentDetails, leavingcertificateStatus },
-  initialLoadUser,
   LeavingCertificateDownload,
 }) => {
   // Initialize state for form values
@@ -288,13 +284,10 @@ const LeavingCertificateForm = ({
     </div>
   );
 };
-LeavingCertificateForm.propTypes = {
-  initialLoadUser: PropTypes.func.isRequired,
-};
+
 const mapStateToProps = (state) => ({
   student: state.student,
 });
 export default connect(mapStateToProps, {
-  initialLoadUser,
   LeavingCertificateDownload,
 })(LeavingCertificateForm);

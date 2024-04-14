@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  initialLoadUser,
   FeeReceiptDownload,
   getFeeReceitStatus,
 } from "../../redux/actions/logActions";
@@ -10,7 +9,6 @@ import PropTypes from "prop-types";
 
 const FeeReceiptForm = ({
   student: { studentInformation, studentDetails, feereceiptStatus },
-  initialLoadUser,
   FeeReceiptDownload,
   getFeeReceitStatus,
 }) => {
@@ -133,7 +131,6 @@ const FeeReceiptForm = ({
 
       URL.revokeObjectURL(pdfUrl);
     }
-    initialLoadUser();
   }, [pdfData]);
   return (
     <div>
@@ -729,14 +726,10 @@ const FeeReceiptForm = ({
   );
 };
 
-FeeReceiptForm.propTypes = {
-  initialLoadUser: PropTypes.func.isRequired,
-};
 const mapStateToProps = (state) => ({
   student: state.student,
 });
 export default connect(mapStateToProps, {
-  initialLoadUser,
   FeeReceiptDownload,
   getFeeReceitStatus,
 })(FeeReceiptForm);

@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
 import {
-  initialLoadUser,
   fetchSemesterCreditRegistration,
   semesterCreditRegistration,
 } from "../../redux/actions/logActions";
 
 const SemesterCreditRegistration = ({
   student: { studentDetails },
-  initialLoadUser,
   fetchSemesterCreditRegistration,
   semesterCreditRegistration,
 }) => {
@@ -23,8 +21,6 @@ const SemesterCreditRegistration = ({
       sName: "Semester 2",
     };
     fetchSemesterCreditRegistration(formData, setData);
-    console.log("Run hua kya");
-    initialLoadUser();
   }, []);
 
   const handlePreferenceChange = (
@@ -189,7 +185,6 @@ const mapStateToProps = (state) => ({
   student: state.student,
 });
 export default connect(mapStateToProps, {
-  initialLoadUser,
   fetchSemesterCreditRegistration,
   semesterCreditRegistration,
 })(SemesterCreditRegistration);
