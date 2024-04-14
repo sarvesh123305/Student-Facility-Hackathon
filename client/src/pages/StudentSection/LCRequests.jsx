@@ -48,7 +48,7 @@ const LCRequests = ({
     <div class="w-full p-4 bg-white border-gray-200 rounded-lg shadow sm:p-8">
       <div class="flex items-center justify-between mb-4">
         <h5 class="text-xl font-bold leading-none text-gray-900">
-          All Scholarship Approval Requests
+          All Leaving Certificate Approval Requests
         </h5>
 
         <div

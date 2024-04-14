@@ -188,7 +188,12 @@ const App = () => {
                       <Route
                         path="/StudentSection/Request/BonafideRequests"
                         element={<Bonafides />}
-                      />
+                      /> */}
+{/* 
+                      <Route
+                        path="/StudentSection/Request/LeavingCertificateRequests"
+                        element={<LCRequests />}
+                      /> */}
                       <Route
                         path="/StudentSection/StudentRegistration"
                         element={<StudentRegistration />}
