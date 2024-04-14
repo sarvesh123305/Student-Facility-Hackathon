@@ -37,12 +37,12 @@ const Result = ({
   };
 
   const generateSG = async (e) => {
-    if(targetCGPA == "")
-      return alert("Target CGPA cannot be empty")
+    if (targetCGPA == "") return alert("Target CGPA cannot be empty");
     if (targetCGPA < 0 || targetCGPA > 10)
       return alert("Target CGPA should be between 0 and 10");
 
     console.log(targetCGPA);
+    alert(targetCGPA);
     console.log(previousCredits);
 
     var totalGradePointsTillNow = 0;

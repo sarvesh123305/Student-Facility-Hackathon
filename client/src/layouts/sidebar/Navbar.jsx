@@ -68,7 +68,7 @@ const Navbar = ({ student, initialLoadUser }) => {
     setInput(value);
     const result = searchDatabase(student, value);
     console.log(result);
-    // setResults(result);
+    setResults(result);
     // console.log(student)
     // console.log("On change called")
   };

@@ -57,7 +57,11 @@ const Login = (props) => {
         Facultylogin({ empno: mis, password: password });
       } else if (role === "StudentsSection") {
         console.log("students sections");
-        StudentSectionlogin({
+
+        await Facultylogin({ empno: mis, password: password });
+      } else if (role === "StudentsSection") {
+        console.log("students sections");
+        await StudentSectionlogin({
           empno: mis,
           password,
         });
