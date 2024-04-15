@@ -1,4 +1,0 @@
-{
-    "mongoURI":"mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper",
-    "jwtsecret":"COEPTechnologicalUniversity"
-}
