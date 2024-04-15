@@ -43,6 +43,7 @@ import AllocateGrades from "./pages/Faculty/AllocateGrades";
 import PrivateRouteStudent from "./components/Routing/PrivateRouteStudent";
 import PrivateRouteFaculty from "./components/Routing/PrivateRouteFaculty";
 import PrivateRouteStudentSection from "./components/Routing/PrivateRouteStudentSection";
+import SentReplies from "./pages/StudentSection/SentReplies";
 
 import BonafideRequests from "./pages/StudentSection/BonafideRequests";
 
@@ -264,6 +265,16 @@ const App = () => {
                         />
                       }
                     />
+
+                    <Route
+                      path="/StudentSection/Queries/SentReplies"
+                      element={
+                        <PrivateRouteStudentSection
+                          component={SentReplies}
+                        />
+                      }
+                    />
+
                     <Route
                       path="/StudentSection/StudentRegistration"
                       element={
@@ -272,8 +283,8 @@ const App = () => {
                         />
                       }
                     />
-      
-                
+
+
                     <Route
                       path="/StudentSection/Scholarship/LetterFormats"
                       element={

@@ -72,7 +72,7 @@ const FeeReceiptForm = ({
 
   const handleDownload = async () => {
     const formData = {
-      FullName: "Sanika Kulkarni",
+      FullName: "Sarvesh Anant Kulkarni",
       Year: 2024,
       MobileNumber: "1234567890",
       Mis: 142203011,
@@ -140,7 +140,7 @@ const FeeReceiptForm = ({
           onClick={handleDownload}
         >
           {" "}
-          Download Fee Receit
+          Download Fee Receipt
         </button>
       )}
       <form onSubmit={handleSubmit}>

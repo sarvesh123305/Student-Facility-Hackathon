@@ -101,7 +101,7 @@ const LeavingCertificateForm = ({
         onClick={handleDownload}
       >
         {" "}
-        Download Fee Receit
+        Download Fee Receipt
       </button>
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 mb-6 md:grid-cols-2 lg:grid-cols-2 p-10">

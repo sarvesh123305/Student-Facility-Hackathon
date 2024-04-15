@@ -26,6 +26,7 @@ const LCRequests = ({
   }, [queries]);
 
   useEffect(() => {
+    console.log(queries)
     setData(queries);
   }, [queries]);
 

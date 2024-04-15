@@ -2,7 +2,9 @@ import React , {useState} from 'react'
 import axios from 'axios'
 import { connect } from "react-redux";
 import { updateQueryItem } from '../../redux/actions/studentSection';
+import { MdAirlineSeatLegroomReduced } from 'react-icons/md';
 const QueryItem = ({
+    studentsection: { queries },
     updateQueryItem,
     key,
     query,
@@ -29,6 +31,7 @@ const QueryItem = ({
                 status: "Rejected"
             }
             updateQueryItem(data)
+            setModalToggle(false);
         };
         const [modalToggle, setModalToggle] = useState(false);
         const [text, setText] = useState("")
@@ -49,6 +52,7 @@ const QueryItem = ({
             }
             console.log(data)
             updateQueryItem(data)
+            setModalToggle(false);
         }
 
         const replyItem = async () => {
