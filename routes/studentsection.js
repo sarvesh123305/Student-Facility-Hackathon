@@ -206,21 +206,6 @@ router.put("/bonafideApproval", async (req, res) => {
   }
 });
 
-router.get("/getQueries", async (req, res) => {
-  try {
-    // get alloted elective from the respective database
-    connectToAtlas();
-    getAllDocumentsFromCollection("test", "Messages")
-      .then((documents) => {
-        res.json(documents);
-      })
-      .catch((error) => {
-        console.error("Error fetching documents:", error);
-      });
-  } catch (error) {
-    res.status(500).send("Internal Server Error");
-  }
-});
 
 router.post("/sendReply", async (req, res) => {
   try {
@@ -297,11 +282,27 @@ router.get("/getScholarshipRequests", async (req, res) => {
   }
 });
 
-router.get("/getFeeReceiptRequests", async (req, res) => {
+router.get("/ ", async (req, res) => {
   try {
     // get alloted elective from the respective database
-    connectToAtlas();
+    connectToAtlas(); 
     getAllDocumentsFromCollection("test", "FeeReceiptRequests")
+      .then((documents) => {
+        res.send(documents);
+      })
+      .catch((error) => {
+        console.error("Error fetching documents:", error);
+      });
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/getQueries", async (req, res) => {
+  try {
+    // get alloted elective from the respective database
+    connectToAtlas(); 
+    getAllDocumentsFromCollection("test", "Queries")
       .then((documents) => {
         res.json(documents);
       })
@@ -312,6 +313,7 @@ router.get("/getFeeReceiptRequests", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
+
 router.delete("/queries/:messageId", async (req, res) => {
   try {
     const { messageId } = req.params;
@@ -341,7 +343,59 @@ router.post("/updateLCRequest/:mis", async (req, res) => {
   try {
     const db = client.db("test");
 
-    const collection = db.collection("LCRequests"); // Assuming your collection name is 'students'
+    const collection = db.collection("LCRequests"); 
+
+    const result = await collection.updateOne(
+      { mis: mis }, 
+      {$set: data}
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json({ message: "Student updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post("/updateScholarshipRequest/:mis", async (req, res) => {
+  const { mis } = req.params;
+
+  const data = req.body;
+
+  try {
+    const db = client.db("test");
+
+    const collection = db.collection("ScholarshipRequests"); 
+
+    const result = await collection.updateOne(
+      { mis: mis }, 
+      {$set: data}
+    );
+
+    if (result.modifiedCount === 0) {
+      return res.status(404).json({ message: "Student not found" });
+    }
+
+    res.status(200).json({ message: "Student updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.post("/updateFeeReceiptRequest/:mis", async (req, res) => {
+  const { mis } = req.params;
+
+  const data = req.body;
+
+  try {
+    const db = client.db("test");
+
+    const collection = db.collection("FeeReceiptRequests"); 
 
     const result = await collection.updateOne(
       { mis: mis }, 

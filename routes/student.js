@@ -2184,4 +2184,16 @@ router.post("/sendLCRequest", async (req, res) => {
   }
 });
 
+router.post("/sendQuery", async (req, res) => {
+  try {
+    const data = req.body;
+    connectToAtlas();
+    addDocumentToCollection(data, "test", "Queries");
+    res.send("Request Sent");
+  } catch (error) {
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
 module.exports = router;

@@ -26,7 +26,6 @@ import StudentSectionHome from "./pages/StudentSection/StudentSectionHome";
 import Notifications from "./pages/Student/Notifications";
 import UpdateProfile from "./pages/Student/UpdateProfile";
 import StudentSectionNotifications from "./pages/StudentSection/StudentSectionNotifications";
-import Bonafides from "./pages/StudentSection/Bonafides";
 import LetterFormat from "./pages/StudentSection/LetterFormat";
 import Queries from "./pages/StudentSection/Queries";
 import UploadMarks from "./pages/Faculty/UploadMarks";
@@ -44,6 +43,10 @@ import AllocateGrades from "./pages/Faculty/AllocateGrades";
 import PrivateRouteStudent from "./components/Routing/PrivateRouteStudent";
 import PrivateRouteFaculty from "./components/Routing/PrivateRouteFaculty";
 import PrivateRouteStudentSection from "./components/Routing/PrivateRouteStudentSection";
+
+import PrivateRoute from "./components/Routing/PrivateRoute";
+import BonafideRequests from "./pages/StudentSection/BonafideRequests";
+
 const App = () => {
   const [showSidebarAndNavbar, setShowSidebarAndNavbar] = useState(false);
 
@@ -237,7 +240,7 @@ const App = () => {
                     <Route
                       path="/StudentSection/Request/BonafideRequests"
                       element={
-                        <PrivateRouteStudentSection component={Bonafides} />
+                        <PrivateRouteStudentSection component={BonafideRequests} />
                       }
                     />
                     <Route
@@ -280,6 +283,7 @@ const App = () => {
                         <PrivateRouteStudentSection component={Bonafides} />
                       }
                     />
+
                     <Route
                       path="/StudentSection/Scholarship/LetterFormats"
                       element={
@@ -287,7 +291,8 @@ const App = () => {
                       }
                     />
                     <Route
-                      path="/StudentSection/Scholarship/Queries"
+
+                      path="/studentsection/Queries/ReceivedQueries"
                       element={
                         <PrivateRouteStudentSection component={Queries} />
                       }

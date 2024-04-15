@@ -91,7 +91,7 @@ export const LeavingCertificateDownload =
 export const sendQuery = (message) => async (dispatch) => {
   try {
     console.log(message);
-    await axios.post("/api/student/queries", message);
+    await axios.post("/api/student/sendQuery", message);
   } catch (err) {
     console.log(err);
   }
