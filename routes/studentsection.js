@@ -10,6 +10,7 @@ const Messages = require("../models/Messages");
 const { MongoClient } = require("mongodb");
 const FeeReceipt = require("../models/FeeReceipt");
 const Bonafide = require("../models/Bonafide");
+const c = require("config");
 const uri =
   "mongodb+srv://sarveshkulkarni2106:123@contactkeeper.jkrszl5.mongodb.net/?retryWrites=true&w=majority&appName=Contactkeeper"; // MongoDB Atlas connection URI
 const client = new MongoClient(uri);
@@ -282,7 +283,8 @@ router.get("/getScholarshipRequests", async (req, res) => {
   }
 });
 
-router.get("/ ", async (req, res) => {
+
+router.get("/getFeeReceiptRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
     connectToAtlas(); 
@@ -412,5 +414,27 @@ router.post("/updateFeeReceiptRequest/:mis", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+router.post("/updateQuery/:from", async (req, res) => {
+  const { from } = req.params;
+
+  const newData = req.body;
+  try {
+    const db = client.db('test');
+    const collection = db.collection('Queries');
+    console.log("hello")
+    const result = await collection.updateOne(
+        { from: from },
+        { $set: newData } 
+    );
+  
+    res.json({ message: 'Document updated successfully', result });
+  } catch (error) {
+    console.error('Error updating document:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 
 module.exports = router;

@@ -44,7 +44,6 @@ import PrivateRouteStudent from "./components/Routing/PrivateRouteStudent";
 import PrivateRouteFaculty from "./components/Routing/PrivateRouteFaculty";
 import PrivateRouteStudentSection from "./components/Routing/PrivateRouteStudentSection";
 
-import PrivateRoute from "./components/Routing/PrivateRoute";
 import BonafideRequests from "./pages/StudentSection/BonafideRequests";
 
 const App = () => {
@@ -273,17 +272,8 @@ const App = () => {
                         />
                       }
                     />
-                    {/* <Route
-                        path="/StudentSection/Scholarship/ScholarshipsAvailable"
-                        element={<Scholarships />}
-                      /> */}
-                    <Route
-                      path="/StudentSection/Scholarship/RequestedBonafides"
-                      element={
-                        <PrivateRouteStudentSection component={Bonafides} />
-                      }
-                    />
-
+      
+                
                     <Route
                       path="/StudentSection/Scholarship/LetterFormats"
                       element={

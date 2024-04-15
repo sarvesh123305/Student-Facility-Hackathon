@@ -7,7 +7,7 @@ const PrivateRouteStudentSection = ({ component: Component }) => {
   const { isAuthenticated, loading, userType } = authContext;
   //  if (loading) return <Spinner />;
   console.log("Is it here", Component);
-  if (isAuthenticated && userType === "studentSection") return <Component />;
+  if (isAuthenticated && userType === "studentsection") return <Component />;
   return <Navigate to="/login" />;
 };
 
