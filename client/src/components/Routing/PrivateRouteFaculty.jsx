@@ -8,7 +8,7 @@ const PrivateRouteFaculty = ({ component: Component }) => {
   //  if (loading) return <Spinner />;
   console.log("Is it here", Component);
   if (isAuthenticated && userType === "faculty") return <Component />;
-  return <Navigate to="/login" />;
+  return <Navigate to="/Faculty/login" />;
 };
 
 export default PrivateRouteFaculty;
