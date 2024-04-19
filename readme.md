@@ -143,5 +143,13 @@ Access data for 5 Years ( Every department should be able to access data of its 
 
 - Letter of Recommendation from faculty to user login
 
-- 
+**PROJECT RUNNING INSTRUCTIONS**
+
+1.Get Config File from project contributers/repository owners
+2.Clone repo and move inside it 
+	npm run clientinstall -force
+	npm i
+
+3.After installation of dependencies , you can run project by 
+	npm run dev
 
