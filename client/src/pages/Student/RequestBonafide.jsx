@@ -49,15 +49,8 @@ const RequestBonafide = ({
   };
 
   const handleBonafideDownload = async () => {
-    // e.preventDefault();
     const formData = {
       mis: studentDetails.mis,
-      name: studentDetails.name,
-      year: academicProfile.year,
-      dept: academicProfile.branch,
-      academicYear: studentDetails.academicyear,
-      programme: "Btech",
-      purpose: "Scholarship",
     };
     bonafideDownload(formData, setPdfData);
   };
@@ -65,10 +58,6 @@ const RequestBonafide = ({
   const handleSendRequest = () => {
     const formData = {
       mis: studentDetails.mis,
-      name: studentDetails.name,
-      year: academicProfile.year,
-      dept: academicProfile.branch,
-      academicYear: studentDetails.academicyear,
       programme: "Btech",
       purpose: "Scholarship",
     };
@@ -242,7 +231,7 @@ const RequestBonafide = ({
                   alue={reason}
                   onChange={onChange}
                   required
-                  class="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                  className="block p-2.5 w-full text-lg text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                   placeholder="Write a reason..."
                 />
               </div>
@@ -260,7 +249,7 @@ const RequestBonafide = ({
           </form>
           {
             //Testing Bonafide
-            bonafidePresent && (
+            1 && (
               <div>
                 <button
                   onClick={handleBonafideDownload}

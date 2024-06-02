@@ -25,7 +25,6 @@ export const initialLoadUser = () => async (dispatch) => {
 };
 export const bonafideDownload = (formData, setPdfData) => async (dispatch) => {
   try {
-    console.log(formData);
     const response = await axios.post(
       "/api/student/requestBonafide",
       formData,
@@ -33,9 +32,9 @@ export const bonafideDownload = (formData, setPdfData) => async (dispatch) => {
         responseType: "arraybuffer",
       }
     );
-
-    // Store the PDF content in the component state
-    setPdfData(new Blob([response.data], { type: "application/pdf" }));
+    console.log("reso", response);
+    // if (response.data)
+    //   setPdfData(new Blob([response.data], { type: "application/pdf" }));
   } catch (error) {
     console.error("Error downloading PDF:", error.message);
   }
@@ -180,18 +179,17 @@ export const updateStudent = (mis, formData) => async (dispatch) => {
 export const sendBonafideRequest = (formData) => async (dispatch) => {
   try {
     // Check if formData.mis in bonafides
-    const repeat = await axios.post(
-      "/api/studentsection/bonafideApplications",
-      {
-        mis: formData.mis,
-      }
-    );
+    // const repeat = await axios.post(
+    //   "/api/studentsection/bonafideApplications",
+    //   {
+    //     mis: formData.mis,
+    //   }
+    // );
 
-    if (repeat.data.msg === "Bonafide Appliacation Found") {
-      alert("Duplicate Entry Exists");
-      return;
-    }
-    console.log("SEND ", formData.mis);
+    // if (repeat.data.msg === "Bonafide Application Found") {
+    //   alert("Duplicate Entry Exists");
+    //   return;
+    // }
     const res = await axios.post("/api/student/sendBonafideRequest", formData);
   } catch (err) {
     console.log(err);

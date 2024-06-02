@@ -170,27 +170,21 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() }); //bad request
     }
-    const { name, mis, dept, year, academicYear, programme, purpose } =
-      req.body;
+    const { mis } = req.body;
     const currentYear = ["First", "Second", "Third", "Final"];
     const cwd = process.cwd();
-    console.log("Year", typeof year, year);
-    console.log("The year", currentYear[year - 1]);
+    const fetchStudent = await Student.findOne({ mis }).select("-password");
+    const fetchBonafide = await Bonafide.findOne({ mis });
+    if (fetchBonafide.status !== "Accepted") {
+      // res.json({ msg: "Your Bonafide Application has not been approved yet!" });
+      const arrayBuffer = Buffer.from(
+        "Your Bonafide Application has not been approved yet!",
+        "utf-8"
+      );
+      return res.status(200).send(arrayBuffer);
+    }
+    const fetchAcademicProfiles = await AcademicProfile.findOne({ mis });
     try {
-      // let user = await Bonafide.findOne({ mis });
-      // if (user) {
-      //   return res.status(400).json({ msg: "Request already exists" });
-      // }
-      // console.log(req.student);
-      // user = new Bonafide({
-      //   name,
-      //   mis,
-      //   dept,
-      //   year,
-      //   academicYear,
-      //   // user: req.student.id,
-      // });
-
       const doc = new PDFDocument({ size: "Letter", layout: "landscape" });
 
       res.setHeader(
@@ -232,20 +226,22 @@ router.post(
         }
       );
       doc.font("Times-Roman").text(`This is to certify that `, 90, 300);
-      doc.font("Times-Bold").text(`${name}`, 270, 300);
+      doc.font("Times-Bold").text(`${fetchStudent.name}`, 270, 300);
       doc.font("Times-Roman").text(`is a bonafide Student of`, 545, 300);
 
       doc
         .font("Times-Roman")
         .text(`this Institute studying in`, 60, 330, { align: "left" });
-      doc.font("Times-Bold").text(`${year}`, 240, 330);
+      doc
+        .font("Times-Bold")
+        .text(`${currentYear[fetchAcademicProfiles.year - 1]}`, 240, 330);
       doc.font("Times-Roman").text(`Year`, 290, 330);
-      doc.font("Times-Bold").text(`${programme}`, 330, 330);
+      doc.font("Times-Bold").text("B.Tech", 330, 330);
       doc.font("Times-Roman").text(`in`, 390, 330);
-      doc.font("Times-Bold").text(`${dept}`, 409, 330);
+      doc.font("Times-Bold").text(`${fetchAcademicProfiles.branch}`, 409, 330);
       doc.font("Times-Roman").text(`during the Year`, 590, 330);
 
-      doc.font("Times-Bold").text(`${academicYear}. `, 60, 360);
+      doc.font("Times-Bold").text(`${fetchStudent.academicyear}. `, 60, 360);
       doc.font("Times-Bold").text(`His/ Her`, 150, 360);
       doc.font("Times-Roman").text(`MIS No.`, 220, 360);
       doc.font("Times-Bold").text(`${mis}.`, 285, 360);
@@ -254,23 +250,7 @@ router.post(
         .text(`This certificate is issued for the purpose of `, 100, 390);
       doc.font("Times-Bold").text(`Scholarship.`, 415, 390);
 
-      // doc.image(
-      //   // "/home/sohel/COEP/SEM-VI/SE-II/Project/MIS-Portal/routes/coepStamp.png",
-      //   cwd + "/routes/coepStamp.png",
-
-      //   {
-      //     width: 150, // Set the width of the image
-      //     height: 150, // Fit the image into a 100x100 box
-      //     x: 250,
-      //     y: 450,
-      //   }
-      // );
-
       doc.font("Times-Bold").text(`Place : Pune`, 50, 450, { align: "Left" });
-
-      // doc
-      //   .font("Times-Bold")
-      //   .text(`Date: ${currentDate}`, 50, 480, { align: "left" });
 
       doc
         .font("Times-Bold")
@@ -282,11 +262,6 @@ router.post(
         .font("Times-Bold")
         .text(`Date: 12/4/2024`, 90, 510, { align: "right" });
 
-      // doc.font("Times-Roman").text(`Registrar`, 560, 490);
-      // doc
-      //   .font("Times-Roman")
-      //   .text(`COEP Technological University, Pune`, 430, 510);
-
       doc.image(cwd + "/routes/Images/greenTick.png", {
         width: 50,
         height: 50,
@@ -296,10 +271,6 @@ router.post(
       });
 
       doc.end();
-
-      // res.json(newBonafide);
-
-      // res.send("User saved int o database magically");
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error occured");
@@ -1577,30 +1548,25 @@ function drawTable2(doc, table, options) {
   doc.rect(x - tableWidth, y, tableWidth, tableHeight + lineSpace).stroke();
 }
 
-// router.post("/sendBonafideRequest", async (req, res) => {
-//   const { mis, name, dept, programme, purpose, year, academicYear } = req.body;
-//   try {
-//     // console.log("FORMDATA : ",formData,mis);
-//     // Create a new Bonafide document
-//     const newBonafide = new Bonafide({
-//       mis,
-//       name,
-//       dept,
-//       year,
-//       academicYear,
-//       programme,
-//       purpose,
-//     });
+router.post("/sendBonafideRequest", async (req, res) => {
+  const { mis, programme, purpose } = req.body;
+  try {
+    const newBonafide = new Bonafide({
+      mis,
+      programme,
+      purpose,
+    });
+    const bonafideApplications = await Bonafide.findOne({ mis });
+    if (bonafideApplications)
+      return res.json({ msg: "Bonafide Application Found" });
 
-//     // Save the new Bonafide document to the database
-//     const result = await newBonafide.save();
-
-//     res.json(result);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
+    const result = await newBonafide.save();
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 router.post("/LeavingCertificate", async (req, res) => {
   // const formData = {
@@ -2151,16 +2117,16 @@ router.post("/sendScholarshipRequest", async (req, res) => {
   }
 });
 
-router.post("/sendBonafideRequest", async (req, res) => {
-  try {
-    const data = req.body;
-    connectToAtlas();
-    addDocumentToCollection(data, "test", "BonafideRequests");
-    res.send("Request Sent");
-  } catch (error) {
-    res.status(500).send("Internal Server Error");
-  }
-});
+// router.post("/sendBonafideRequest", async (req, res) => {
+//   try {
+//     const data = req.body;
+//     connectToAtlas();
+//     addDocumentToCollection(data, "test", "BonafideRequests");
+//     res.send("Request Sent");
+//   } catch (error) {
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 router.post("/sendFeeReceiptRequest", async (req, res) => {
   try {
@@ -2194,6 +2160,5 @@ router.post("/sendQuery", async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 });
-
 
 module.exports = router;

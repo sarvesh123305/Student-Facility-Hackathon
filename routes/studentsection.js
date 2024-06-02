@@ -144,17 +144,12 @@ router.post(
 router.post("/bonafideApplications", async (req, res) => {
   try {
     const { mis } = req.body;
-    // Fetch all bonafide applications from the collection
-
     const bonafideApplications = await Bonafide.findOne({ mis });
-    if (!bonafideApplications)
-      return res.json({ msg: "No bonafide applications found" });
+    if (bonafideApplications)
+      return res.json({ msg: "Bonafide Application Found" });
 
-    // Return the bonafide applications as JSON response
-    res.json({ msg: "Bonafide Appliacation Found" });
+    res.json({ msg: "No Bonafide Application Found" });
   } catch (err) {
-    // Log and send an error response if an error occurs
-    console.error("Error fetching bonafide applications:", err.message);
     res.status(500).send("Server error occurred");
   }
 });
@@ -206,7 +201,6 @@ router.put("/bonafideApproval", async (req, res) => {
     res.status(500).send("Server error occurred");
   }
 });
-
 
 router.post("/sendReply", async (req, res) => {
   try {
@@ -283,11 +277,10 @@ router.get("/getScholarshipRequests", async (req, res) => {
   }
 });
 
-
 router.get("/getFeeReceiptRequests", async (req, res) => {
   try {
     // get alloted elective from the respective database
-    connectToAtlas(); 
+    connectToAtlas();
     getAllDocumentsFromCollection("test", "FeeReceiptRequests")
       .then((documents) => {
         res.send(documents);
@@ -303,7 +296,7 @@ router.get("/getFeeReceiptRequests", async (req, res) => {
 router.get("/getQueries", async (req, res) => {
   try {
     // get alloted elective from the respective database
-    connectToAtlas(); 
+    connectToAtlas();
     getAllDocumentsFromCollection("test", "Queries")
       .then((documents) => {
         res.json(documents);
@@ -345,12 +338,9 @@ router.post("/updateLCRequest/:mis", async (req, res) => {
   try {
     const db = client.db("test");
 
-    const collection = db.collection("LCRequests"); 
+    const collection = db.collection("LCRequests");
 
-    const result = await collection.updateOne(
-      { mis: mis }, 
-      {$set: data}
-    );
+    const result = await collection.updateOne({ mis: mis }, { $set: data });
 
     if (result.modifiedCount === 0) {
       return res.status(404).json({ message: "Student not found" });
@@ -371,12 +361,9 @@ router.post("/updateScholarshipRequest/:mis", async (req, res) => {
   try {
     const db = client.db("test");
 
-    const collection = db.collection("ScholarshipRequests"); 
+    const collection = db.collection("ScholarshipRequests");
 
-    const result = await collection.updateOne(
-      { mis: mis }, 
-      {$set: data}
-    );
+    const result = await collection.updateOne({ mis: mis }, { $set: data });
 
     if (result.modifiedCount === 0) {
       return res.status(404).json({ message: "Student not found" });
@@ -397,12 +384,9 @@ router.post("/updateFeeReceiptRequest/:mis", async (req, res) => {
   try {
     const db = client.db("test");
 
-    const collection = db.collection("FeeReceiptRequests"); 
+    const collection = db.collection("FeeReceiptRequests");
 
-    const result = await collection.updateOne(
-      { mis: mis }, 
-      {$set: data}
-    );
+    const result = await collection.updateOne({ mis: mis }, { $set: data });
 
     if (result.modifiedCount === 0) {
       return res.status(404).json({ message: "Student not found" });
@@ -420,21 +404,19 @@ router.post("/updateQuery/:from", async (req, res) => {
 
   const newData = req.body;
   try {
-    const db = client.db('test');
-    const collection = db.collection('Queries');
-    console.log("hello")
+    const db = client.db("test");
+    const collection = db.collection("Queries");
+    console.log("hello");
     const result = await collection.updateOne(
-        { from: from },
-        { $set: newData } 
+      { from: from },
+      { $set: newData }
     );
-  
-    res.json({ message: 'Document updated successfully', result });
+
+    res.json({ message: "Document updated successfully", result });
   } catch (error) {
-    console.error('Error updating document:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error updating document:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
-
-
 
 module.exports = router;
