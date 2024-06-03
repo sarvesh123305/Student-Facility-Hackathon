@@ -24,8 +24,6 @@ Routes ready till now :
 	5. Routes to similar other pages
 	6. Subject allocation backend and frontend ready
 
-Sarvesh Kulkarni if yevdhya josti ready aahe, tr we’ll have come up with some different features which can be implemented. Te aapan je varti features takle tr khup common aahet, kahitar asa pahije ka je tya Panelist lokanni pan vichar kele nasel!
-Certainly! Here are some key bullet points you can include in your project proposal:
 
 **Introduction:**
 - Addressing the challenges faced by students in dealing with administrative tasks.
