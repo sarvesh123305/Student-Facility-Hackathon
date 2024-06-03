@@ -4,7 +4,7 @@ import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDbqTjsHHs6RbtQ9lGqVmPopAVpIOWW884",
+    apiKey: "123455",
     authDomain: "student-facility.firebaseapp.com",
     projectId: "student-facility",
     storageBucket: "student-facility.appspot.com",
